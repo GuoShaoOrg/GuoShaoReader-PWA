@@ -4,7 +4,6 @@ import {makeStyles} from "@material-ui/core/styles";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from '@material-ui/icons/Share';
 import {orange} from '@material-ui/core/colors';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import parse from "html-react-parser";
 
 
