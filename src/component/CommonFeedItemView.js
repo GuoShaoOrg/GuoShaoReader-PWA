@@ -1,11 +1,12 @@
 import React from "react";
 import {Avatar, Card, CardActionArea, CardActions, CardContent, CardHeader, IconButton} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from '@material-ui/icons/Share';
+import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
+import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 import {orange} from '@material-ui/core/colors';
 import parse from "html-react-parser";
-
+import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
+import Toast from "./Toast";
 
 function CommonFeedItemView(props) {
     const classes = useStyles();
@@ -13,28 +14,44 @@ function CommonFeedItemView(props) {
     const data = props.data
     const date = data.InputDate.slice(0, 10)
 
+    const onFeedLinkClick = () => {
+        window.open(data.Link)
+    }
+
+    const onFeedTitleClick = () => {
+        console.log("onFeedTitleClick")
+    }
+
+    const handlerFollowClick = () => {
+        Toast.show("Handler Follow Click","info")
+    }
+
     return (
         <Card className={classes.root}>
-            <CardActionArea>
+            <CardActionArea >
                 <CardHeader
                     avatar={
                         <Avatar aria-label="rss" className={classes.avatar} src={data.ChannelImageUrl}/>
                     }
+                    onClick={onFeedTitleClick}
                     title={data.Title}
                     subheader={date}
                     className={classes.title}
                 />
-                <CardContent>
+                <CardContent onClick={onFeedLinkClick}>
                     {parse(data.ChannelDesc)}
                 </CardContent>
 
             </CardActionArea>
             <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                    <FavoriteIcon/>
+                <IconButton aria-label="follow" onClick={handlerFollowClick}>
+                    <PlaylistAddIcon/>
+                </IconButton>
+                <IconButton aria-label="favorite">
+                    <FavoriteBorderOutlinedIcon/>
                 </IconButton>
                 <IconButton aria-label="share">
-                    <ShareIcon/>
+                    <ShareOutlinedIcon/>
                 </IconButton>
             </CardActions>
         </Card>

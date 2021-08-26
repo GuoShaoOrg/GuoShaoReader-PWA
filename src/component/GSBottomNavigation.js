@@ -1,9 +1,10 @@
 import React, {useState, forwardRef, useEffect} from "react";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import {BottomNavigationAction} from "@material-ui/core";
-import RestoreIcon from "@material-ui/icons/Restore";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import LocationOnIcon from "@material-ui/icons/LocationOn";
+import RssFeedIcon from '@material-ui/icons/RssFeed';
+import ListIcon from '@material-ui/icons/List';
+import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
+import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import {makeStyles} from "@material-ui/core/styles";
 import {Link} from 'react-router-dom';
 
@@ -27,9 +28,10 @@ const GSBottomNavigation = forwardRef((props, ref) => {
             showLabels
             className={classes.root}
         >
-            <BottomNavigationAction label="Recents" icon={<RestoreIcon/>} component={Link} to={'/'}/>
-            <BottomNavigationAction label="Favorites" icon={<FavoriteIcon/>} component={Link} to={'/item'}/>
-            <BottomNavigationAction label="Nearby" icon={<LocationOnIcon/>} component={Link} to={'/404'}/>
+            <BottomNavigationAction icon={<RssFeedIcon/>} component={Link} to={'/'}/>
+            <BottomNavigationAction icon={<ListIcon/>} component={Link} to={'/item'}/>
+            <BottomNavigationAction icon={<SearchOutlinedIcon/>} component={Link} to={'/404'}/>
+            <BottomNavigationAction icon={<AccountCircleOutlinedIcon/>} component={Link} to={'/404'}/>
         </BottomNavigation>
     )
 })
