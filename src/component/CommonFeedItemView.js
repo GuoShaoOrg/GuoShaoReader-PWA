@@ -26,6 +26,14 @@ function CommonFeedItemView(props) {
         Toast.show("Handler Follow Click","info")
     }
 
+    const handlerFavoriteClick = () => {
+        Toast.show("Handler Favorite Click","info")
+    }
+
+    const handlerShareClick = () => {
+        Toast.show("Handler Share Click","info")
+    }
+
     return (
         <Card className={classes.root}>
             <CardActionArea >
@@ -47,10 +55,10 @@ function CommonFeedItemView(props) {
                 <IconButton aria-label="follow" onClick={handlerFollowClick}>
                     <PlaylistAddIcon/>
                 </IconButton>
-                <IconButton aria-label="favorite">
+                <IconButton aria-label="favorite" onClick={handlerFavoriteClick}>
                     <FavoriteBorderOutlinedIcon/>
                 </IconButton>
-                <IconButton aria-label="share">
+                <IconButton aria-label="share" onClick={handlerShareClick}>
                     <ShareOutlinedIcon/>
                 </IconButton>
             </CardActions>

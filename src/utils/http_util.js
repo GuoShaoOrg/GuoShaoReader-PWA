@@ -1,5 +1,6 @@
 import axios from "axios";
 import Toast from "../component/Toast";
+import {getAuthToken} from "../service/UserService";
 
 let instance = axios.create();
 
@@ -7,7 +8,7 @@ instance.interceptors.request.use(function (config) {
     if (config.headers.Authorization === undefined
         || config.headers.Authorization === null
         || config.headers.Authorization === "") {
-
+        config.headers.Authorization = getAuthToken();
     }
     return config;
 }, function (error) {

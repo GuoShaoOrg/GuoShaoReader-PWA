@@ -29,9 +29,9 @@ const GSBottomNavigation = forwardRef((props, ref) => {
             className={classes.root}
         >
             <BottomNavigationAction icon={<RssFeedIcon/>} component={Link} to={'/'}/>
-            <BottomNavigationAction icon={<ListIcon/>} component={Link} to={'/item'}/>
-            <BottomNavigationAction icon={<SearchOutlinedIcon/>} component={Link} to={'/404'}/>
-            <BottomNavigationAction icon={<AccountCircleOutlinedIcon/>} component={Link} to={'/404'}/>
+            <BottomNavigationAction icon={<ListIcon/>} component={Link} to={'/subList'}/>
+            <BottomNavigationAction icon={<SearchOutlinedIcon/>} component={Link} to={'/explore'}/>
+            <BottomNavigationAction icon={<AccountCircleOutlinedIcon/>} component={Link} to={'/setting'}/>
         </BottomNavigation>
     )
 })

@@ -4,6 +4,9 @@ import {BrowserRouter as Router, Route} from 'react-router-dom'
 import CacheRoute, {CacheSwitch} from 'react-router-cache-route'
 import GSBottomNavigation from "../component/GSBottomNavigation";
 import TimelineFeedPage from "./TimelineFeedPage";
+import Setting from "../component/Setting";
+import SubscriptionList from "../component/SubscriptionList";
+import ExploreFeedView from "../component/ExploreFeedView";
 
 export const AppContext = React.createContext(null);
 
@@ -38,6 +41,9 @@ function Home() {
         LogOut: () => {
 
         },
+        GetUserInfo: () => {
+
+        },
         GetCPageHeight: () => {
             return pageHeight
         },
@@ -55,8 +61,9 @@ function Home() {
                     <div ref={pageContainerRef} style={{height: pageHeight}}>
                         <CacheSwitch>
                             <CacheRoute exact path="/" component={TimelineFeedPage}/>
-                            <Route exact path="/item/" render={() => <div>item page</div>}/>
-                            <Route render={() => <div>404 Not Found</div>}/>
+                            <Route exact path="/subList/" component={SubscriptionList}/>
+                            <Route exact path="/explore/" component={ExploreFeedView}/>
+                            <Route exact path={"/setting"} component={Setting}/>
                         </CacheSwitch>
                     </div>
                     <GSBottomNavigation ref={bottomTabRef}/>
