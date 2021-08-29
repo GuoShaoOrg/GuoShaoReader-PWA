@@ -8,7 +8,7 @@ import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import {makeStyles} from "@material-ui/core/styles";
 import {Link} from 'react-router-dom';
 
-const GSBottomNavigation = forwardRef((props, ref) => {
+const GSBottomNavigationWithoutToken = forwardRef((props, ref) => {
 
     const classes = useStyles();
     const [bottomValue, setBottomValue] = useState()
@@ -29,9 +29,8 @@ const GSBottomNavigation = forwardRef((props, ref) => {
             className={classes.root}
         >
             <BottomNavigationAction icon={<RssFeedIcon/>} component={Link} to={'/'}/>
-            <BottomNavigationAction icon={<ListIcon/>} component={Link} to={'/subList'}/>
             <BottomNavigationAction icon={<SearchOutlinedIcon/>} component={Link} to={'/explore'}/>
-            <BottomNavigationAction icon={<AccountCircleOutlinedIcon/>} component={Link} to={'/setting'}/>
+            <BottomNavigationAction icon={<AccountCircleOutlinedIcon/>} component={Link} to={'/login'}/>
         </BottomNavigation>
     )
 })
@@ -44,4 +43,4 @@ const useStyles = makeStyles({
     },
 });
 
-export default GSBottomNavigation
+export default GSBottomNavigationWithoutToken

@@ -7,6 +7,8 @@ import TimelineFeedPage from "./TimelineFeedPage";
 import Setting from "../component/Setting";
 import SubscriptionList from "../component/SubscriptionList";
 import ExploreFeedView from "../component/ExploreFeedView";
+import LoginPage from "./LoginPage";
+import GSBottomNavigationWithoutToken from "../component/GSBottomNavigationWithoutToken";
 
 export const AppContext = React.createContext(null);
 
@@ -51,6 +53,7 @@ function Home() {
 
     useEffect(() => {
         setPageHeight(containerRef.current.clientHeight - bottomTabRef.current.clientHeight)
+
     }, [state.token])
 
 
@@ -61,12 +64,16 @@ function Home() {
                     <div ref={pageContainerRef} style={{height: pageHeight}}>
                         <CacheSwitch>
                             <CacheRoute exact path="/" component={TimelineFeedPage}/>
-                            <Route exact path="/subList/" component={SubscriptionList}/>
-                            <Route exact path="/explore/" component={ExploreFeedView}/>
+                            <Route exact path="/subList" component={SubscriptionList}/>
+                            <Route exact path="/explore" component={ExploreFeedView}/>
                             <Route exact path={"/setting"} component={Setting}/>
+                            <Route exact path={"/login"} component={LoginPage}/>
                         </CacheSwitch>
                     </div>
-                    <GSBottomNavigation ref={bottomTabRef}/>
+                    {state.token === "" || state.token === undefined || state.token === null ?
+                        (<GSBottomNavigationWithoutToken ref={bottomTabRef}/>) :
+                        (<GSBottomNavigation ref={bottomTabRef}/>)}
+
                 </div>
             </Router>
         </AppContext.Provider>
