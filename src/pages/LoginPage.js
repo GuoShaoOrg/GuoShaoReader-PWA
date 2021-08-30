@@ -5,10 +5,12 @@ import {makeStyles} from "@material-ui/core/styles";
 import {Button, TextField} from "@material-ui/core";
 import RssFeedIcon from '@material-ui/icons/RssFeed';
 import {AppContext} from "./Home";
+import {useHistory} from "react-router-dom";
 
 const LoginPage = () => {
     const classes = useStyles();
 
+    const history = useHistory()
     const [accessValue, setAccessValue] = useState();
     const [password, setPassword] = useState();
     const appContext = useContext(AppContext);
@@ -21,17 +23,18 @@ const LoginPage = () => {
     }
 
     const doLogin = () => {
-        let api_url = process.env.REACT_APP_BASE_API + "api/v1/user/login";
+        let api_url = process.env.REACT_APP_BASE_API + "rss/api/v1/user/login";
         getHttpInstance().post(api_url, {
             "email": accessValue,
             "password": password,
         })
             .then((response) => {
-                console.log("response")
-                console.log(response)
                 let responseData = response.data;
                 storeUserLoginInfo(responseData.data)
                 appContext.Login(responseData.data.token)
+                history.push({
+                    pathname: '/',
+                })
             })
             .catch((error) => console.error(error))
             .finally(() => {
