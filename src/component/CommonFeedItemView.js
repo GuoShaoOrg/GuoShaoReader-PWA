@@ -1,5 +1,14 @@
 import React from "react";
-import {Avatar, Card, CardActionArea, CardActions, CardContent, CardHeader, IconButton} from "@material-ui/core";
+import {
+    Avatar,
+    Card,
+    CardActionArea,
+    CardActions,
+    CardContent,
+    CardHeader,
+    IconButton,
+    Typography
+} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
@@ -23,33 +32,33 @@ function CommonFeedItemView(props) {
     }
 
     const handlerFollowClick = () => {
-        Toast.show("Handler Follow Click","info")
+        Toast.show("Handler Follow Click", "info")
     }
 
     const handlerFavoriteClick = () => {
-        Toast.show("Handler Favorite Click","info")
+        Toast.show("Handler Favorite Click", "info")
     }
 
     const handlerShareClick = () => {
-        Toast.show("Handler Share Click","info")
+        Toast.show("Handler Share Click", "info")
     }
 
     return (
         <Card className={classes.root}>
-            <CardActionArea >
+            <CardActionArea>
                 <CardHeader
                     avatar={
                         <Avatar aria-label="rss" className={classes.avatar} src={data.ChannelImageUrl}/>
                     }
                     onClick={onFeedTitleClick}
                     title={data.Title}
-                    subheader={date}
+                    subheader={data.ChannelTitle}
                     className={classes.title}
                 />
                 <CardContent onClick={onFeedLinkClick}>
                     {parse(data.ChannelDesc)}
+                    <Typography className={classes.dateText} variant="subtitle2" color="textSecondary">{date}</Typography>
                 </CardContent>
-
             </CardActionArea>
             <CardActions disableSpacing>
                 <IconButton aria-label="follow" onClick={handlerFollowClick}>
@@ -81,6 +90,9 @@ const useStyles = makeStyles((theme) => ({
     avatar: {
         backgroundColor: orange[500],
     },
+    dateText: {
+        marginTop: "10px"
+    }
 }));
 
 export default CommonFeedItemView
