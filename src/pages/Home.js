@@ -66,7 +66,7 @@ function Home() {
                         <CacheSwitch>
                             <CacheRoute exact path="/" component={TimelineFeedPage}/>
                             <Route exact path="/subList" component={SubscriptionList}/>
-                            <Route exact path="/explore" component={ExploreFeedView}/>
+                            <CacheRoute exact path="/explore" component={ExploreFeedView}/>
                             <Route exact path={"/setting"} component={Setting}/>
                             <Route exact path={"/login"} component={LoginPage}/>
                         </CacheSwitch>
