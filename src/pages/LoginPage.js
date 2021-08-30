@@ -30,7 +30,7 @@ const LoginPage = () => {
         })
             .then((response) => {
                 let responseData = response.data;
-                storeUserLoginInfo(responseData.data)
+                storeUserLoginInfo(JSON.stringify(responseData.data))
                 appContext.Login(responseData.data.token)
                 history.push({
                     pathname: '/',

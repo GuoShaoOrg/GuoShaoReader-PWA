@@ -9,6 +9,7 @@ import SubscriptionList from "../component/SubscriptionList";
 import ExploreFeedView from "../component/ExploreFeedView";
 import LoginPage from "./LoginPage";
 import GSBottomNavigationWithoutToken from "../component/GSBottomNavigationWithoutToken";
+import {getAuthToken, getUserLoginInfo} from "../service/UserService";
 
 export const AppContext = React.createContext(null);
 
@@ -32,7 +33,7 @@ function Home() {
             }
         },
         {
-            token: ""
+            token: getAuthToken()
         },
     );
 

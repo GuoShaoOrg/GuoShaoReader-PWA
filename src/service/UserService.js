@@ -12,6 +12,7 @@ export const getAuthToken = () => {
     if (userLoginInfo === null || userLoginInfo === undefined) {
         return null
     }
+    userLoginInfo = JSON.parse(userLoginInfo)
     return userLoginInfo["token"]
 }
 

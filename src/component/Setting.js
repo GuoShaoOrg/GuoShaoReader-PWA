@@ -1,9 +1,12 @@
-import React, {useContext, useEffect} from "react";
+import React from "react";
 import {AppBar, Avatar, Paper, Toolbar, Typography} from "@material-ui/core";
+import PersonIcon from '@material-ui/icons/Person';
 import {makeStyles} from "@material-ui/core/styles";
+import {getUserLoginInfo} from "../service/UserService";
 
 const Setting = () => {
     const classes = useStyles();
+    const userInfo = JSON.parse(getUserLoginInfo())
 
     return (
         <div>
@@ -14,9 +17,9 @@ const Setting = () => {
             </AppBar>
             <Paper className={classes.account}>
                 <div className={classes.avatar}>
-                    <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg">GS</Avatar>
+                    <Avatar alt="Remy Sharp" src="">GS</Avatar>
                 </div>
-                <div className={classes.username}>username</div>
+                <div className={classes.username}>{userInfo["username"]}</div>
             </Paper>
         </div>
     )
@@ -37,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: "10px",
         marginBottom: "10px",
         display: "inline-block",
-        textAlign: "center"
+        textAlign: "center",
     },
     username: {
         display: "inline",
