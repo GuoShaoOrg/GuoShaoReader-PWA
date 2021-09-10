@@ -16,12 +16,16 @@ import {orange} from '@material-ui/core/colors';
 import parse from "html-react-parser";
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import Toast from "./Toast";
+import { subFeedChannelById } from "../utils/http_util";
+import { getUserLoginInfo } from "../service/UserService";
 
 function CommonFeedItemView(props) {
     const classes = useStyles();
 
     const data = props.data
     const date = data.InputDate.slice(0, 10)
+    const [isSub, setIsSub] = React.useState(false)
+    const userInfo = JSON.parse(getUserLoginInfo());
 
     const onFeedLinkClick = () => {
         window.open(data.Link)
@@ -32,7 +36,19 @@ function CommonFeedItemView(props) {
     }
 
     const handlerFollowClick = () => {
-        Toast.show("Handler Follow Click", "info")
+        let params = {
+          UserId: userInfo["uid"],
+          ChannelId: data.ChannelId,
+        };
+
+        subFeedChannelById(params).then(res => {
+            if (res.status === 200) {
+                setIsSub(true)
+            }
+        }
+        ).catch(err => {
+            console.log(err)
+        })
     }
 
     const handlerFavoriteClick = () => {
@@ -61,10 +77,13 @@ function CommonFeedItemView(props) {
                 </CardContent>
             </CardActionArea>
             <CardActions disableSpacing>
-                <IconButton aria-label="follow" onClick={handlerFollowClick}>
-                    <PlaylistAddIcon/>
-                </IconButton>
-                <IconButton aria-label="favorite" onClick={handlerFavoriteClick}>
+          {isSub ? null : (
+            <IconButton aria-label="follow" onClick={handlerFollowClick}>
+              <PlaylistAddIcon />
+            </IconButton>
+          )}
+
+          <IconButton aria-label="favorite" onClick={handlerFavoriteClick}>
                     <FavoriteBorderOutlinedIcon/>
                 </IconButton>
                 <IconButton aria-label="share" onClick={handlerShareClick}>

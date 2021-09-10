@@ -2,6 +2,8 @@ import React, {useContext, useEffect, useState} from "react";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CommonFeedItemView from "./CommonFeedItemView";
 import {AppContext} from "../pages/Home";
+import ScrollToTop from "react-scroll-to-top";
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
 function CommonFeedListView(props) {
     // const [loading, setLoading] = useState(false);
@@ -44,6 +46,7 @@ function CommonFeedListView(props) {
 
     return (
         <div id="scrollableDiv" style={{height: appContext.GetCPageHeight(), overflowY: "scroll"}}>
+            <ScrollToTop smooth color={"orange"} component={<KeyboardArrowUpIcon/>}/>
             <InfiniteScroll
                 scrollableTarget={"scrollableDiv"}
                 dataLength={dataSource.length}

@@ -9490,6 +9490,11 @@ react-scripts@4.0.3:
   optionalDependencies:
     fsevents "^2.1.3"
 
+react-scroll-to-top@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.nlark.com/react-scroll-to-top/download/react-scroll-to-top-1.0.5.tgz#7a048c1ab0b038dda237cfb6155e1cdf0ae50e4d"
+  integrity sha1-egSMGrCwON2iN8+2FV4c3wrlDk0=
+
 react-transition-group@^4.4.0:
   version "4.4.2"
   resolved "https://registry.nlark.com/react-transition-group/download/react-transition-group-4.4.2.tgz?cache=0&sync_timestamp=1622301299633&other_urls=https%3A%2F%2Fregistry.nlark.com%2Freact-transition-group%2Fdownload%2Freact-transition-group-4.4.2.tgz#8b59a56f09ced7b55cbd53c36768b922890d5470"

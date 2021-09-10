@@ -16,20 +16,25 @@ instance.interceptors.request.use(function (config) {
 });
 
 instance.interceptors.response.use(function (response) {
-    if (response.status === 401) {
-        Toast.show("请先登录", "error")
-        return;
-    }
     if (response.data.code !== 0) {
         Toast.show("发生了一些意外", "error")
         return;
     }
     return response;
 }, function (error) {
-
+    if (error.response.status === 401) {
+      Toast.show("请先登录", "error");
+      return;
+    }
     return Promise.reject(error);
 });
 
+
+export const subFeedChannelById = (data) => {
+    let api_url =
+      process.env.REACT_APP_BASE_API + "rss/api/v1/feed/sub_channel_by_user_id";
+    return instance.post(api_url, data);
+};
 
 export default function getHttpInstance() {
     return instance;

@@ -13,6 +13,6 @@ export const getAuthToken = () => {
         return null
     }
     userLoginInfo = JSON.parse(userLoginInfo)
-    return userLoginInfo["token"]
+    return userLoginInfo["token"]+"@@"+userLoginInfo["uid"]
 }
 

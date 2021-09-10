@@ -1,6 +1,5 @@
 import React from "react";
 import {AppBar, Avatar, Paper, Toolbar, Typography} from "@material-ui/core";
-import PersonIcon from '@material-ui/icons/Person';
 import {makeStyles} from "@material-ui/core/styles";
 import {getUserLoginInfo} from "../service/UserService";
 
