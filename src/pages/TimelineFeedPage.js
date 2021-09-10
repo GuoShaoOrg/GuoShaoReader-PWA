@@ -1,44 +1,60 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import CommonFeedListView from "../component/CommonFeedListView";
-import getHttpInstance from "../utils/http_util";
+import { getUserLoginInfo } from "../service/UserService";
+import { getFeedItemByUserId, getLatestFeedItem } from "../utils/http_util";
 
 function TimelineFeedPage() {
-
     const [reqStart, setReqStart] = useState(0);
+    const userInfo = JSON.parse(getUserLoginInfo());
 
     const fetchData = (refresh, callback) => {
-        let api_url = process.env.REACT_APP_BASE_API + "rss/api/v1/feed/latest";
-        let params
+        let params;
         if (refresh) {
-            setReqStart(0)
+            setReqStart(0);
             params = {
                 start: 0,
                 size: 10,
-
+                userId: userInfo["uid"],
             };
         } else {
             params = {
                 start: reqStart,
                 size: 10,
+                userId: userInfo["uid"],
             };
         }
-        getHttpInstance().get(api_url, {
-            params: params,
-        })
-            .then((response) => {
-                callback(response.data.data)
-            })
-            .catch((error) => console.error(error))
-            .finally(() => {
-                setReqStart(prevState => (prevState + 10))
-            });
+
+        if (userInfo === null || userInfo === undefined) {
+            getLatestFeedItem(params)
+                .then((res) => {
+                    if (res.status === 200) {
+                        callback(res.data);
+                        setReqStart((prevState) => prevState + 10);
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        } else {
+            getFeedItemByUserId(params)
+                .then((res) => {
+                    console.log(res);
+                    if (res.status === 200 && res.data.data.length > 0) {
+                        callback(res.data.data);
+                        setReqStart((prevState) => prevState + 10);
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
     };
 
     return (
         <div>
-            <CommonFeedListView fetchData={fetchData}/>
+            <CommonFeedListView fetchData={fetchData} />
         </div>
-    )
+    );
 }
 
-export default TimelineFeedPage
+export default TimelineFeedPage;
