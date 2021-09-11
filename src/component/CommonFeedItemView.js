@@ -9,14 +9,14 @@ import {
     IconButton,
     Typography
 } from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
-import {orange} from '@material-ui/core/colors';
+import { orange } from '@material-ui/core/colors';
 import parse from "html-react-parser";
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import Toast from "./Toast";
-import { subFeedChannelById } from "../utils/http_util";
+import { markFeedItemByUserId, subFeedChannelById } from "../utils/http_util";
 import { getUserLoginInfo } from "../service/UserService";
 
 function CommonFeedItemView(props) {
@@ -25,6 +25,7 @@ function CommonFeedItemView(props) {
     const data = props.data
     const date = data.InputDate.slice(0, 10)
     const [isSub, setIsSub] = React.useState(false)
+    const [isMarked, setIsMarked] = React.useState(false)
     const userInfo = JSON.parse(getUserLoginInfo());
 
     const onFeedLinkClick = () => {
@@ -37,22 +38,32 @@ function CommonFeedItemView(props) {
 
     const handlerFollowClick = () => {
         let params = {
-          UserId: userInfo["uid"],
-          ChannelId: data.ChannelId,
+            UserId: userInfo["uid"],
+            ChannelId: data.ChannelId,
         };
 
         subFeedChannelById(params).then(res => {
             if (res.status === 200) {
                 setIsSub(true)
             }
-        }
-        ).catch(err => {
+        }).catch(err => {
             console.log(err)
         })
     }
 
     const handlerFavoriteClick = () => {
-        Toast.show("Handler Favorite Click", "info")
+        let params = {
+            UserId: userInfo["uid"],
+            ItemId: data.Id,
+        };
+
+        markFeedItemByUserId(params).then(res => {
+            if (res.status === 200) {
+                setIsMarked(true)
+            }
+        }).catch(err => {
+            console.log(err)
+        })
     }
 
     const handlerShareClick = () => {
@@ -64,7 +75,7 @@ function CommonFeedItemView(props) {
             <CardActionArea>
                 <CardHeader
                     avatar={
-                        <Avatar aria-label="rss" className={classes.avatar} src={data.ChannelImageUrl}/>
+                        <Avatar aria-label="rss" className={classes.avatar} src={data.ChannelImageUrl} />
                     }
                     onClick={onFeedTitleClick}
                     title={data.Title}
@@ -77,17 +88,21 @@ function CommonFeedItemView(props) {
                 </CardContent>
             </CardActionArea>
             <CardActions disableSpacing>
-          {isSub ? null : (
-            <IconButton aria-label="follow" onClick={handlerFollowClick}>
-              <PlaylistAddIcon />
-            </IconButton>
-          )}
+                {isSub ? null : (
+                    <IconButton aria-label="follow" onClick={handlerFollowClick}>
+                        <PlaylistAddIcon />
+                    </IconButton>
+                )}
 
-          <IconButton aria-label="favorite" onClick={handlerFavoriteClick}>
-                    <FavoriteBorderOutlinedIcon/>
+                <IconButton aria-label="favorite" onClick={handlerFavoriteClick}>
+                    {isMarked ? <FavoriteBorderOutlinedIcon color={"primary"} /> : (
+                        <FavoriteBorderOutlinedIcon />
+                    )}
                 </IconButton>
+
+
                 <IconButton aria-label="share" onClick={handlerShareClick}>
-                    <ShareOutlinedIcon/>
+                    <ShareOutlinedIcon />
                 </IconButton>
             </CardActions>
         </Card>

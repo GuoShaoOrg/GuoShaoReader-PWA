@@ -9,18 +9,22 @@ function TimelineFeedPage() {
 
     const fetchData = (refresh, callback) => {
         let params;
+        let userId = ""
+        if (userInfo !== null) {
+            userId = userInfo["uid"]
+        }
         if (refresh) {
             setReqStart(0);
             params = {
                 start: 0,
                 size: 10,
-                userId: userInfo["uid"],
+                userId: userId,
             };
         } else {
             params = {
                 start: reqStart,
                 size: 10,
-                userId: userInfo["uid"],
+                userId: userId,
             };
         }
 

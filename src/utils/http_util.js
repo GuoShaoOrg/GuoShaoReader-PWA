@@ -29,6 +29,9 @@ instance.interceptors.response.use(function (response) {
     return Promise.reject(error);
 });
 
+export default function getHttpInstance() {
+    return instance;
+}
 
 export const subFeedChannelById = (data) => {
     let api_url =
@@ -47,6 +50,7 @@ export const getLatestFeedItem = (data) => {
     return instance.get(api_url, { params: data });
 };
 
-export default function getHttpInstance() {
-    return instance;
+export const markFeedItemByUserId = (data) => {
+    let api_url = process.env.REACT_APP_BASE_API + "rss/api/v1/feed/mark_feed_item_by_user_id";
+    return instance.post(api_url, data);
 }
