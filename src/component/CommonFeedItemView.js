@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {
     Avatar,
     Card,
@@ -9,15 +9,15 @@ import {
     IconButton,
     Typography
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
-import { orange } from '@material-ui/core/colors';
+import {orange} from '@material-ui/core/colors';
 import parse from "html-react-parser";
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import Toast from "./Toast";
-import { markFeedItemByUserId, subFeedChannelById } from "../utils/http_util";
-import { getUserLoginInfo } from "../service/UserService";
+import {markFeedItemByUserId, subFeedChannelById} from "../utils/http_util";
+import {getUserLoginInfo} from "../service/UserService";
 
 function CommonFeedItemView(props) {
     const classes = useStyles();
@@ -27,6 +27,15 @@ function CommonFeedItemView(props) {
     const [isSub, setIsSub] = React.useState(false)
     const [isMarked, setIsMarked] = React.useState(false)
     const userInfo = JSON.parse(getUserLoginInfo());
+
+    useEffect(() => {
+        if (data.Sub === 1) {
+            setIsSub(true)
+        }
+        if (data.Marked === 1) {
+            setIsMarked(true)
+        }
+    }, [])
 
     const onFeedLinkClick = () => {
         window.open(data.Link)
@@ -59,7 +68,11 @@ function CommonFeedItemView(props) {
 
         markFeedItemByUserId(params).then(res => {
             if (res.status === 200) {
-                setIsMarked(true)
+                if (isMarked) {
+                    setIsMarked(false)
+                } else {
+                    setIsMarked(true)
+                }
             }
         }).catch(err => {
             console.log(err)
@@ -75,7 +88,7 @@ function CommonFeedItemView(props) {
             <CardActionArea>
                 <CardHeader
                     avatar={
-                        <Avatar aria-label="rss" className={classes.avatar} src={data.ChannelImageUrl} />
+                        <Avatar aria-label="rss" className={classes.avatar} src={data.ChannelImageUrl}/>
                     }
                     onClick={onFeedTitleClick}
                     title={data.Title}
@@ -84,25 +97,26 @@ function CommonFeedItemView(props) {
                 />
                 <CardContent onClick={onFeedLinkClick}>
                     {parse(data.ChannelDesc)}
-                    <Typography className={classes.dateText} variant="subtitle2" color="textSecondary">{date}</Typography>
+                    <Typography className={classes.dateText} variant="subtitle2"
+                                color="textSecondary">{date}</Typography>
                 </CardContent>
             </CardActionArea>
             <CardActions disableSpacing>
                 {isSub ? null : (
                     <IconButton aria-label="follow" onClick={handlerFollowClick}>
-                        <PlaylistAddIcon />
+                        <PlaylistAddIcon/>
                     </IconButton>
                 )}
 
                 <IconButton aria-label="favorite" onClick={handlerFavoriteClick}>
-                    {isMarked ? <FavoriteBorderOutlinedIcon color={"primary"} /> : (
-                        <FavoriteBorderOutlinedIcon />
+                    {isMarked ? <FavoriteBorderOutlinedIcon color={"primary"}/> : (
+                        <FavoriteBorderOutlinedIcon/>
                     )}
                 </IconButton>
 
 
                 <IconButton aria-label="share" onClick={handlerShareClick}>
-                    <ShareOutlinedIcon />
+                    <ShareOutlinedIcon/>
                 </IconButton>
             </CardActions>
         </Card>
