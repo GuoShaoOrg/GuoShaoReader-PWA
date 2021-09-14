@@ -6,14 +6,13 @@ import ScrollToTop from "react-scroll-to-top";
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
 function CommonFeedListView(props) {
-    // const [loading, setLoading] = useState(false);
+
     const [hasMore, setHasMore] = useState(true);
     const [dataSource, setDataSource] = useState([]);
 
     const fetchData = props.fetchData
 
     const handleInfiniteOnLoad = () => {
-        console.log("handleInfiniteOnLoad")
         fetchData(false, res => {
             if (res === undefined || res === null || res === []) {
                 setHasMore(false)

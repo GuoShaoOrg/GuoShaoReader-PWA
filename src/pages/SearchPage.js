@@ -3,7 +3,7 @@ import {alpha, AppBar, InputBase, Toolbar, Typography} from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
 import {makeStyles} from "@material-ui/core/styles";
 
-const ExploreFeedView = () => {
+const SearchPage = () => {
     const classes = useStyles();
 
     return(
@@ -62,4 +62,4 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
     },
 }));
-export default ExploreFeedView
+export default SearchPage

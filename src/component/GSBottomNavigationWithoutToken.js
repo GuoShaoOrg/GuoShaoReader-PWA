@@ -2,7 +2,6 @@ import React, {useState, forwardRef, useEffect} from "react";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import {BottomNavigationAction} from "@material-ui/core";
 import RssFeedIcon from '@material-ui/icons/RssFeed';
-import ListIcon from '@material-ui/icons/List';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import {makeStyles} from "@material-ui/core/styles";

@@ -42,7 +42,6 @@ function TimelineFeedPage() {
         } else {
             getFeedItemByUserId(params)
                 .then((res) => {
-                    console.log(res);
                     if (res.status === 200 && res.data.data.length > 0) {
                         callback(res.data.data);
                         setReqStart((prevState) => prevState + 10);

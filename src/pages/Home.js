@@ -4,9 +4,9 @@ import {BrowserRouter as Router, Route} from 'react-router-dom'
 import CacheRoute, {CacheSwitch} from 'react-router-cache-route'
 import GSBottomNavigation from "../component/GSBottomNavigation";
 import TimelineFeedPage from "./TimelineFeedPage";
-import Setting from "../component/Setting";
-import SubscriptionList from "../component/SubscriptionList";
-import ExploreFeedView from "../component/ExploreFeedView";
+import SettingPage from "./SettingPage";
+import ExplorePage from "./ExplorePage";
+import SearchPage from "./SearchPage";
 import LoginPage from "./LoginPage";
 import GSBottomNavigationWithoutToken from "../component/GSBottomNavigationWithoutToken";
 import {getAuthToken, getUserLoginInfo} from "../service/UserService";
@@ -65,9 +65,9 @@ function Home() {
                     <div ref={pageContainerRef} style={{height: pageHeight}}>
                         <CacheSwitch>
                             <CacheRoute exact path="/" component={TimelineFeedPage}/>
-                            <Route exact path="/subList" component={SubscriptionList}/>
-                            <CacheRoute exact path="/explore" component={ExploreFeedView}/>
-                            <Route exact path={"/setting"} component={Setting}/>
+                            <CacheRoute exact path="/subList" component={ExplorePage}/>
+                            <CacheRoute exact path="/explore" component={SearchPage}/>
+                            <Route exact path={"/setting"} component={SettingPage}/>
                             <Route exact path={"/login"} component={LoginPage}/>
                         </CacheSwitch>
                     </div>

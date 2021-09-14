@@ -3,7 +3,7 @@ import {AppBar, Avatar, Paper, Toolbar, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {getUserLoginInfo} from "../service/UserService";
 
-const Setting = () => {
+const SettingPage = () => {
     const classes = useStyles();
     const userInfo = JSON.parse(getUserLoginInfo())
 
@@ -47,4 +47,4 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: "20px"
     }
 }));
-export default Setting
+export default SettingPage
