@@ -6,8 +6,6 @@ import parse from "html-react-parser";
 export default function FeedCatalogHorizontalItem(props) {
     const classes = useStyles();
     const itemData = props.data
-    console.log("itemData")
-    console.log(itemData)
     const date = itemData.InputDate.slice(0, 10)
     return (
         <Card className={classes.root}>
@@ -24,6 +22,7 @@ export default function FeedCatalogHorizontalItem(props) {
 const useStyles = makeStyles({
     root: {
         width: 300,
+        maxHeight: 500,
         marginLeft: '10px',
         marginBottom: '15px',
         marginTop: '5px',
