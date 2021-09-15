@@ -3,16 +3,24 @@ import FeedCatalogHorizontalList from "./FeedCatalogHorizontalList";
 import {
     Avatar,
     Card,
-    CardActionArea,
-    CardHeader,
+    CardActionArea, CardActions,
+    CardHeader, IconButton,
 } from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {orange} from "@material-ui/core/colors";
+import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
+import ShareOutlinedIcon from "@material-ui/icons/ShareOutlined";
+import {subFeedChannelById} from "../../utils/http_util";
+import {getUserLoginInfo} from "../../service/UserService";
+import Toast from "../Toast";
 
 export default function FeedCatalogItemView(props) {
     const classes = useStyles();
     const itemData = props.data
     const [subTitle, setSubTitle] = useState(itemData.ChannelDesc);
+    const [isSub, setIsSub] = React.useState(false)
+    const userInfo = JSON.parse(getUserLoginInfo());
+
     const onFeedTitleClick = () => {
 
     }
@@ -22,6 +30,27 @@ export default function FeedCatalogItemView(props) {
             setSubTitle(itemData.ChannelDesc.substring(0, 30) + "...")
         }
     }, [])
+
+
+    const handlerShareClick = () => {
+        Toast.show("Handler Share Click", "info")
+    }
+
+    const handlerSubClick = () => {
+        console.log(itemData)
+        let params = {
+            UserId: userInfo["uid"],
+            ChannelId: itemData.Id,
+        };
+
+        subFeedChannelById(params).then(res => {
+            if (res.status === 200) {
+                setIsSub(true)
+            }
+        }).catch(err => {
+            console.log(err)
+        })
+    }
 
     return (
         <Card className={classes.root}>
@@ -40,7 +69,17 @@ export default function FeedCatalogItemView(props) {
                 }
 
             </CardActionArea>
+            <CardActions disableSpacing>
+                {isSub ? null : (
+                    <IconButton aria-label="follow" onClick={handlerSubClick}>
+                        <PlaylistAddIcon/>
+                    </IconButton>
+                )}
 
+                <IconButton aria-label="share" onClick={handlerShareClick}>
+                    <ShareOutlinedIcon/>
+                </IconButton>
+            </CardActions>
         </Card>
     )
 }
