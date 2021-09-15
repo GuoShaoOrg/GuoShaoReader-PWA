@@ -29,6 +29,9 @@ export default function FeedCatalogItemView(props) {
         if (subTitle.length > 50) {
             setSubTitle(itemData.ChannelDesc.substring(0, 30) + "...")
         }
+        if (itemData.Sub === 1) {
+            setIsSub(true)
+        }
     }, [])
 
 

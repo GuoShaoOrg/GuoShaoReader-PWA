@@ -7,9 +7,14 @@ export default function FeedCatalogHorizontalItem(props) {
     const classes = useStyles();
     const itemData = props.data
     const date = itemData.InputDate.slice(0, 10)
+
+    const onFeedLinkClick = () => {
+        window.open(itemData.Link)
+    }
+
     return (
         <Card className={classes.root}>
-            <CardContent className={classes.media}>
+            <CardContent className={classes.media} onClick={onFeedLinkClick}>
                 <Typography gutterBottom variant="subtitle2">{itemData.Title}</Typography>
                 {parse(itemData.ChannelDesc)}
                 <Typography className={classes.dateText} variant="subtitle2"
