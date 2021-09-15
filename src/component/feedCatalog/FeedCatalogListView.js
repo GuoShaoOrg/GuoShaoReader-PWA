@@ -14,6 +14,7 @@ export default function FeedCatalogListView(props) {
     useEffect(() => {
         loadData(true, resp => {
             if (resp === undefined || resp === null || resp === []) {
+                setHasMore(false)
                 return
             }
             setDataSource(resp)
@@ -34,6 +35,7 @@ export default function FeedCatalogListView(props) {
     const onPullRefresh = () => {
         loadData(true, resp => {
             if (resp === undefined || resp === null || resp === []) {
+                setHasMore(false)
                 return
             }
             setDataSource(resp)

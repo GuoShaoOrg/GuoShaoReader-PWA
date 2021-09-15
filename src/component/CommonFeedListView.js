@@ -26,6 +26,7 @@ function CommonFeedListView(props) {
     const onPullRefresh = () => {
         fetchData(true, resp => {
             if (resp === undefined || resp === null || resp === []) {
+                setHasMore(false)
                 return
             }
             setDataSource(resp)
@@ -35,6 +36,7 @@ function CommonFeedListView(props) {
     useEffect(() => {
         fetchData(true, resp => {
             if (resp === undefined || resp === null || resp === []) {
+                setHasMore(false)
                 return
             }
             setDataSource(resp)
