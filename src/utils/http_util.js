@@ -59,3 +59,8 @@ export const getFeedChannelCatalogListByTag = (data) => {
     let api_url = process.env.REACT_APP_BASE_API + "rss/api/v1/feed/channel_catalog_list_by_tag";
     return instance.get(api_url, { params: data });
 }
+
+export const searchFeedItemByKeyword = (data) => {
+    let api_url = process.env.REACT_APP_BASE_API + "rss/api/v1/feed/search";
+    return instance.get(api_url, { params: data });
+}

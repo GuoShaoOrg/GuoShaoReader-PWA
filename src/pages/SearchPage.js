@@ -1,35 +1,159 @@
-import React from "react";
-import {alpha, AppBar, InputBase, Toolbar, Typography} from "@material-ui/core";
-import SearchIcon from '@material-ui/icons/Search';
+import React, {useContext, useEffect, useRef, useState} from "react";
+import InfiniteScroll from 'react-infinite-scroll-component';
+import CommonFeedItemView from "../component/CommonFeedItemView";
+import {AppContext} from "./Home";
+import ScrollToTop from "react-scroll-to-top";
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import {alpha, AppBar, Button, InputBase, Toolbar} from "@material-ui/core";
+import SearchIcon from "@material-ui/icons/Search";
+import {searchFeedItemByKeyword} from "../utils/http_util";
 import {makeStyles} from "@material-ui/core/styles";
 
-const SearchPage = () => {
-    const classes = useStyles();
+function SearchPage() {
 
-    return(
+    const classes = useStyles();
+    const [hasMore, setHasMore] = useState(true);
+    const [dataSource, setDataSource] = useState([]);
+    const searchBarRef = useRef(null)
+    const [searchBarHeight, setSearchBarHeight] = useState(0)
+
+    const [searchKeyword, setSearchKeyword] = useState("")
+    const [reqStart, setReqStart] = useState(0);
+
+    useEffect(() => {
+        setSearchBarHeight(searchBarRef.current.clientHeight)
+    }, [])
+
+    const onSearchClick = () => {
+        fetchData(true, resp => {
+            if (resp === undefined || resp === null || resp === []) {
+                setHasMore(false)
+                return
+            }
+            setDataSource(resp)
+        })
+    }
+
+    const onInputTextChange = (event) => {
+        setSearchKeyword(event.target.value)
+    };
+
+    const fetchData = (refresh, callback) => {
+        if (searchKeyword === "") {
+            return
+        }
+
+        if (refresh) {
+            setDataSource([])
+            setReqStart(0);
+        }
+
+        let params = {
+            start: reqStart,
+            size: 10,
+            keyword: searchKeyword
+        }
+        searchFeedItemByKeyword(params).then((resp) => {
+            if (resp.status === 200 && resp.data.data.length > 0) {
+                callback(resp.data.data);
+                setReqStart((prevState) => prevState + 10);
+            }
+        }).catch((error) => {
+
+        })
+    }
+
+    const handleInfiniteOnLoad = () => {
+        fetchData(false, res => {
+            if (res === undefined || res === null || res === []) {
+                setHasMore(false)
+                return
+            }
+            let tempData = dataSource.concat(res);
+            setDataSource(tempData)
+        });
+    };
+
+    const onPullRefresh = () => {
+        fetchData(true, resp => {
+            if (resp === undefined || resp === null || resp === []) {
+                setHasMore(false)
+                return
+            }
+            setDataSource(resp)
+        })
+    }
+
+    useEffect(() => {
+        fetchData(true, resp => {
+            if (resp === undefined || resp === null || resp === []) {
+                setHasMore(false)
+                return
+            }
+            setDataSource(resp)
+        })
+    }, [])
+
+    const appContext = useContext(AppContext);
+
+    return (
         <div>
-            <AppBar>
+            <AppBar ref={searchBarRef}>
                 <Toolbar>
-                    <Typography variant="h6" className={classes.title}>发现</Typography>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
-                            <SearchIcon />
+                            <SearchIcon/>
                         </div>
                         <InputBase
-                            placeholder="Search…"
+                            placeholder="输入关键字..."
                             classes={{
                                 root: classes.inputRoot,
                                 input: classes.inputInput,
                             }}
-                            inputProps={{ 'aria-label': 'search' }}
+                            inputProps={{'aria-label': 'search'}}
+                            onChange={onInputTextChange}
                         />
                     </div>
+                    <Button variant="contained" color="primary" onClick={onSearchClick}>搜索</Button>
                 </Toolbar>
             </AppBar>
-
+            <div id="searchScrollableDiv"
+                 style={{
+                     height: (appContext.GetCPageHeight() - searchBarHeight),
+                     marginTop: searchBarHeight,
+                     overflowY: "scroll"
+                 }}>
+                <InfiniteScroll
+                    scrollableTarget={"searchScrollableDiv"}
+                    dataLength={dataSource.length}
+                    next={handleInfiniteOnLoad}
+                    hasMore={hasMore}
+                    loader={<h4 style={{textAlign: 'center', color: 'grey'}}>Loading...</h4>}
+                    endMessage={
+                        <p style={{textAlign: 'center', color: 'grey'}}>
+                            <b>Yay! You have seen it all</b>
+                        </p>
+                    }
+                    refreshFunction={onPullRefresh}
+                    pullDownToRefresh={true}
+                    pullDownToRefreshThreshold={50}
+                    pullDownToRefreshContent={
+                        <h3 style={{textAlign: 'center', color: 'grey'}}>&#8595; Pull down to refresh</h3>
+                    }
+                    releaseToRefreshContent={
+                        <h3 style={{textAlign: 'center', color: 'grey'}}>&#8593; Release to refresh</h3>
+                    }
+                >
+                    <ScrollToTop smooth color={"orange"} component={<KeyboardArrowUpIcon/>}/>
+                    {dataSource.map((_, index) => (
+                        <CommonFeedItemView key={index} data={dataSource[index]}/>
+                    ))}
+                </InfiniteScroll>
+            </div>
         </div>
     )
 }
+
 const useStyles = makeStyles((theme) => ({
     title: {
         flexGrow: 1,
