@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {
     Avatar,
     Card,
@@ -96,7 +96,9 @@ function CommonFeedItemView(props) {
                     className={classes.title}
                 />
                 <CardContent onClick={onFeedLinkClick}>
-                    {parse(data.ChannelDesc)}
+                    <div className={classes.channelDescription}>
+                        {parse(data.ChannelDesc)}
+                    </div>
                     <Typography className={classes.dateText} variant="subtitle2"
                                 color="textSecondary">{date}</Typography>
                 </CardContent>
@@ -140,7 +142,12 @@ const useStyles = makeStyles((theme) => ({
     },
     dateText: {
         marginTop: "10px"
+    },
+    channelDescription: {
+        maxHeight: "300px",
+        overflow: "scroll"
     }
+
 }));
 
 export default CommonFeedItemView

@@ -83,6 +83,7 @@ function Home() {
 
 const useStyles = makeStyles({
     container: {
+        overflow: "hidden",
         height: '100%'
     }
 });

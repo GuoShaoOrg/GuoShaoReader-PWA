@@ -117,6 +117,7 @@ function SearchPage() {
                     <Button variant="contained" color="primary" onClick={onSearchClick}>搜索</Button>
                 </Toolbar>
             </AppBar>
+            <ScrollToTop smooth color={"orange"} component={<KeyboardArrowUpIcon/>}/>
             <div id="searchScrollableDiv"
                  style={{
                      height: (appContext.GetCPageHeight() - searchBarHeight),
@@ -128,7 +129,6 @@ function SearchPage() {
                     dataLength={dataSource.length}
                     next={handleInfiniteOnLoad}
                     hasMore={hasMore}
-                    loader={<h4 style={{textAlign: 'center', color: 'grey'}}>Loading...</h4>}
                     endMessage={
                         <p style={{textAlign: 'center', color: 'grey'}}>
                             <b>Yay! You have seen it all</b>
@@ -144,7 +144,6 @@ function SearchPage() {
                         <h3 style={{textAlign: 'center', color: 'grey'}}>&#8593; Release to refresh</h3>
                     }
                 >
-                    <ScrollToTop smooth color={"orange"} component={<KeyboardArrowUpIcon/>}/>
                     {dataSource.map((_, index) => (
                         <CommonFeedItemView key={index} data={dataSource[index]}/>
                     ))}
