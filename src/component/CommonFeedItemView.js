@@ -45,7 +45,7 @@ function CommonFeedItemView(props) {
 
     const onFeedTitleClick = () => {
         history.push({
-            pathname: '/feed/channel/'+data.ChannelId
+            pathname: '/feed/channel/' + data.ChannelId
         })
     }
 
@@ -57,7 +57,11 @@ function CommonFeedItemView(props) {
 
         subFeedChannelById(params).then(res => {
             if (res.status === 200) {
-                setIsSub(true)
+                if (isMarked) {
+                    setIsSub(false)
+                } else {
+                    setIsSub(true)
+                }
             }
         }).catch(err => {
             console.log(err)
@@ -108,7 +112,9 @@ function CommonFeedItemView(props) {
                 </CardContent>
             </CardActionArea>
             <CardActions disableSpacing>
-                {isSub ? null : (
+                {isSub ? <IconButton aria-label="follow" onClick={handlerFollowClick}>
+                    <PlaylistAddIcon color={"primary"} />
+                </IconButton> : (
                     <IconButton aria-label="follow" onClick={handlerFollowClick}>
                         <PlaylistAddIcon/>
                     </IconButton>
