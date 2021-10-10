@@ -84,7 +84,7 @@ function CommonFeedItemView(props) {
     }
 
     const handlerShareClick = () => {
-        Toast.show("Handler Share Click", "info")
+        Toast.show("分享功能暂未开通", "info")
     }
 
     return (

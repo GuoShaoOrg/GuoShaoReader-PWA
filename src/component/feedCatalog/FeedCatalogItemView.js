@@ -13,6 +13,7 @@ import ShareOutlinedIcon from "@material-ui/icons/ShareOutlined";
 import {subFeedChannelById} from "../../utils/http_util";
 import {getUserLoginInfo} from "../../service/UserService";
 import Toast from "../Toast";
+import {useHistory} from "react-router-dom";
 
 export default function FeedCatalogItemView(props) {
     const classes = useStyles();
@@ -20,9 +21,12 @@ export default function FeedCatalogItemView(props) {
     const [subTitle, setSubTitle] = useState(itemData.ChannelDesc);
     const [isSub, setIsSub] = React.useState(false)
     const userInfo = JSON.parse(getUserLoginInfo());
+    const history = useHistory()
 
     const onFeedTitleClick = () => {
-
+        history.push({
+            pathname: '/feed/channel/'+itemData.Id
+        })
     }
 
     useEffect(() => {
