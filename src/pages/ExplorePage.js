@@ -1,27 +1,33 @@
 import React, {useState} from "react";
 import FeedCatalogListView from "../component/feedCatalog/FeedCatalogListView";
-import {getFeedChannelCatalogListByTag} from "../utils/http_util";
+import {getFeedChannelCatalogListByUserId} from "../utils/http_util";
+import {getUserLoginInfo} from "../service/UserService";
 
 const ExplorePage = () => {
 
+    const userInfo = JSON.parse(getUserLoginInfo());
     const [reqStart, setReqStart] = useState(0);
     const loadData = (refresh, callback) => {
         let params;
+        let userId = ""
+        if (userInfo !== null) {
+            userId = userInfo["uid"]
+        }
         if (refresh) {
             setReqStart(0);
             params = {
                 start: 0,
                 size: 10,
-                tagName: "科技"
+                userId: userId
             };
         } else {
             params = {
                 start: reqStart,
                 size: 10,
-                tagName: "科技"
+                userId: userId
             };
         }
-        getFeedChannelCatalogListByTag(params)
+        getFeedChannelCatalogListByUserId(params)
             .then((res) => {
                 if (res.status === 200 && res.data.data.length > 0) {
                     callback(res.data.data);

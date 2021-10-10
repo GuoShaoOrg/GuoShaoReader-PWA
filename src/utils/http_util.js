@@ -55,8 +55,8 @@ export const markFeedItemByUserId = (data) => {
     return instance.post(api_url, data);
 }
 
-export const getFeedChannelCatalogListByTag = (data) => {
-    let api_url = process.env.REACT_APP_BASE_API + "rss/api/v1/feed/channel_catalog_list_by_tag";
+export const getFeedChannelCatalogListByUserId = (data) => {
+    let api_url = process.env.REACT_APP_BASE_API + "rss/api/v1/feed/channel_catalog_list_by_user_id";
     return instance.get(api_url, { params: data });
 }
 

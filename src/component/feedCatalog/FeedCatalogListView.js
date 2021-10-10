@@ -51,7 +51,6 @@ export default function FeedCatalogListView(props) {
                     dataLength={dataSource.length}
                     next={handleLoadMore}
                     hasMore={hasMore}
-                    loader={<h4 style={{textAlign: 'center', color: 'grey'}}>Loading...</h4>}
                     endMessage={
                         <p style={{textAlign: 'center', color: 'grey'}}>
                             <b>Yay! You have seen it all</b>
