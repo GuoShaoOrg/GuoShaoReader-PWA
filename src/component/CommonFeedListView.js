@@ -53,7 +53,6 @@ function CommonFeedListView(props) {
                 dataLength={dataSource.length}
                 next={handleInfiniteOnLoad}
                 hasMore={hasMore}
-                loader={<h4 style={{textAlign: 'center', color: 'grey'}}>Loading...</h4>}
                 endMessage={
                     <p style={{textAlign: 'center', color: 'grey'}}>
                         <b>Yay! You have seen it all</b>
