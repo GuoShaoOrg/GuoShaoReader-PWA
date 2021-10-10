@@ -18,10 +18,12 @@ import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutline
 import Toast from "./Toast";
 import {markFeedItemByUserId, subFeedChannelById} from "../utils/http_util";
 import {getUserLoginInfo} from "../service/UserService";
+import {useHistory} from "react-router-dom";
 
 function CommonFeedItemView(props) {
     const classes = useStyles();
 
+    const history = useHistory()
     const data = props.data
     const date = data.InputDate.slice(0, 10)
     const [isSub, setIsSub] = React.useState(false)
@@ -42,7 +44,9 @@ function CommonFeedItemView(props) {
     }
 
     const onFeedTitleClick = () => {
-        console.log("onFeedTitleClick")
+        history.push({
+            pathname: '/feed/channel/'+data.ChannelId
+        })
     }
 
     const handlerFollowClick = () => {
