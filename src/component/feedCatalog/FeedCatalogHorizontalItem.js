@@ -16,7 +16,9 @@ export default function FeedCatalogHorizontalItem(props) {
         <Card className={classes.root}>
             <CardContent className={classes.media} onClick={onFeedLinkClick}>
                 <Typography gutterBottom variant="subtitle2">{itemData.Title}</Typography>
-                {parse(itemData.ChannelDesc)}
+                <div className={classes.channelDescription}>
+                    {parse(itemData.ChannelDesc)}
+                </div>
                 <Typography className={classes.dateText} variant="subtitle2"
                             color="textSecondary">{date}</Typography>
             </CardContent>
@@ -38,5 +40,9 @@ const useStyles = makeStyles({
     },
     dateText: {
         marginTop: "10px"
+    },
+    channelDescription: {
+        maxHeight: "300px",
+        overflow: "scroll"
     }
 });
