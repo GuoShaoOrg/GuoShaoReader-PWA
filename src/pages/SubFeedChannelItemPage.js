@@ -3,7 +3,7 @@ import FeedCatalogListView from "../component/feedCatalog/FeedCatalogListView";
 import {getFeedChannelCatalogListByUserId} from "../utils/http_util";
 import {getUserLoginInfo} from "../service/UserService";
 
-const ExplorePage = () => {
+const SubFeedChannelItemPage = () => {
 
     const userInfo = JSON.parse(getUserLoginInfo());
     const [reqStart, setReqStart] = useState(0);
@@ -45,4 +45,4 @@ const ExplorePage = () => {
     )
 }
 
-export default ExplorePage
+export default SubFeedChannelItemPage
