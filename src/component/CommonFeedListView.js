@@ -2,8 +2,8 @@ import React, {useContext, useEffect, useState} from "react";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CommonFeedItemView from "./CommonFeedItemView";
 import {AppContext} from "../pages/Home";
-import ScrollToTop from "react-scroll-to-top";
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import {Fab} from "@material-ui/core";
+import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 
 function CommonFeedListView(props) {
 
@@ -11,6 +11,25 @@ function CommonFeedListView(props) {
     const [dataSource, setDataSource] = useState([]);
 
     const fetchData = props.fetchData
+
+    const [visible, setVisible] = useState(false)
+
+    const toggleVisible = (event) => {
+        const scrolled = event.target.scrollTop;
+        if (scrolled > 300) {
+            setVisible(true)
+        } else if (scrolled <= 300) {
+            setVisible(false)
+        }
+    };
+    const scrollToTop = () => {
+        document.getElementById("scrollableDiv").scrollTo({
+            top: 0,
+            behavior: 'smooth'
+            /* you can also use 'auto' behaviour
+               in place of 'smooth' */
+        });
+    };
 
     const handleInfiniteOnLoad = () => {
         fetchData(false, res => {
@@ -46,8 +65,7 @@ function CommonFeedListView(props) {
     const appContext = useContext(AppContext);
 
     return (
-        <div id="scrollableDiv" style={{height: appContext.GetCPageHeight(), overflowY: "scroll"}}>
-            <ScrollToTop smooth color={"orange"} component={<KeyboardArrowUpIcon/>}/>
+        <div id="scrollableDiv" onScroll={toggleVisible} style={{height: appContext.GetCPageHeight(), overflowY: "scroll"}}>
             <InfiniteScroll
                 scrollableTarget={"scrollableDiv"}
                 dataLength={dataSource.length}
@@ -72,6 +90,10 @@ function CommonFeedListView(props) {
                     <CommonFeedItemView key={index} data={dataSource[index]}/>
                 ))}
             </InfiniteScroll>
+            <Fab color="primary" size="small" onClick={scrollToTop}
+                 style={{position: "fixed", display: visible ? 'inline' : 'none',bottom: "80px", right: "60px", zIndex: 99}}>
+                <KeyboardArrowUpIcon />
+            </Fab>
         </div>
     )
 }

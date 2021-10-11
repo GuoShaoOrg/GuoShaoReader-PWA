@@ -1,15 +1,35 @@
 import React, {useContext, useEffect, useState} from "react";
-import ScrollToTop from "react-scroll-to-top";
-import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {AppContext} from "../../pages/Home";
 import FeedCatalogItemView from "./FeedCatalogItemView";
+import {Fab} from "@material-ui/core";
+import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 
 export default function FeedCatalogListView(props) {
     const appContext = useContext(AppContext);
     const [dataSource, setDataSource] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const loadData = props.loadData
+
+    const [visible, setVisible] = useState(false)
+
+    const scrollToTop = () => {
+        document.getElementById("feedCatalogScrollableDiv").scrollTo({
+            top: 0,
+            behavior: 'smooth'
+            /* you can also use 'auto' behaviour
+               in place of 'smooth' */
+        });
+    };
+
+    const toggleVisible = (event) => {
+        const scrolled = event.target.scrollTop;
+        if (scrolled > 300) {
+            setVisible(true)
+        } else if (scrolled <= 300) {
+            setVisible(false)
+        }
+    };
 
     useEffect(() => {
         loadData(true, resp => {
@@ -44,8 +64,7 @@ export default function FeedCatalogListView(props) {
 
     return(
         <div>
-            <div id="feedCatalogScrollableDiv" style={{height: appContext.GetCPageHeight(), overflowY: "scroll"}}>
-                <ScrollToTop smooth color={"orange"} component={<KeyboardArrowUpIcon/>}/>
+            <div id="feedCatalogScrollableDiv" onScroll={toggleVisible} style={{height: appContext.GetCPageHeight(), overflowY: "scroll"}}>
                 <InfiniteScroll
                     scrollableTarget={"feedCatalogScrollableDiv"}
                     dataLength={dataSource.length}
@@ -70,6 +89,10 @@ export default function FeedCatalogListView(props) {
                         <FeedCatalogItemView key={index} data={dataSource[index]}/>
                     ))}
                 </InfiniteScroll>
+                <Fab color="primary" size="small" onClick={scrollToTop}
+                     style={{position: "fixed", display: visible ? 'inline' : 'none',bottom: "80px", right: "60px", zIndex: 99}}>
+                    <KeyboardArrowUpIcon />
+                </Fab>
             </div>
         </div>
     )

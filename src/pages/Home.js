@@ -20,6 +20,7 @@ function Home() {
     const containerRef = useRef(null)
     const pageContainerRef = useRef(null)
     const [pageHeight, setPageHeight] = useState(0)
+    const [bottomHeight, setBottomHeight] = useState(0)
 
     const [state, dispatch] = React.useReducer(
         (prevState, action) => {
@@ -51,11 +52,14 @@ function Home() {
         GetCPageHeight: () => {
             return pageHeight
         },
+        GetBottomBarHeight: () => {
+            return bottomHeight
+        },
     };
 
     useEffect(() => {
         setPageHeight(containerRef.current.clientHeight - bottomTabRef.current.clientHeight)
-
+        setBottomHeight(bottomTabRef.current.clientHeight)
     }, [state.token])
 
 
