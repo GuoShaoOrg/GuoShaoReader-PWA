@@ -4,9 +4,11 @@ import CommonFeedItemView from "./CommonFeedItemView";
 import {AppContext} from "../../pages/Home";
 import {Fab} from "@material-ui/core";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
+import ListItemPlaceholder from "./ListItemPlaceholder";
 
 function CommonFeedListView(props) {
 
+    const [loading, setLoading] = useState(true);
     const [hasMore, setHasMore] = useState(true);
     const [dataSource, setDataSource] = useState([]);
 
@@ -32,6 +34,7 @@ function CommonFeedListView(props) {
     };
 
     const handleInfiniteOnLoad = () => {
+        setLoading(true)
         fetchData(false, res => {
             if (res === undefined || res === null || res === []) {
                 setHasMore(false)
@@ -40,9 +43,11 @@ function CommonFeedListView(props) {
             let tempData = dataSource.concat(res);
             setDataSource(tempData)
         });
+        setLoading(false)
     };
 
     const onPullRefresh = () => {
+        setLoading(true)
         fetchData(true, resp => {
             if (resp === undefined || resp === null || resp === []) {
                 setHasMore(false)
@@ -50,9 +55,11 @@ function CommonFeedListView(props) {
             }
             setDataSource(resp)
         })
+        setLoading(false)
     }
 
     useEffect(() => {
+        setLoading(true)
         fetchData(true, resp => {
             if (resp === undefined || resp === null || resp === []) {
                 setHasMore(false)
@@ -60,40 +67,55 @@ function CommonFeedListView(props) {
             }
             setDataSource(resp)
         })
+        setLoading(false)
     }, [])
 
     const appContext = useContext(AppContext);
 
     return (
-        <div id="scrollableDiv" onScroll={toggleVisible} style={{height: appContext.GetCPageHeight(), overflowY: "scroll"}}>
-            <InfiniteScroll
-                scrollableTarget={"scrollableDiv"}
-                dataLength={dataSource.length}
-                next={handleInfiniteOnLoad}
-                hasMore={hasMore}
-                endMessage={
-                    <p style={{textAlign: 'center', color: 'grey'}}>
-                        <b>Yay! You have seen it all</b>
-                    </p>
-                }
-                refreshFunction={onPullRefresh}
-                pullDownToRefresh={true}
-                pullDownToRefreshThreshold={50}
-                pullDownToRefreshContent={
-                    <h3 style={{textAlign: 'center', color: 'grey'}}>&#8595; Pull down to refresh</h3>
-                }
-                releaseToRefreshContent={
-                    <h3 style={{textAlign: 'center', color: 'grey'}}>&#8593; Release to refresh</h3>
-                }
-            >
-                {dataSource.map((_, index) => (
-                    <CommonFeedItemView key={index} data={dataSource[index]}/>
-                ))}
-            </InfiniteScroll>
+        <div id="scrollableDiv" onScroll={toggleVisible}
+             style={{height: appContext.GetCPageHeight(), overflowY: "scroll"}}>
+            {loading ? (<PlaceholderItemList/>) :
+                <InfiniteScroll
+                    scrollableTarget={"scrollableDiv"}
+                    dataLength={dataSource.length}
+                    next={handleInfiniteOnLoad}
+                    hasMore={hasMore}
+                    endMessage={
+                        <p style={{textAlign: 'center', color: 'grey'}}>
+                            <b>Yay! You have seen it all</b>
+                        </p>
+                    }
+                    refreshFunction={onPullRefresh}
+                    pullDownToRefresh={true}
+                    pullDownToRefreshThreshold={50}
+                    pullDownToRefreshContent={
+                        <h3 style={{textAlign: 'center', color: 'grey'}}>&#8595; Pull down to refresh</h3>
+                    }
+                    releaseToRefreshContent={
+                        <h3 style={{textAlign: 'center', color: 'grey'}}>&#8593; Release to refresh</h3>
+                    }
+                >
+                    {dataSource.map((_, index) => (
+                        <CommonFeedItemView key={index} data={dataSource[index]}/>
+                    ))}
+                </InfiniteScroll>
+            }
             <Fab color="primary" size="small" onClick={scrollToTop}
                  style={{position: "fixed", display: visible ? 'inline' : 'none',bottom: "80px", right: "60px", zIndex: 99}}>
                 <KeyboardArrowUpIcon />
             </Fab>
+        </div>
+    )
+}
+
+function PlaceholderItemList() {
+
+    return(
+        <div>
+            <ListItemPlaceholder/>
+            <ListItemPlaceholder/>
+            <ListItemPlaceholder/>
         </div>
     )
 }
