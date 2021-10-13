@@ -4,13 +4,14 @@ import {AppContext} from "../../pages/Home";
 import FeedCatalogItemView from "./FeedCatalogItemView";
 import {Fab} from "@material-ui/core";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
+import ListItemPlaceholder from "../commomList/ListItemPlaceholder";
 
 export default function FeedCatalogListView(props) {
     const appContext = useContext(AppContext);
     const [dataSource, setDataSource] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const loadData = props.loadData
-
+    const [loading, setLoading] = useState(true);
     const [visible, setVisible] = useState(false)
 
     const scrollToTop = () => {
@@ -32,6 +33,7 @@ export default function FeedCatalogListView(props) {
     };
 
     useEffect(() => {
+        setLoading(true)
         loadData(true, resp => {
             if (resp === undefined || resp === null || resp === []) {
                 setHasMore(false)
@@ -39,9 +41,11 @@ export default function FeedCatalogListView(props) {
             }
             setDataSource(resp)
         })
+        setLoading(false)
     }, [])
 
     const handleLoadMore = () => {
+        setLoading(true)
         loadData(false, res => {
             if (res === undefined || res === null || res === []) {
                 setHasMore(false)
@@ -50,9 +54,11 @@ export default function FeedCatalogListView(props) {
             let tempData = dataSource.concat(res);
             setDataSource(tempData)
         });
+        setLoading(false)
     };
 
     const onPullRefresh = () => {
+        setLoading(true)
         loadData(true, resp => {
             if (resp === undefined || resp === null || resp === []) {
                 setHasMore(false)
@@ -60,40 +66,54 @@ export default function FeedCatalogListView(props) {
             }
             setDataSource(resp)
         })
+        setLoading(false)
     }
 
     return(
         <div>
             <div id="feedCatalogScrollableDiv" onScroll={toggleVisible} style={{height: appContext.GetCPageHeight(), overflowY: "scroll"}}>
-                <InfiniteScroll
-                    scrollableTarget={"feedCatalogScrollableDiv"}
-                    dataLength={dataSource.length}
-                    next={handleLoadMore}
-                    hasMore={hasMore}
-                    endMessage={
-                        <p style={{textAlign: 'center', color: 'grey'}}>
-                            <b>Yay! You have seen it all</b>
-                        </p>
-                    }
-                    refreshFunction={onPullRefresh}
-                    pullDownToRefresh={true}
-                    pullDownToRefreshThreshold={50}
-                    pullDownToRefreshContent={
-                        <h3 style={{textAlign: 'center', color: 'grey'}}>&#8595; Pull down to refresh</h3>
-                    }
-                    releaseToRefreshContent={
-                        <h3 style={{textAlign: 'center', color: 'grey'}}>&#8593; Release to refresh</h3>
-                    }
-                >
-                    {dataSource.map((_, index) => (
-                        <FeedCatalogItemView key={index} data={dataSource[index]}/>
-                    ))}
-                </InfiniteScroll>
+                {loading?(<PlaceholderItemList/>):
+                    <InfiniteScroll
+                        scrollableTarget={"feedCatalogScrollableDiv"}
+                        dataLength={dataSource.length}
+                        next={handleLoadMore}
+                        hasMore={hasMore}
+                        endMessage={
+                            <p style={{textAlign: 'center', color: 'grey'}}>
+                                <b>Yay! You have seen it all</b>
+                            </p>
+                        }
+                        refreshFunction={onPullRefresh}
+                        pullDownToRefresh={true}
+                        pullDownToRefreshThreshold={50}
+                        pullDownToRefreshContent={
+                            <h3 style={{textAlign: 'center', color: 'grey'}}>&#8595; Pull down to refresh</h3>
+                        }
+                        releaseToRefreshContent={
+                            <h3 style={{textAlign: 'center', color: 'grey'}}>&#8593; Release to refresh</h3>
+                        }
+                    >
+                        {dataSource.map((_, index) => (
+                            <FeedCatalogItemView key={index} data={dataSource[index]}/>
+                        ))}
+                    </InfiniteScroll>
+                }
                 <Fab color="primary" size="small" onClick={scrollToTop}
                      style={{position: "fixed", display: visible ? 'inline' : 'none',bottom: "80px", right: "60px", zIndex: 99}}>
                     <KeyboardArrowUpIcon />
                 </Fab>
             </div>
+        </div>
+    )
+}
+
+function PlaceholderItemList() {
+
+    return(
+        <div>
+            <ListItemPlaceholder/>
+            <ListItemPlaceholder/>
+            <ListItemPlaceholder/>
         </div>
     )
 }
