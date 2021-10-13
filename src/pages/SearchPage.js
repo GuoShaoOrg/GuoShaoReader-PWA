@@ -4,10 +4,11 @@ import CommonFeedItemView from "../component/commomList/CommonFeedItemView";
 import {AppContext} from "./Home";
 import ScrollToTop from "react-scroll-to-top";
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import {alpha, AppBar, Button, InputBase, Toolbar} from "@material-ui/core";
+import {alpha, AppBar, Button, Fab, InputBase, Toolbar} from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import {searchFeedItemByKeyword} from "../utils/http_util";
 import {makeStyles} from "@material-ui/core/styles";
+import ListItemPlaceholder from "../component/commomList/ListItemPlaceholder";
 
 function SearchPage() {
 
@@ -16,9 +17,10 @@ function SearchPage() {
     const [dataSource, setDataSource] = useState([]);
     const searchBarRef = useRef(null)
     const [searchBarHeight, setSearchBarHeight] = useState(0)
-
+    const [loading, setLoading] = useState(false);
     const [searchKeyword, setSearchKeyword] = useState("")
     const [reqStart, setReqStart] = useState(0);
+    const [visible, setVisible] = useState(false)
 
     useEffect(() => {
         setSearchBarHeight(searchBarRef.current.clientHeight)
@@ -33,6 +35,23 @@ function SearchPage() {
             setDataSource(resp)
         })
     }
+    const toggleVisible = (event) => {
+        const scrolled = event.target.scrollTop;
+        if (scrolled > 300) {
+            setVisible(true)
+        } else if (scrolled <= 300) {
+            setVisible(false)
+        }
+    };
+
+    const scrollToTop = () => {
+        document.getElementById("searchScrollableDiv").scrollTo({
+            top: 0,
+            behavior: 'smooth'
+            /* you can also use 'auto' behaviour
+               in place of 'smooth' */
+        });
+    };
 
     const onInputTextChange = (event) => {
         setSearchKeyword(event.target.value)
@@ -53,6 +72,7 @@ function SearchPage() {
             size: 10,
             keyword: searchKeyword
         }
+        setLoading(true)
         searchFeedItemByKeyword(params).then((resp) => {
             if (resp.status === 200 && resp.data.data.length > 0) {
                 callback(resp.data.data);
@@ -61,6 +81,8 @@ function SearchPage() {
         }).catch((error) => {
 
         })
+
+        setLoading(false)
     }
 
     const handleInfiniteOnLoad = () => {
@@ -119,36 +141,54 @@ function SearchPage() {
             </AppBar>
             <ScrollToTop smooth color={"orange"} component={<KeyboardArrowUpIcon/>}/>
             <div id="searchScrollableDiv"
+                 onScroll={toggleVisible}
                  style={{
                      height: (appContext.GetCPageHeight() - searchBarHeight),
                      marginTop: searchBarHeight,
                      overflowY: "scroll"
                  }}>
-                <InfiniteScroll
-                    scrollableTarget={"searchScrollableDiv"}
-                    dataLength={dataSource.length}
-                    next={handleInfiniteOnLoad}
-                    hasMore={hasMore}
-                    endMessage={
-                        <p style={{textAlign: 'center', color: 'grey'}}>
-                            <b>Yay! You have seen it all</b>
-                        </p>
-                    }
-                    refreshFunction={onPullRefresh}
-                    pullDownToRefresh={true}
-                    pullDownToRefreshThreshold={50}
-                    pullDownToRefreshContent={
-                        <h3 style={{textAlign: 'center', color: 'grey'}}>&#8595; Pull down to refresh</h3>
-                    }
-                    releaseToRefreshContent={
-                        <h3 style={{textAlign: 'center', color: 'grey'}}>&#8593; Release to refresh</h3>
-                    }
-                >
-                    {dataSource.map((_, index) => (
-                        <CommonFeedItemView key={index} data={dataSource[index]}/>
-                    ))}
-                </InfiniteScroll>
+                {loading?(<PlaceholderItemList/>):
+                    <InfiniteScroll
+                        scrollableTarget={"searchScrollableDiv"}
+                        dataLength={dataSource.length}
+                        next={handleInfiniteOnLoad}
+                        hasMore={hasMore}
+                        endMessage={
+                            <p style={{textAlign: 'center', color: 'grey'}}>
+                                <b>Yay! You have seen it all</b>
+                            </p>
+                        }
+                        refreshFunction={onPullRefresh}
+                        pullDownToRefresh={true}
+                        pullDownToRefreshThreshold={50}
+                        pullDownToRefreshContent={
+                            <h3 style={{textAlign: 'center', color: 'grey'}}>&#8595; Pull down to refresh</h3>
+                        }
+                        releaseToRefreshContent={
+                            <h3 style={{textAlign: 'center', color: 'grey'}}>&#8593; Release to refresh</h3>
+                        }
+                    >
+                        {dataSource.map((_, index) => (
+                            <CommonFeedItemView key={index} data={dataSource[index]}/>
+                        ))}
+                    </InfiniteScroll>
+                }
+                <Fab color="primary" size="small" onClick={scrollToTop}
+                     style={{position: "fixed", display: visible ? 'inline' : 'none',bottom: "80px", right: "60px", zIndex: 99}}>
+                    <KeyboardArrowUpIcon />
+                </Fab>
             </div>
+        </div>
+    )
+}
+
+function PlaceholderItemList() {
+
+    return(
+        <div>
+            <ListItemPlaceholder/>
+            <ListItemPlaceholder/>
+            <ListItemPlaceholder/>
         </div>
     )
 }
