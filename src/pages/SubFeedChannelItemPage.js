@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import FeedCatalogListView from "../component/feedCatalog/FeedCatalogListView";
+import FeedCatalogListView from "../component/feedCatalogList/FeedCatalogListView";
 import {getFeedChannelCatalogListByUserId} from "../utils/http_util";
 import {getUserLoginInfo} from "../service/UserService";
 

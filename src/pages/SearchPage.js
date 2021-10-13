@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import InfiniteScroll from 'react-infinite-scroll-component';
-import CommonFeedItemView from "../component/CommonFeedItemView";
+import CommonFeedItemView from "../component/commomList/CommonFeedItemView";
 import {AppContext} from "./Home";
 import ScrollToTop from "react-scroll-to-top";
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';

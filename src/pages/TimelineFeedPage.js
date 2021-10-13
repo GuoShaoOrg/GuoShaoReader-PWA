@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import CommonFeedListView from "../component/CommonFeedListView";
+import CommonFeedListView from "../component/commomList/CommonFeedListView";
 import { getUserLoginInfo } from "../service/UserService";
 import { getFeedItemByUserId, getLatestFeedItem } from "../utils/http_util";
 

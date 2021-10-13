@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CommonFeedItemView from "./CommonFeedItemView";
-import {AppContext} from "../pages/Home";
+import {AppContext} from "../../pages/Home";
 import {Fab} from "@material-ui/core";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 

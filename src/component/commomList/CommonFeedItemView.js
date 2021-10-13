@@ -15,9 +15,9 @@ import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 import {orange} from '@material-ui/core/colors';
 import parse from "html-react-parser";
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
-import Toast from "./Toast";
-import {markFeedItemByUserId, subFeedChannelById} from "../utils/http_util";
-import {getUserLoginInfo} from "../service/UserService";
+import Toast from "../Toast";
+import {markFeedItemByUserId, subFeedChannelById} from "../../utils/http_util";
+import {getUserLoginInfo} from "../../service/UserService";
 import {useHistory} from "react-router-dom";
 
 function CommonFeedItemView(props) {
