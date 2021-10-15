@@ -6,9 +6,10 @@ import ScrollToTop from "react-scroll-to-top";
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import {alpha, AppBar, Button, Fab, InputBase, Toolbar} from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-import {searchFeedItemByKeyword} from "../utils/http_util";
+import {getRandomFeedItem, searchFeedItemByKeyword} from "../utils/http_util";
 import {makeStyles} from "@material-ui/core/styles";
 import ListItemPlaceholder from "../component/commomList/ListItemPlaceholder";
+import {getUserLoginInfo} from "../service/UserService";
 
 function SearchPage() {
 
@@ -21,6 +22,7 @@ function SearchPage() {
     const [searchKeyword, setSearchKeyword] = useState("")
     const [reqStart, setReqStart] = useState(0);
     const [visible, setVisible] = useState(false)
+    const userInfo = JSON.parse(getUserLoginInfo());
 
     useEffect(() => {
         setSearchBarHeight(searchBarRef.current.clientHeight)
@@ -58,13 +60,33 @@ function SearchPage() {
     };
 
     const fetchData = (refresh, callback) => {
-        if (searchKeyword === "") {
-            return
-        }
-
         if (refresh) {
             setDataSource([])
             setReqStart(0);
+        }
+
+        if (searchKeyword === "") {
+            let userId = ""
+            if (userInfo !== null) {
+                userId = userInfo["uid"]
+            }
+            let randomParams = {
+                start: reqStart,
+                size: 10,
+                userId: userId
+            }
+            setLoading(true)
+            getRandomFeedItem(randomParams).then((resp) => {
+                if (resp.status === 200 && resp.data.data.length > 0) {
+                    callback(resp.data.data);
+                    setReqStart((prevState) => prevState + 10);
+                }
+            }).catch((error) => {
+
+            })
+
+            setLoading(false)
+            return
         }
 
         let params = {
