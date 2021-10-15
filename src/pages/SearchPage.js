@@ -94,7 +94,6 @@ function SearchPage() {
             size: 10,
             keyword: searchKeyword
         }
-        setLoading(true)
         searchFeedItemByKeyword(params).then((resp) => {
             if (resp.status === 200 && resp.data.data.length > 0) {
                 callback(resp.data.data);
@@ -103,8 +102,6 @@ function SearchPage() {
         }).catch((error) => {
 
         })
-
-        setLoading(false)
     }
 
     const handleInfiniteOnLoad = () => {
@@ -119,6 +116,7 @@ function SearchPage() {
     };
 
     const onPullRefresh = () => {
+        setLoading(true)
         fetchData(true, resp => {
             if (resp === undefined || resp === null || resp === []) {
                 setHasMore(false)
@@ -126,9 +124,11 @@ function SearchPage() {
             }
             setDataSource(resp)
         })
+        setLoading(false)
     }
 
     useEffect(() => {
+        setLoading(true)
         fetchData(true, resp => {
             if (resp === undefined || resp === null || resp === []) {
                 setHasMore(false)
@@ -136,6 +136,7 @@ function SearchPage() {
             }
             setDataSource(resp)
         })
+        setLoading(false)
     }, [])
 
     const appContext = useContext(AppContext);

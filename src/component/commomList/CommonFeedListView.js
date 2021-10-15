@@ -34,7 +34,6 @@ function CommonFeedListView(props) {
     };
 
     const handleInfiniteOnLoad = () => {
-        setLoading(true)
         fetchData(false, res => {
             if (res === undefined || res === null || res === []) {
                 setHasMore(false)
@@ -43,7 +42,6 @@ function CommonFeedListView(props) {
             let tempData = dataSource.concat(res);
             setDataSource(tempData)
         });
-        setLoading(false)
     };
 
     const onPullRefresh = () => {

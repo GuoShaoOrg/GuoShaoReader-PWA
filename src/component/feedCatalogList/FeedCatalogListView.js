@@ -45,7 +45,6 @@ export default function FeedCatalogListView(props) {
     }, [])
 
     const handleLoadMore = () => {
-        setLoading(true)
         loadData(false, res => {
             if (res === undefined || res === null || res === []) {
                 setHasMore(false)
@@ -54,7 +53,6 @@ export default function FeedCatalogListView(props) {
             let tempData = dataSource.concat(res);
             setDataSource(tempData)
         });
-        setLoading(false)
     };
 
     const onPullRefresh = () => {
