@@ -20,6 +20,7 @@ function SearchPage() {
     const [searchBarHeight, setSearchBarHeight] = useState(0)
     const [loading, setLoading] = useState(false);
     const [searchKeyword, setSearchKeyword] = useState("")
+    const [preSearchKeyword, setPreSearchKeyword] = useState("")
     const [reqStart, setReqStart] = useState(0);
     const [visible, setVisible] = useState(false)
     const userInfo = JSON.parse(getUserLoginInfo());
@@ -89,11 +90,16 @@ function SearchPage() {
             return
         }
 
+        if (preSearchKeyword !== "" && preSearchKeyword !== searchKeyword) {
+            setReqStart(0)
+        }
+
         let params = {
             start: reqStart,
             size: 10,
             keyword: searchKeyword
         }
+        setPreSearchKeyword(searchKeyword)
         searchFeedItemByKeyword(params).then((resp) => {
             if (resp.status === 200 && resp.data.data.length > 0) {
                 callback(resp.data.data);
