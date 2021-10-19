@@ -32,7 +32,7 @@ function TimelineFeedPage() {
             getLatestFeedItem(params)
                 .then((res) => {
                     if (res.status === 200) {
-                        callback(res.data);
+                        callback(res.data.data);
                         setReqStart((prevState) => prevState + 10);
                     }
                 })
