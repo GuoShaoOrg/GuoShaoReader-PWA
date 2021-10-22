@@ -18,7 +18,7 @@ function SearchPage() {
     const [dataSource, setDataSource] = useState([]);
     const searchBarRef = useRef(null)
     const [searchBarHeight, setSearchBarHeight] = useState(0)
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [searchKeyword, setSearchKeyword] = useState("")
     const [preSearchKeyword, setPreSearchKeyword] = useState("")
     const [reqStart, setReqStart] = useState(0);
@@ -30,12 +30,14 @@ function SearchPage() {
     }, [])
 
     const onSearchClick = () => {
+        setLoading(true)
         fetchData(true, resp => {
             if (resp === undefined || resp === null || resp === []) {
                 setHasMore(false)
                 return
             }
             setDataSource(resp)
+            setLoading(false)
         })
     }
     const toggleVisible = (event) => {
@@ -76,17 +78,15 @@ function SearchPage() {
                 size: 10,
                 userId: userId
             }
-            setLoading(true)
+
             getRandomFeedItem(randomParams).then((resp) => {
                 if (resp.status === 200 && resp.data.data.length > 0) {
                     callback(resp.data.data);
                     setReqStart((prevState) => prevState + 10);
                 }
             }).catch((error) => {
-
             })
 
-            setLoading(false)
             return
         }
 
@@ -129,8 +129,8 @@ function SearchPage() {
                 return
             }
             setDataSource(resp)
+            setLoading(false)
         })
-        setLoading(false)
     }
 
     useEffect(() => {
@@ -141,8 +141,8 @@ function SearchPage() {
                 return
             }
             setDataSource(resp)
+            setLoading(false)
         })
-        setLoading(false)
     }, [])
 
     const appContext = useContext(AppContext);

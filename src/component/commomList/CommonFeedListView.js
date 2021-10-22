@@ -52,8 +52,8 @@ function CommonFeedListView(props) {
                 return
             }
             setDataSource(resp)
+            setLoading(false)
         })
-        setLoading(false)
     }
 
     useEffect(() => {
@@ -64,8 +64,8 @@ function CommonFeedListView(props) {
                 return
             }
             setDataSource(resp)
+            setLoading(false)
         })
-        setLoading(false)
     }, [])
 
     const appContext = useContext(AppContext);
