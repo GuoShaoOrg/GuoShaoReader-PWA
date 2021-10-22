@@ -14,6 +14,7 @@ import {subFeedChannelById} from "../../utils/http_util";
 import {getUserLoginInfo} from "../../service/UserService";
 import Toast from "../Toast";
 import {useHistory} from "react-router-dom";
+import copy from 'copy-to-clipboard';
 
 export default function FeedCatalogItemView(props) {
     const classes = useStyles();
@@ -40,13 +41,17 @@ export default function FeedCatalogItemView(props) {
 
 
     const handlerShareClick = () => {
-        Toast.show("分享功能暂未开通", "info")
+        copy(itemData.Link)
+        Toast.show("链接已复制到剪贴板", "info")
     }
 
     const handlerSubClick = () => {
-        console.log(itemData)
+        let uid = "";
+        if (userInfo !== null) {
+            uid = userInfo["uid"]
+        }
         let params = {
-            UserId: userInfo["uid"],
+            UserId: uid,
             ChannelId: itemData.Id,
         };
 

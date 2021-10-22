@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {
     Avatar,
     Card,
@@ -19,6 +19,7 @@ import Toast from "../Toast";
 import {markFeedItemByUserId, subFeedChannelById} from "../../utils/http_util";
 import {getUserLoginInfo} from "../../service/UserService";
 import {useHistory} from "react-router-dom";
+import copy from 'copy-to-clipboard';
 
 function CommonFeedItemView(props) {
     const classes = useStyles();
@@ -50,17 +51,23 @@ function CommonFeedItemView(props) {
     }
 
     const handlerFollowClick = () => {
+        let uid = "";
+        if (userInfo !== null) {
+            uid = userInfo["uid"]
+        }
         let params = {
-            UserId: userInfo["uid"],
+            UserId: uid,
             ChannelId: data.ChannelId,
         };
 
         subFeedChannelById(params).then(res => {
             if (res.status === 200) {
-                if (isMarked) {
+                if (isSub) {
                     setIsSub(false)
+                    Toast.show("取消订阅", "info")
                 } else {
                     setIsSub(true)
+                    Toast.show("订阅成功", "info")
                 }
             }
         }).catch(err => {
@@ -78,8 +85,10 @@ function CommonFeedItemView(props) {
             if (res.status === 200) {
                 if (isMarked) {
                     setIsMarked(false)
+                    Toast.show("取消收藏", "info")
                 } else {
                     setIsMarked(true)
+                    Toast.show("已收藏", "info")
                 }
             }
         }).catch(err => {
@@ -88,7 +97,8 @@ function CommonFeedItemView(props) {
     }
 
     const handlerShareClick = () => {
-        Toast.show("分享功能暂未开通", "info")
+        copy(data.Link)
+        Toast.show("链接已复制到剪贴板", "info")
     }
 
     return (
@@ -113,7 +123,7 @@ function CommonFeedItemView(props) {
             </CardActionArea>
             <CardActions disableSpacing>
                 {isSub ? <IconButton aria-label="follow" onClick={handlerFollowClick}>
-                    <PlaylistAddIcon color={"primary"} />
+                    <PlaylistAddIcon color={"primary"}/>
                 </IconButton> : (
                     <IconButton aria-label="follow" onClick={handlerFollowClick}>
                         <PlaylistAddIcon/>
