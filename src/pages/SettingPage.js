@@ -2,14 +2,22 @@ import React from "react";
 import {AppBar, Avatar, Container, Paper, Toolbar, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {getUserLoginInfo} from "../service/UserService";
-import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import CardActionArea from '@material-ui/core/CardActionArea';
+import {useHistory} from "react-router-dom";
 
 
 const SettingPage = () => {
     const classes = useStyles();
     const userInfo = JSON.parse(getUserLoginInfo())
+    const history = useHistory()
+
+    const toMarkedItemListPage = () => {
+        console.log("toMarkedItemListPage")
+        history.push({
+            pathname: '/user/marked/item/'
+        })
+    }
 
     return (
         <div>
@@ -25,14 +33,8 @@ const SettingPage = () => {
                 <div className={classes.username}>{userInfo["username"]}</div>
             </Paper>
 
-            <CardActionArea className={classes.commonWrap}>
-                <div className={classes.commonIcon}>
-                    <PlaylistAddCheckIcon color="primary"/>
-                </div>
-                <Container className={classes.commonText}>订阅列表</Container>
-            </CardActionArea>
-            <CardActionArea className={classes.commonWrap}>
-                <div className={classes.commonIcon}>
+            <CardActionArea className={classes.commonWrap} onClick={toMarkedItemListPage}>
+                <div className={classes.commonIcon} >
                     <FavoriteBorderOutlinedIcon color="primary"/>
                 </div>
                 <Container className={classes.commonText}>收藏记录</Container>

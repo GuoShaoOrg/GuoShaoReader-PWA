@@ -11,6 +11,7 @@ import LoginPage from "./LoginPage";
 import GSBottomNavigationWithoutToken from "../component/GSBottomNavigationWithoutToken";
 import {getAuthToken, getUserLoginInfo} from "../service/UserService";
 import FeedChannelPage from "./FeedChannelPage";
+import MarkedFeedItemPage from "./MarkedFeedItemPage";
 
 export const AppContext = React.createContext(null);
 
@@ -75,6 +76,7 @@ function Home() {
                             <Route exact path={"/setting"} component={SettingPage}/>
                             <Route exact path={"/login"} component={LoginPage}/>
                             <Route exact path={"/feed/channel/:channelId"} component={FeedChannelPage}/>
+                            <Route exact path={"/user/marked/item/"} component={MarkedFeedItemPage}/>
                         </CacheSwitch>
                     </div>
                     {state.token === "" || state.token === undefined || state.token === null ?
