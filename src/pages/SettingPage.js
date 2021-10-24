@@ -13,7 +13,6 @@ const SettingPage = () => {
     const history = useHistory()
 
     const toMarkedItemListPage = () => {
-        console.log("toMarkedItemListPage")
         history.push({
             pathname: '/user/marked/item/'
         })
