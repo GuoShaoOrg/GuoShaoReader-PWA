@@ -12,6 +12,7 @@ function CommonFeedListView(props) {
     const [dataSource, setDataSource] = useState([]);
 
     const fetchData = props.fetchData
+    const listHeader = props.listHeader
     const containerId = props.containerId
     const style = props.style
 
@@ -71,6 +72,7 @@ function CommonFeedListView(props) {
 
     return (
         <div id={containerId} onScroll={toggleVisible} style={style}>
+            <>{listHeader}</>
             {loading ? (<ListLoadingPlaceholder/>) :
                 <InfiniteScroll
                     scrollableTarget={"scrollableDiv"}

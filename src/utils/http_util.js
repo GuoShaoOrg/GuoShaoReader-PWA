@@ -76,3 +76,9 @@ export const getRandomFeedItem = (data) => {
         process.env.REACT_APP_BASE_API + "rss/api/v1/feed/random";
     return instance.get(api_url, { params: data });
 }
+
+export const getFeedChannelInfoById = (data) => {
+    let api_url =
+        process.env.REACT_APP_BASE_API + "rss/api/v1/feed/channel_info_by_id";
+    return instance.get(api_url, { params: data });
+}
