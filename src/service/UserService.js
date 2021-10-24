@@ -4,7 +4,11 @@ export const storeUserLoginInfo = (userInfo) => {
 }
 
 export const getUserLoginInfo = () => {
-    return localStorage.getItem("userInfo")
+    let userLoginInfo = localStorage.getItem("userInfo")
+    if (userLoginInfo === null || userLoginInfo === undefined || userLoginInfo === "null") {
+        return null
+    }
+    return userLoginInfo
 }
 
 export const getAuthToken = () => {
