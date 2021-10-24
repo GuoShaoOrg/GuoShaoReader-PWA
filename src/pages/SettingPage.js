@@ -17,6 +17,11 @@ const SettingPage = () => {
             pathname: '/user/marked/item/'
         })
     }
+    const toAccountInfoPage = () => {
+        history.push({
+            pathname: '/account/info'
+        })
+    }
 
     return (
         <div>
@@ -25,7 +30,7 @@ const SettingPage = () => {
                     <Typography variant="h6" className={classes.title}>设置</Typography>
                 </Toolbar>
             </AppBar>
-            <Paper className={classes.account}>
+            <Paper className={classes.account} onClick={toAccountInfoPage}>
                 <div className={classes.avatar}>
                     <Avatar alt="Remy Sharp" src="">GS</Avatar>
                 </div>

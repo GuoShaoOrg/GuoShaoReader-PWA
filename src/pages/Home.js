@@ -9,9 +9,10 @@ import SubFeedChannelItemPage from "./SubFeedChannelItemPage";
 import SearchPage from "./SearchPage";
 import LoginPage from "./LoginPage";
 import GSBottomNavigationWithoutToken from "../component/GSBottomNavigationWithoutToken";
-import {getAuthToken, getUserLoginInfo} from "../service/UserService";
+import {getAuthToken, storeUserLoginInfo} from "../service/UserService";
 import FeedChannelPage from "./FeedChannelPage";
 import MarkedFeedItemPage from "./MarkedFeedItemPage";
+import AccountPage from "./AccountPage";
 
 export const AppContext = React.createContext(null);
 
@@ -45,7 +46,8 @@ function Home() {
             dispatch({type: "RESTORE_TOKEN", token: token});
         },
         LogOut: () => {
-
+            dispatch({type: "RESTORE_TOKEN", token: ""});
+            storeUserLoginInfo(null);
         },
         GetUserInfo: () => {
 
@@ -77,6 +79,7 @@ function Home() {
                             <Route exact path={"/login"} component={LoginPage}/>
                             <Route exact path={"/feed/channel/:channelId"} component={FeedChannelPage}/>
                             <Route exact path={"/user/marked/item/"} component={MarkedFeedItemPage}/>
+                            <Route exact path={"/account/info"} component={AccountPage}/>
                         </CacheSwitch>
                     </div>
                     {state.token === "" || state.token === undefined || state.token === null ?
