@@ -158,7 +158,7 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: '56.25%', // 16:9
     },
     avatar: {
-        backgroundColor: orange[500],
+        backgroundColor: "transparent",
     },
     dateText: {
         marginTop: "10px"

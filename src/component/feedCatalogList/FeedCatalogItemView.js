@@ -105,6 +105,6 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {},
     avatar: {
-        backgroundColor: orange[500],
+        backgroundColor: "transparent",
     },
 }));
