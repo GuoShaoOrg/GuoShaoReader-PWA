@@ -1,13 +1,16 @@
-import React, {useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import CommonFeedListView from "../component/feedCommomList/CommonFeedListView";
-import {getFeedItemByChannelId} from "../utils/http_util";
+import {getFeedChannelInfoById, getFeedItemByChannelId} from "../utils/http_util";
 import {getUserLoginInfo} from "../service/UserService";
+import {AppContext} from "./Home";
 
 const FeedChannelPage = () => {
 
+    const appContext = useContext(AppContext);
     const {channelId} = useParams()
     const [reqStart, setReqStart] = useState(0);
+    const [channelInfo, setChannelInfo] = useState(0);
     const userInfo = JSON.parse(getUserLoginInfo());
 
     const getFeedItemList = (refresh, callback) => {
@@ -33,9 +36,36 @@ const FeedChannelPage = () => {
             });
     }
 
-    return(
+    const getFeedChannelInfo = () => {
+        let userId = ""
+        if (userInfo !== null) {
+            userId = userInfo["uid"]
+        }
+        let params = {
+            channelId: channelId,
+            userId: userId
+        }
+        getFeedChannelInfoById(params)
+            .then((res) => {
+                if (res.status === 200 && res.data.data.length > 0) {
+                    setChannelInfo(res.data.data)
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+
+    useEffect(() => {
+        getFeedChannelInfo()
+    }, [])
+
+    return (
         <div>
-            <CommonFeedListView fetchData={getFeedItemList} />
+            <CommonFeedListView containerId={"FeedChannelPageCommonFeedListView"}
+                                fetchData={getFeedItemList}
+                                style={{height: appContext.GetCPageHeight(), overflowY: "scroll"}}
+            />
         </div>
     )
 }

@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, {useContext, useState} from "react";
 import CommonFeedListView from "../component/feedCommomList/CommonFeedListView";
 import { getUserLoginInfo } from "../service/UserService";
 import { getFeedItemByUserId, getLatestFeedItem } from "../utils/http_util";
+import {AppContext} from "./Home";
 
 function TimelineFeedPage() {
+    const appContext = useContext(AppContext);
     const [reqStart, setReqStart] = useState(0);
     const userInfo = JSON.parse(getUserLoginInfo());
 
@@ -55,7 +57,9 @@ function TimelineFeedPage() {
 
     return (
         <div>
-            <CommonFeedListView fetchData={fetchData} />
+            <CommonFeedListView containerId={"TimelineFeedPageCommonFeedListView"}
+                                fetchData={fetchData}
+                                style={{height: appContext.GetCPageHeight(), overflowY: "scroll"}} />
         </div>
     );
 }

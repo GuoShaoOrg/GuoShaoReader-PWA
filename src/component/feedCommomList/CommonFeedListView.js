@@ -1,10 +1,8 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CommonFeedItemView from "./CommonFeedItemView";
-import {AppContext} from "../../pages/Home";
 import {Fab} from "@material-ui/core";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
-import ListItemPlaceholder from "./ListItemPlaceholder";
 import ListLoadingPlaceholder from "./ListLoadingPlaceholder";
 
 function CommonFeedListView(props) {
@@ -14,6 +12,8 @@ function CommonFeedListView(props) {
     const [dataSource, setDataSource] = useState([]);
 
     const fetchData = props.fetchData
+    const containerId = props.containerId
+    const style = props.style
 
     const [visible, setVisible] = useState(false)
 
@@ -26,7 +26,7 @@ function CommonFeedListView(props) {
         }
     };
     const scrollToTop = () => {
-        document.getElementById("scrollableDiv").scrollTo({
+        document.getElementById(containerId).scrollTo({
             top: 0,
             behavior: 'smooth'
             /* you can also use 'auto' behaviour
@@ -69,11 +69,8 @@ function CommonFeedListView(props) {
         })
     }, [])
 
-    const appContext = useContext(AppContext);
-
     return (
-        <div id="scrollableDiv" onScroll={toggleVisible}
-             style={{height: appContext.GetCPageHeight(), overflowY: "scroll"}}>
+        <div id={containerId} onScroll={toggleVisible} style={style}>
             {loading ? (<ListLoadingPlaceholder/>) :
                 <InfiniteScroll
                     scrollableTarget={"scrollableDiv"}
