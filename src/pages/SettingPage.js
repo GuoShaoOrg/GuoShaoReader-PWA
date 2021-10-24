@@ -29,13 +29,13 @@ const SettingPage = () => {
                 <div className={classes.commonIcon}>
                     <PlaylistAddCheckIcon color="primary"/>
                 </div>
-                <Container className={classes.commonText}>订阅历史</Container>
+                <Container className={classes.commonText}>订阅列表</Container>
             </CardActionArea>
             <CardActionArea className={classes.commonWrap}>
                 <div className={classes.commonIcon}>
                     <FavoriteBorderOutlinedIcon color="primary"/>
                 </div>
-                <Container className={classes.commonText}>喜欢记录</Container>
+                <Container className={classes.commonText}>收藏记录</Container>
             </CardActionArea>
         </div>
     )

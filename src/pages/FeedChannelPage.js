@@ -90,7 +90,7 @@ const FeedChannelPage = () => {
 
     return (
         <div>
-            <CommonFeedListView containerId={"TimelineFeedPageCommonFeedListView"}
+            <CommonFeedListView containerId={"FeedChannelPageCommonFeedListView"}
                                 fetchData={getFeedItemList}
                                 listHeader={<ListHeader/>}
                                 style={{height: appContext.GetCPageHeight(), overflowY: "scroll"}}/>
