@@ -5,6 +5,7 @@ import FeedCatalogItemView from "./FeedCatalogItemView";
 import {Fab} from "@material-ui/core";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import ListItemPlaceholder from "../feedCommomList/ListItemPlaceholder";
+import ListLoadingPlaceholder from "../feedCommomList/ListLoadingPlaceholder";
 
 export default function FeedCatalogListView(props) {
     const appContext = useContext(AppContext);
@@ -70,7 +71,7 @@ export default function FeedCatalogListView(props) {
     return(
         <div>
             <div id="feedCatalogScrollableDiv" onScroll={toggleVisible} style={{height: appContext.GetCPageHeight(), overflowY: "scroll"}}>
-                {loading?(<PlaceholderItemList/>):
+                {loading?(<ListLoadingPlaceholder/>):
                     <InfiniteScroll
                         scrollableTarget={"feedCatalogScrollableDiv"}
                         dataLength={dataSource.length}
@@ -101,17 +102,6 @@ export default function FeedCatalogListView(props) {
                     <KeyboardArrowUpIcon />
                 </Fab>
             </div>
-        </div>
-    )
-}
-
-function PlaceholderItemList() {
-
-    return(
-        <div>
-            <ListItemPlaceholder/>
-            <ListItemPlaceholder/>
-            <ListItemPlaceholder/>
         </div>
     )
 }

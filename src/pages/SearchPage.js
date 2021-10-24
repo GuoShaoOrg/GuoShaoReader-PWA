@@ -10,6 +10,7 @@ import {getRandomFeedItem, searchFeedItemByKeyword} from "../utils/http_util";
 import {makeStyles} from "@material-ui/core/styles";
 import ListItemPlaceholder from "../component/feedCommomList/ListItemPlaceholder";
 import {getUserLoginInfo} from "../service/UserService";
+import ListLoadingPlaceholder from "../component/feedCommomList/ListLoadingPlaceholder";
 
 function SearchPage() {
 
@@ -176,7 +177,7 @@ function SearchPage() {
                      marginTop: searchBarHeight,
                      overflowY: "scroll"
                  }}>
-                {loading?(<PlaceholderItemList/>):
+                {loading?(<ListLoadingPlaceholder/>):
                     <InfiniteScroll
                         scrollableTarget={"searchScrollableDiv"}
                         dataLength={dataSource.length}
@@ -207,17 +208,6 @@ function SearchPage() {
                     <KeyboardArrowUpIcon />
                 </Fab>
             </div>
-        </div>
-    )
-}
-
-function PlaceholderItemList() {
-
-    return(
-        <div>
-            <ListItemPlaceholder/>
-            <ListItemPlaceholder/>
-            <ListItemPlaceholder/>
         </div>
     )
 }
