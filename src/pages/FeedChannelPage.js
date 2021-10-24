@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 import {useParams} from "react-router-dom";
-import CommonFeedListView from "../component/commomList/CommonFeedListView";
+import CommonFeedListView from "../component/feedCommomList/CommonFeedListView";
 import {getFeedItemByChannelId} from "../utils/http_util";
 import {getUserLoginInfo} from "../service/UserService";
 
-const FeedChannelItemPage = () => {
+const FeedChannelPage = () => {
 
     const {channelId} = useParams()
     const [reqStart, setReqStart] = useState(0);
@@ -40,4 +40,4 @@ const FeedChannelItemPage = () => {
     )
 }
 
-export default FeedChannelItemPage;
+export default FeedChannelPage;

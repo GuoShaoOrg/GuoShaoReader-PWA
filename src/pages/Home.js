@@ -10,7 +10,7 @@ import SearchPage from "./SearchPage";
 import LoginPage from "./LoginPage";
 import GSBottomNavigationWithoutToken from "../component/GSBottomNavigationWithoutToken";
 import {getAuthToken, getUserLoginInfo} from "../service/UserService";
-import FeedChannelItemPage from "./FeedChannelItemPage";
+import FeedChannelPage from "./FeedChannelPage";
 
 export const AppContext = React.createContext(null);
 
@@ -74,7 +74,7 @@ function Home() {
                             <CacheRoute exact path="/explore" component={SearchPage}/>
                             <Route exact path={"/setting"} component={SettingPage}/>
                             <Route exact path={"/login"} component={LoginPage}/>
-                            <Route exact path={"/feed/channel/:channelId"} component={FeedChannelItemPage}/>
+                            <Route exact path={"/feed/channel/:channelId"} component={FeedChannelPage}/>
                         </CacheSwitch>
                     </div>
                     {state.token === "" || state.token === undefined || state.token === null ?

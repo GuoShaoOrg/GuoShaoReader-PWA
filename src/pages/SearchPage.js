@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import InfiniteScroll from 'react-infinite-scroll-component';
-import CommonFeedItemView from "../component/commomList/CommonFeedItemView";
+import CommonFeedItemView from "../component/feedCommomList/CommonFeedItemView";
 import {AppContext} from "./Home";
 import ScrollToTop from "react-scroll-to-top";
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
@@ -8,7 +8,7 @@ import {alpha, AppBar, Button, Fab, InputBase, Toolbar} from "@material-ui/core"
 import SearchIcon from "@material-ui/icons/Search";
 import {getRandomFeedItem, searchFeedItemByKeyword} from "../utils/http_util";
 import {makeStyles} from "@material-ui/core/styles";
-import ListItemPlaceholder from "../component/commomList/ListItemPlaceholder";
+import ListItemPlaceholder from "../component/feedCommomList/ListItemPlaceholder";
 import {getUserLoginInfo} from "../service/UserService";
 
 function SearchPage() {

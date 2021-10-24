@@ -4,7 +4,7 @@ import {AppContext} from "../../pages/Home";
 import FeedCatalogItemView from "./FeedCatalogItemView";
 import {Fab} from "@material-ui/core";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
-import ListItemPlaceholder from "../commomList/ListItemPlaceholder";
+import ListItemPlaceholder from "../feedCommomList/ListItemPlaceholder";
 
 export default function FeedCatalogListView(props) {
     const appContext = useContext(AppContext);
