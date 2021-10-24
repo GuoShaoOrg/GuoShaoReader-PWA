@@ -17,7 +17,7 @@ instance.interceptors.request.use(function (config) {
 
 instance.interceptors.response.use(function (response) {
     if (response.data.code !== 0) {
-        Toast.show("发生了一些意外", "error")
+        Toast.show(response.data.message, "error")
         return;
     }
     return response;
@@ -31,6 +31,11 @@ instance.interceptors.response.use(function (response) {
 
 export default function getHttpInstance() {
     return instance;
+}
+
+export const register = (data) => {
+    let api_url = process.env.REACT_APP_BASE_API + "rss/api/v1/user/register";
+    return instance.post(api_url, data);
 }
 
 export const subFeedChannelById = (data) => {

@@ -8,43 +8,48 @@ import {AppContext} from "./Home";
 import {useHistory} from "react-router-dom";
 import Toast from "../component/Toast";
 
-const LoginPage = () => {
+const RegisterPage = () => {
     const classes = useStyles();
 
     const history = useHistory()
     const [accessValue, setAccessValue] = useState();
     const [password, setPassword] = useState();
+    const [verifyPassword, setVerifyPassword] = useState();
+    const [nickname, setNickname] = useState();
     const appContext = useContext(AppContext);
     const onSetAccessValue = (event) => {
         setAccessValue(event.target.value)
+    }
+
+    const onSetNicknameValue = (event) => {
+        setNickname(event.target.value)
     }
 
     const onSetPassword = (event) => {
         setPassword(event.target.value)
     }
 
-    const doLogin = () => {
-        let api_url = process.env.REACT_APP_BASE_API + "rss/api/v1/user/login";
+    const onSetVerifyPassword = (event) => {
+        setVerifyPassword(event.target.value)
+    }
+
+    const doRegister = () => {
         let params = getParams()
-        getHttpInstance().post(api_url, params)
-            .then((response) => {
-                let responseData = response.data;
-                storeUserLoginInfo(JSON.stringify(responseData.data))
-                appContext.Login(responseData.data.token)
+        if (params === undefined) {
+            return
+        }
+        register(params).then(res => {
+            if (res.status === 200) {
+                storeUserLoginInfo(JSON.stringify(res.data.data))
+                appContext.Login(res.data.data.token)
                 history.push({
                     pathname: '/',
                 })
-            })
-            .catch((error) => console.error(error))
-            .finally(() => {
-            });
-
-    };
-
-    const toRegisterPage = () => {
-        history.push({
-            pathname: '/register',
+            }
+        }).catch(err => {
+            console.log(err)
         })
+
     };
 
     const isValidMobilePhone = (phone) => {
@@ -62,14 +67,18 @@ const LoginPage = () => {
             return
         }
         let params = {
+            "username": nickname,
             "email": accessValue,
             "password": password,
+            "passwordVerify": verifyPassword,
         }
 
         if (isValidMobilePhone(accessValue)) {
             params = {
+                "username": nickname,
                 "mobile": accessValue,
                 "password": password,
+                "passwordVerify": verifyPassword,
             }
         }
 
@@ -83,14 +92,17 @@ const LoginPage = () => {
                 <div className={classes.horizontalBlock}/>
                 <div className={classes.loginBlock}>
                     <RssFeedIcon color="primary" className={classes.loginImage}/>
+                    <TextField className={classes.inputFiled} required onChange={onSetNicknameValue} variant="outlined"
+                               label="昵称" color="primary"/>
                     <TextField className={classes.inputFiled} required onChange={onSetAccessValue} variant="outlined"
                                label="邮箱或手机号" color="primary"/>
                     <TextField className={classes.inputFiled} required onChange={onSetPassword} variant="outlined"
                                type="password"
                                label="密码" color="primary"/>
-                    <Button onClick={doLogin} className={classes.loginButton} variant="contained"
-                            color="primary">登录</Button>
-                    <Button onClick={toRegisterPage} className={classes.loginButton} variant="contained"
+                    <TextField className={classes.inputFiled} required onChange={onSetVerifyPassword} variant="outlined"
+                               type="password"
+                               label="确认密码" color="primary"/>
+                    <Button onClick={doRegister} className={classes.loginButton} variant="contained"
                             color="primary">注册</Button>
                 </div>
                 <div className={classes.horizontalBlock}/>
@@ -134,4 +146,4 @@ const useStyles = makeStyles({
     }
 });
 
-export default LoginPage
+export default RegisterPage

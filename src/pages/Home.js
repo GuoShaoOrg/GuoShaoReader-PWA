@@ -13,6 +13,7 @@ import {getAuthToken, storeUserLoginInfo} from "../service/UserService";
 import FeedChannelPage from "./FeedChannelPage";
 import MarkedFeedItemPage from "./MarkedFeedItemPage";
 import AccountPage from "./AccountPage";
+import RegisterPage from "./RegisterPage";
 
 export const AppContext = React.createContext(null);
 
@@ -77,6 +78,7 @@ function Home() {
                             <CacheRoute exact path="/explore" component={SearchPage}/>
                             <Route exact path={"/setting"} component={SettingPage}/>
                             <Route exact path={"/login"} component={LoginPage}/>
+                            <Route exact path={"/register"} component={RegisterPage}/>
                             <Route exact path={"/feed/channel/:channelId"} component={FeedChannelPage}/>
                             <Route exact path={"/user/marked/item/"} component={MarkedFeedItemPage}/>
                             <Route exact path={"/account/info"} component={AccountPage}/>
