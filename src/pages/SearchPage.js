@@ -28,19 +28,10 @@ function SearchPage() {
 
     useEffect(() => {
         setSearchBarHeight(searchBarRef.current.clientHeight)
-        document.addEventListener('keypress',handleEnterKey)
     }, [])
 
-    const handleEnterKey = (e) => {
-        if(e.keyCode === 13){
-            onSearchClick()
-        }
-    }
-
     const onSearchClick = () => {
-        setLoading(true)
         fetchData(true, resp => {
-            setLoading(false)
             if (resp === undefined || resp === null || resp === []) {
                 setHasMore(false)
                 return
@@ -71,6 +62,7 @@ function SearchPage() {
     };
 
     const fetchData = (refresh, callback) => {
+        setLoading(true)
         if (refresh) {
             setDataSource([])
             setReqStart(0);
@@ -88,6 +80,7 @@ function SearchPage() {
             }
 
             getRandomFeedItem(randomParams).then((resp) => {
+                setLoading(false)
                 if (resp.status === 200 && resp.data.data.length > 0) {
                     callback(resp.data.data);
                     setReqStart((prevState) => prevState + 10);
@@ -109,6 +102,7 @@ function SearchPage() {
         }
         setPreSearchKeyword(searchKeyword)
         searchFeedItemByKeyword(params).then((resp) => {
+            setLoading(false)
             if (resp.status === 200 && resp.data.data.length > 0) {
                 callback(resp.data.data);
                 setReqStart((prevState) => prevState + 10);
@@ -130,26 +124,22 @@ function SearchPage() {
     };
 
     const onPullRefresh = () => {
-        setLoading(true)
         fetchData(true, resp => {
             if (resp === undefined || resp === null || resp === []) {
                 setHasMore(false)
                 return
             }
             setDataSource(resp)
-            setLoading(false)
         })
     }
 
     useEffect(() => {
-        setLoading(true)
         fetchData(true, resp => {
             if (resp === undefined || resp === null || resp === []) {
                 setHasMore(false)
                 return
             }
             setDataSource(resp)
-            setLoading(false)
         })
     }, [])
 
