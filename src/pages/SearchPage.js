@@ -31,7 +31,9 @@ function SearchPage() {
     }, [])
 
     const onSearchClick = () => {
+        setLoading(true)
         fetchData(true, resp => {
+            setLoading(false)
             if (resp === undefined || resp === null || resp === []) {
                 setHasMore(false)
                 return
@@ -62,7 +64,6 @@ function SearchPage() {
     };
 
     const fetchData = (refresh, callback) => {
-        setLoading(true)
         if (refresh) {
             setDataSource([])
             setReqStart(0);
@@ -80,8 +81,7 @@ function SearchPage() {
             }
 
             getRandomFeedItem(randomParams).then((resp) => {
-                setLoading(false)
-                if (resp.status === 200 && resp.data.data.length > 0) {
+                if (resp.status === 200) {
                     callback(resp.data.data);
                     setReqStart((prevState) => prevState + 10);
                 }
@@ -102,8 +102,7 @@ function SearchPage() {
         }
         setPreSearchKeyword(searchKeyword)
         searchFeedItemByKeyword(params).then((resp) => {
-            setLoading(false)
-            if (resp.status === 200 && resp.data.data.length > 0) {
+            if (resp.status === 200) {
                 callback(resp.data.data);
                 setReqStart((prevState) => prevState + 10);
             }
@@ -124,7 +123,9 @@ function SearchPage() {
     };
 
     const onPullRefresh = () => {
+        setLoading(true)
         fetchData(true, resp => {
+            setLoading(false)
             if (resp === undefined || resp === null || resp === []) {
                 setHasMore(false)
                 return
@@ -134,7 +135,9 @@ function SearchPage() {
     }
 
     useEffect(() => {
+        setLoading(true)
         fetchData(true, resp => {
+            setLoading(false)
             if (resp === undefined || resp === null || resp === []) {
                 setHasMore(false)
                 return
