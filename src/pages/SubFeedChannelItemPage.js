@@ -29,7 +29,7 @@ const SubFeedChannelItemPage = () => {
         }
         getFeedChannelCatalogListByUserId(params)
             .then((res) => {
-                if (res.status === 200 && res.data.data.length > 0) {
+                if (res.status === 200) {
                     callback(res.data.data);
                     setReqStart((prevState) => prevState + 10);
                 }

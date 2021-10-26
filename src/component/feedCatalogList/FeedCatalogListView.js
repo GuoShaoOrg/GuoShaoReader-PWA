@@ -4,7 +4,6 @@ import {AppContext} from "../../pages/Home";
 import FeedCatalogItemView from "./FeedCatalogItemView";
 import {Fab} from "@material-ui/core";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
-import ListItemPlaceholder from "../feedCommomList/ListItemPlaceholder";
 import ListLoadingPlaceholder from "../feedCommomList/ListLoadingPlaceholder";
 
 export default function FeedCatalogListView(props) {
@@ -36,13 +35,13 @@ export default function FeedCatalogListView(props) {
     useEffect(() => {
         setLoading(true)
         loadData(true, resp => {
+            setLoading(false)
             if (resp === undefined || resp === null || resp === []) {
                 setHasMore(false)
                 return
             }
             setDataSource(resp)
         })
-        setLoading(false)
     }, [])
 
     const handleLoadMore = () => {
@@ -59,13 +58,13 @@ export default function FeedCatalogListView(props) {
     const onPullRefresh = () => {
         setLoading(true)
         loadData(true, resp => {
+            setLoading(false)
             if (resp === undefined || resp === null || resp === []) {
                 setHasMore(false)
                 return
             }
             setDataSource(resp)
         })
-        setLoading(false)
     }
 
     return(
