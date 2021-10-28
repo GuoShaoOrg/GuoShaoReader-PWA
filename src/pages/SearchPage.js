@@ -64,9 +64,11 @@ function SearchPage() {
     };
 
     const fetchData = (refresh, callback) => {
+        let resetReqStart = false
         if (refresh) {
             setDataSource([])
             setReqStart(0);
+            resetReqStart = true
         }
 
         if (searchKeyword === "") {
@@ -79,7 +81,13 @@ function SearchPage() {
                 size: 10,
                 userId: userId
             }
-
+            if (resetReqStart) {
+                randomParams = {
+                    start: 0,
+                    size: 10,
+                    keyword: searchKeyword
+                }
+            }
             getRandomFeedItem(randomParams).then((resp) => {
                 if (resp.status === 200) {
                     callback(resp.data.data);
@@ -91,14 +99,22 @@ function SearchPage() {
             return
         }
 
-        if (preSearchKeyword !== "" && preSearchKeyword !== searchKeyword) {
+        if (preSearchKeyword !== searchKeyword) {
             setReqStart(0)
+            resetReqStart = true
         }
 
         let params = {
             start: reqStart,
             size: 10,
             keyword: searchKeyword
+        }
+        if (resetReqStart) {
+            params = {
+                start: 0,
+                size: 10,
+                keyword: searchKeyword
+            }
         }
         setPreSearchKeyword(searchKeyword)
         searchFeedItemByKeyword(params).then((resp) => {
