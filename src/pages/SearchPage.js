@@ -64,11 +64,9 @@ function SearchPage() {
     };
 
     const fetchData = (refresh, callback) => {
-        let resetReqStart = false
         if (refresh) {
             setDataSource([])
             setReqStart(0);
-            resetReqStart = true
         }
 
         if (searchKeyword === "") {
@@ -81,7 +79,7 @@ function SearchPage() {
                 size: 10,
                 userId: userId
             }
-            if (resetReqStart) {
+            if (refresh) {
                 randomParams = {
                     start: 0,
                     size: 10,
@@ -101,7 +99,6 @@ function SearchPage() {
 
         if (preSearchKeyword !== searchKeyword) {
             setReqStart(0)
-            resetReqStart = true
         }
 
         let params = {
@@ -109,7 +106,7 @@ function SearchPage() {
             size: 10,
             keyword: searchKeyword
         }
-        if (resetReqStart) {
+        if (refresh) {
             params = {
                 start: 0,
                 size: 10,
