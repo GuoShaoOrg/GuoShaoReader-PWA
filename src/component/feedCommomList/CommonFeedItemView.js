@@ -27,6 +27,7 @@ function CommonFeedItemView(props) {
     const history = useHistory()
     const data = props.data
     const date = data.InputDate.slice(0, 10)
+    const [author, setAuthor] = React.useState("")
     const [isSub, setIsSub] = React.useState(false)
     const [isMarked, setIsMarked] = React.useState(false)
     const userInfo = JSON.parse(getUserLoginInfo());
@@ -37,6 +38,9 @@ function CommonFeedItemView(props) {
         }
         if (data.Marked === 1) {
             setIsMarked(true)
+        }
+        if (data.Author !== "") {
+            setAuthor("作者:"+data.Author)
         }
     }, [])
 
@@ -118,7 +122,7 @@ function CommonFeedItemView(props) {
                         {parse(data.ChannelDesc)}
                     </div>
                     <Typography className={classes.dateText} variant="subtitle2"
-                                color="textSecondary">{date}</Typography>
+                                color="textSecondary">{date}&nbsp;&nbsp;{author}</Typography>
                 </CardContent>
             </CardActionArea>
             <CardActions disableSpacing>

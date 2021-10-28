@@ -204,7 +204,7 @@ function SearchPage() {
                     </InfiniteScroll>
                 }
                 <Fab color="primary" size="small" onClick={scrollToTop}
-                     style={{position: "fixed", display: visible ? 'inline' : 'none',bottom: "80px", right: "60px", zIndex: 99}}>
+                     style={{position: "fixed", display: visible ? 'inline' : 'none',bottom: (appContext.GetBottomBarHeight() + 50), right: "60px", zIndex: 99}}>
                     <KeyboardArrowUpIcon />
                 </Fab>
             </div>
