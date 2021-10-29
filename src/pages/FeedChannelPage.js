@@ -77,10 +77,10 @@ const FeedChannelPage = () => {
                     <Typography style={{textAlign: "center"}} gutterBottom variant="h5" component="div">
                         {channelInfo.Title}
                     </Typography>
-                    <Typography style={{textAlign: "center"}} variant="body2" color="text.secondary">
+                    <Typography style={{textAlign: "center"}} variant="body2" color="textSecondary">
                         {channelInfo.ChannelDesc}
                     </Typography>
-                    <Typography style={{textAlign: "center", color: "gray"}} variant="body2" color="text.secondary">
+                    <Typography style={{textAlign: "center", color: "gray"}} variant="body2" color="textSecondary">
                         文章 {channelInfo.Count}
                     </Typography>
                 </CardContent>
