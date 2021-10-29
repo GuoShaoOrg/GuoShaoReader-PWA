@@ -6,10 +6,11 @@ import ListIcon from '@material-ui/icons/List';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import {makeStyles} from "@material-ui/core/styles";
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 
 const GSBottomNavigation = forwardRef((props, ref) => {
 
+    const { pathname } = useLocation()
     const classes = useStyles();
     const [bottomValue, setBottomValue] = useState()
     const onTabChange = (event, value) => {
@@ -17,8 +18,23 @@ const GSBottomNavigation = forwardRef((props, ref) => {
     }
 
     useEffect(() => {
-        setBottomValue(0)
-    }, [])
+        switch (pathname) {
+            case "/":
+                setBottomValue(0)
+                break
+            case "/subList":
+                setBottomValue(1)
+                break
+            case "/explore":
+                setBottomValue(2)
+                break
+            case "/setting":
+                setBottomValue(3)
+                break
+            default:
+                break
+        }
+    }, [pathname])
 
     return (
         <BottomNavigation
