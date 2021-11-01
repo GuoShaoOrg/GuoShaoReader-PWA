@@ -82,7 +82,7 @@ function CommonFeedListView(props) {
                     hasMore={hasMore}
                     endMessage={
                         <p style={{textAlign: 'center', color: 'grey'}}>
-                            <b>Yay! You have seen it all</b>
+                            <b>没有更多了</b>
                         </p>
                     }
                     refreshFunction={onPullRefresh}

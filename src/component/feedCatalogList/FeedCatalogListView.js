@@ -78,17 +78,17 @@ export default function FeedCatalogListView(props) {
                         hasMore={hasMore}
                         endMessage={
                             <p style={{textAlign: 'center', color: 'grey'}}>
-                                <b>Yay! You have seen it all</b>
+                                <b>没有更多了</b>
                             </p>
                         }
                         refreshFunction={onPullRefresh}
                         pullDownToRefresh={true}
                         pullDownToRefreshThreshold={50}
                         pullDownToRefreshContent={
-                            <h3 style={{textAlign: 'center', color: 'grey'}}>&#8595; Pull down to refresh</h3>
+                            <h3 style={{textAlign: 'center', color: 'grey'}}>&#8595; 下拉刷新</h3>
                         }
                         releaseToRefreshContent={
-                            <h3 style={{textAlign: 'center', color: 'grey'}}>&#8593; Release to refresh</h3>
+                            <h3 style={{textAlign: 'center', color: 'grey'}}>&#8593; 松开刷新</h3>
                         }
                     >
                         {dataSource.map((_, index) => (
