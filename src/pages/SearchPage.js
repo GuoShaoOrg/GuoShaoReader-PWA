@@ -83,7 +83,7 @@ function SearchPage() {
                 randomParams = {
                     start: 0,
                     size: 10,
-                    keyword: searchKeyword
+                    userId: userId
                 }
             }
             getRandomFeedItem(randomParams).then((resp) => {

@@ -63,6 +63,7 @@ function CommonFeedListView(props) {
         setLoading(true)
         fetchData(true, resp => {
             if (resp === undefined || resp === null || resp === []) {
+                setLoading(false)
                 setHasMore(false)
                 return
             }
