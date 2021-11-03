@@ -25,6 +25,7 @@ function CommonFeedItemView(props) {
 
     const history = useHistory()
     const data = props.data
+    const isTitleClickable = props.isTitleClickable
     const date = data.InputDate.slice(0, 10)
     const [author, setAuthor] = React.useState("")
     const [isSub, setIsSub] = React.useState(false)
@@ -48,6 +49,9 @@ function CommonFeedItemView(props) {
     }
 
     const onFeedTitleClick = () => {
+        if (!isTitleClickable) {
+            return
+        }
         history.push({
             pathname: '/feed/channel/' + data.ChannelId
         })
@@ -100,7 +104,9 @@ function CommonFeedItemView(props) {
     }
 
     const handlerShareClick = () => {
-        copy(data.Link)
+        let shareItemLink = process.env.REACT_APP_BASE_API + "share/feed/item/" + data.Id;
+        let shareText = data.Title + "\n" + shareItemLink
+        copy(shareText)
         Toast.show("链接已复制到剪贴板", "info")
     }
 

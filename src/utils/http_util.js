@@ -93,3 +93,9 @@ export const getMarkedFeedItemListByUserId = (data) => {
         process.env.REACT_APP_BASE_API + "rss/api/v1/feed/mark_feed_item_by_user_id";
     return instance.get(api_url, { params: data });
 }
+
+export const getFeedItemInfoById = (data) => {
+    let api_url =
+        process.env.REACT_APP_BASE_API + "rss/api/v1/feed/item_by_item_id";
+    return instance.get(api_url, { params: data });
+}
