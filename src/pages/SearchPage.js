@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CommonFeedItemView from "../component/feedCommomList/CommonFeedItemView";
-import {AppContext} from "./Home";
+import {AuthContext} from "./Home";
 import ScrollToTop from "react-scroll-to-top";
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import {alpha, AppBar, Button, Fab, InputBase, Toolbar} from "@material-ui/core";
@@ -159,7 +159,7 @@ function SearchPage() {
         })
     }, [])
 
-    const appContext = useContext(AppContext);
+    const authContext = useContext(AuthContext);
 
     return (
         <div>
@@ -186,7 +186,7 @@ function SearchPage() {
             <div id="searchScrollableDiv"
                  onScroll={toggleVisible}
                  style={{
-                     height: (appContext.GetCPageHeight() - searchBarHeight),
+                     height: (authContext.GetCPageHeight() - searchBarHeight),
                      marginTop: searchBarHeight,
                      overflowY: "scroll"
                  }}>
@@ -217,7 +217,7 @@ function SearchPage() {
                     </InfiniteScroll>
                 }
                 <Fab color="primary" size="small" onClick={scrollToTop}
-                     style={{position: "fixed", display: visible ? 'inline' : 'none',bottom: (appContext.GetBottomBarHeight() + 50), right: "60px", zIndex: 99}}>
+                     style={{position: "fixed", display: visible ? 'inline' : 'none',bottom: (authContext.GetBottomBarHeight() + 50), right: "60px", zIndex: 99}}>
                     <KeyboardArrowUpIcon />
                 </Fab>
             </div>

@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {getFeedChannelInfoById, getFeedItemByChannelId} from "../utils/http_util";
 import {getUserLoginInfo} from "../service/UserService";
-import {AppContext} from "./Home";
+import {AuthContext} from "./Home";
 import {
     Avatar, Box,
     Card, CardContent, Typography,
@@ -14,7 +14,7 @@ import CommonFeedListView from "../component/feedCommomList/CommonFeedListView";
 const FeedChannelPage = () => {
 
     const classes = useStyles();
-    const appContext = useContext(AppContext);
+    const authContext = useContext(AuthContext);
     const {channelId} = useParams()
     const [reqStart, setReqStart] = useState(0);
     const [channelInfo, setChannelInfo] = useState(0);
@@ -93,7 +93,7 @@ const FeedChannelPage = () => {
             <CommonFeedListView containerId={"FeedChannelPageCommonFeedListView"}
                                 fetchData={getFeedItemList}
                                 listHeader={<ListHeader/>}
-                                style={{height: appContext.GetCPageHeight(), overflowY: "scroll"}}/>
+                                style={{height: authContext.GetCPageHeight(), overflowY: "scroll"}}/>
         </div>
     )
 }

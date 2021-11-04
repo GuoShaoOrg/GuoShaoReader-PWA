@@ -4,7 +4,7 @@ import CommonFeedItemView from "./CommonFeedItemView";
 import {Fab} from "@material-ui/core";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import ListLoadingPlaceholder from "./ListLoadingPlaceholder";
-import {AppContext} from "../../pages/Home";
+import {AuthContext} from "../../pages/Home";
 
 function CommonFeedListView(props) {
 
@@ -71,7 +71,7 @@ function CommonFeedListView(props) {
             setLoading(false)
         })
     }, [])
-    const appContext = useContext(AppContext);
+    const authContext = useContext(AuthContext);
     return (
         <div id={containerId} onScroll={toggleVisible} style={style}>
             <>{listHeader}</>
@@ -102,7 +102,7 @@ function CommonFeedListView(props) {
                 </InfiniteScroll>
             }
             <Fab color="primary" size="small" onClick={scrollToTop}
-                 style={{position: "fixed", display: visible ? 'inline' : 'none',bottom: (appContext.GetBottomBarHeight() + 50), right: "60px", zIndex: 99}}>
+                 style={{position: "fixed", display: visible ? 'inline' : 'none',bottom: (authContext.GetBottomBarHeight() + 50), right: "60px", zIndex: 99}}>
                 <KeyboardArrowUpIcon />
             </Fab>
         </div>

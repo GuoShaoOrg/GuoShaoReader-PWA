@@ -4,7 +4,7 @@ import {storeUserLoginInfo} from "../service/UserService";
 import {makeStyles} from "@material-ui/core/styles";
 import {Button, TextField} from "@material-ui/core";
 import RssFeedIcon from '@material-ui/icons/RssFeed';
-import {AppContext} from "./Home";
+import {AuthContext} from "./Home";
 import {useHistory} from "react-router-dom";
 import Toast from "../component/Toast";
 
@@ -16,7 +16,7 @@ const RegisterPage = () => {
     const [password, setPassword] = useState();
     const [verifyPassword, setVerifyPassword] = useState();
     const [nickname, setNickname] = useState();
-    const appContext = useContext(AppContext);
+    const authContext = useContext(AuthContext);
     const onSetAccessValue = (event) => {
         setAccessValue(event.target.value)
     }
@@ -41,7 +41,7 @@ const RegisterPage = () => {
         register(params).then(res => {
             if (res.status === 200) {
                 storeUserLoginInfo(JSON.stringify(res.data.data))
-                appContext.Login(res.data.data.token)
+                authContext.Login(res.data.data.token)
                 history.push({
                     pathname: '/',
                 })

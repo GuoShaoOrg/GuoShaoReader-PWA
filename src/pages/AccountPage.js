@@ -5,17 +5,17 @@ import {makeStyles} from "@material-ui/core/styles";
 import {getUserLoginInfo} from "../service/UserService";
 import {AccessTimeOutlined, EmailOutlined, ExitToAppOutlined, MobileFriendlyOutlined} from "@material-ui/icons";
 import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
-import {AppContext} from "./Home";
+import {AuthContext} from "./Home";
 import {useHistory} from "react-router-dom";
 
 const AccountPage = () => {
     const classes = useStyles();
     const userInfo = JSON.parse(getUserLoginInfo())
-    const appContext = useContext(AppContext);
+    const authContext = useContext(AuthContext);
     const history = useHistory()
 
     const logout = () => {
-        appContext.LogOut()
+        authContext.LogOut()
         history.push({
             pathname: '/'
         })

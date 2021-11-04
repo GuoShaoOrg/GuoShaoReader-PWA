@@ -4,7 +4,7 @@ import {storeUserLoginInfo} from "../service/UserService";
 import {makeStyles} from "@material-ui/core/styles";
 import {Button, TextField} from "@material-ui/core";
 import RssFeedIcon from '@material-ui/icons/RssFeed';
-import {AppContext} from "./Home";
+import {AuthContext} from "./Home";
 import {useHistory} from "react-router-dom";
 import Toast from "../component/Toast";
 
@@ -14,7 +14,7 @@ const LoginPage = () => {
     const history = useHistory()
     const [accessValue, setAccessValue] = useState();
     const [password, setPassword] = useState();
-    const appContext = useContext(AppContext);
+    const authContext = useContext(AuthContext);
     const onSetAccessValue = (event) => {
         setAccessValue(event.target.value)
     }
@@ -30,7 +30,7 @@ const LoginPage = () => {
             .then((response) => {
                 let responseData = response.data;
                 storeUserLoginInfo(JSON.stringify(responseData.data))
-                appContext.Login(responseData.data.token)
+                authContext.Login(responseData.data.token)
                 history.push({
                     pathname: '/',
                 })

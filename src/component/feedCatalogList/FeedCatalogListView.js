@@ -1,13 +1,13 @@
 import React, {useContext, useEffect, useState} from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {AppContext} from "../../pages/Home";
+import {AuthContext} from "../../pages/Home";
 import FeedCatalogItemView from "./FeedCatalogItemView";
 import {Fab} from "@material-ui/core";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import ListLoadingPlaceholder from "../feedCommomList/ListLoadingPlaceholder";
 
 export default function FeedCatalogListView(props) {
-    const appContext = useContext(AppContext);
+    const authContext = useContext(AuthContext);
     const [dataSource, setDataSource] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const loadData = props.loadData
@@ -69,7 +69,7 @@ export default function FeedCatalogListView(props) {
 
     return(
         <div>
-            <div id="feedCatalogScrollableDiv" onScroll={toggleVisible} style={{height: appContext.GetCPageHeight(), overflowY: "scroll"}}>
+            <div id="feedCatalogScrollableDiv" onScroll={toggleVisible} style={{height: authContext.GetCPageHeight(), overflowY: "scroll"}}>
                 {loading?(<ListLoadingPlaceholder/>):
                     <InfiniteScroll
                         scrollableTarget={"feedCatalogScrollableDiv"}
@@ -97,7 +97,7 @@ export default function FeedCatalogListView(props) {
                     </InfiniteScroll>
                 }
                 <Fab color="primary" size="small" onClick={scrollToTop}
-                     style={{position: "fixed", display: visible ? 'inline' : 'none',bottom: (appContext.GetBottomBarHeight() + 50), right: "60px", zIndex: 99}}>
+                     style={{position: "fixed", display: visible ? 'inline' : 'none',bottom: (authContext.GetBottomBarHeight() + 50), right: "60px", zIndex: 99}}>
                     <KeyboardArrowUpIcon />
                 </Fab>
             </div>

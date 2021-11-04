@@ -3,8 +3,6 @@ import Home from './pages/Home'
 import Toast from "./component/Toast";
 import {createTheme, MuiThemeProvider} from "@material-ui/core";
 import {orange, purple} from "@material-ui/core/colors";
-import {BrowserRouter as Router, Route} from 'react-router-dom'
-import ShareFeedItemPage from "./pages/ShareFeedItemPage";
 import React from "react";
 
 const theme = createTheme({
@@ -22,10 +20,7 @@ function App() {
     return (
         <div className={"App"}>
             <MuiThemeProvider theme={theme}>
-                <Router>
-                    <Route path={"/share/feed/item/:itemId"} component={ShareFeedItemPage}/>
-                    <Route path={"/"} component={Home}/>
-                </Router>
+                <Home/>
                 <Toast ref={(ref) => {
                     Toast.setRef(ref)
                 }}/>

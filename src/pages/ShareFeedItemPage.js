@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {
     Avatar,
     Box, Button,
@@ -25,6 +25,7 @@ import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutline
 import Toast from "../component/Toast";
 import {orange} from "@material-ui/core/colors";
 import CommonFeedItemView from "../component/feedCommomList/CommonFeedItemView";
+import {AuthContext} from "./Home";
 
 const ShareFeedItemPage = () => {
 
@@ -32,6 +33,7 @@ const ShareFeedItemPage = () => {
     const history = useHistory()
 
     const {itemId} = useParams()
+    const authContext = useContext(AuthContext);
     const [author, setAuthor] = React.useState("")
     const [date, setDate] = React.useState("")
     const [itemHtml, setItemHtml] = React.useState("")
@@ -180,7 +182,7 @@ const ShareFeedItemPage = () => {
     }
 
     return (
-        <div>
+        <div style={{overflow: 'scroll',height: authContext.GetCPageHeight()}}>
             <Card className={classes.root}>
                 <CardActionArea>
                     <CardHeader
@@ -242,8 +244,6 @@ const ShareFeedItemPage = () => {
                 <CommonFeedItemView key={index} isTitleClickable={false} data={itemList[index]}/>
             ))}
         </div>
-
-
     )
 }
 

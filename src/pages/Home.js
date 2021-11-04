@@ -14,8 +14,9 @@ import FeedChannelPage from "./FeedChannelPage";
 import MarkedFeedItemPage from "./MarkedFeedItemPage";
 import AccountPage from "./AccountPage";
 import RegisterPage from "./RegisterPage";
+import ShareFeedItemPage from "./ShareFeedItemPage";
 
-export const AppContext = React.createContext(null);
+export const AuthContext = React.createContext(null);
 
 function Home() {
     const classes = useStyles();
@@ -68,7 +69,7 @@ function Home() {
 
 
     return (
-        <AppContext.Provider value={authContext}>
+        <AuthContext.Provider value={authContext}>
             <Router>
                 <div ref={containerRef} className={classes.container}>
                     <div ref={pageContainerRef} style={{height: pageHeight}}>
@@ -85,6 +86,7 @@ function Home() {
                             <Route exact path={"/feed/channel/:channelId"} component={FeedChannelPage}/>
                             <Route exact path={"/user/marked/item/"} component={MarkedFeedItemPage}/>
                             <Route exact path={"/account/info"} component={AccountPage}/>
+                            <Route path={"/share/feed/item/:itemId"} component={ShareFeedItemPage}/>
                         </CacheSwitch>
                     </div>
                     {state.token === "" || state.token === undefined || state.token === null ?
@@ -93,7 +95,7 @@ function Home() {
 
                 </div>
             </Router>
-        </AppContext.Provider>
+        </AuthContext.Provider>
     )
 }
 

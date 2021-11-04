@@ -2,11 +2,11 @@ import React, {useContext, useState} from "react";
 import {getMarkedFeedItemListByUserId} from "../utils/http_util";
 import {getUserLoginInfo} from "../service/UserService";
 import CommonFeedListView from "../component/feedCommomList/CommonFeedListView";
-import {AppContext} from "./Home";
+import {AuthContext} from "./Home";
 
 const MarkedFeedItemPage = () => {
 
-    const appContext = useContext(AppContext);
+    const authContext = useContext(AuthContext);
     const [reqStart, setReqStart] = useState(0);
     const userInfo = JSON.parse(getUserLoginInfo());
     const getMarkedFeedItemList = (refresh, callback) => {
@@ -44,7 +44,7 @@ const MarkedFeedItemPage = () => {
         <div>
             <CommonFeedListView containerId={"TimelineFeedPageCommonFeedListView"}
                                 fetchData={getMarkedFeedItemList}
-                                style={{height: appContext.GetCPageHeight(), overflowY: "scroll"}} />
+                                style={{height: authContext.GetCPageHeight(), overflowY: "scroll"}} />
         </div>
     )
 }
