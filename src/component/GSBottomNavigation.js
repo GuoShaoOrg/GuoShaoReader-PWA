@@ -19,7 +19,7 @@ const GSBottomNavigation = forwardRef((props, ref) => {
 
     useEffect(() => {
         switch (pathname) {
-            case "/":
+            case "/timeline":
                 setBottomValue(0)
                 break
             case "/subList":
@@ -44,7 +44,7 @@ const GSBottomNavigation = forwardRef((props, ref) => {
             showLabels
             className={classes.root}
         >
-            <BottomNavigationAction icon={<RssFeedIcon/>} component={Link} to={'/'}/>
+            <BottomNavigationAction icon={<RssFeedIcon/>} component={Link} to={'/timeline'}/>
             <BottomNavigationAction icon={<ListIcon/>} component={Link} to={'/subList'}/>
             <BottomNavigationAction icon={<SearchOutlinedIcon/>} component={Link} to={'/explore'}/>
             <BottomNavigationAction icon={<AccountCircleOutlinedIcon/>} component={Link} to={'/setting'}/>

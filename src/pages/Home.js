@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import {makeStyles} from '@material-ui/core/styles';
-import {BrowserRouter as Router, Route} from 'react-router-dom'
+import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom'
 import CacheRoute, {CacheSwitch} from 'react-router-cache-route'
 import GSBottomNavigation from "../component/GSBottomNavigation";
 import TimelineFeedPage from "./TimelineFeedPage";
@@ -73,7 +73,10 @@ function Home() {
                 <div ref={containerRef} className={classes.container}>
                     <div ref={pageContainerRef} style={{height: pageHeight}}>
                         <CacheSwitch>
-                            <CacheRoute exact path="/" component={TimelineFeedPage}/>
+                            <Route exact path="/">
+                                <Redirect to="/timeline" />
+                            </Route>
+                            <CacheRoute exact path="/timeline" component={TimelineFeedPage}/>
                             <CacheRoute exact path="/subList" component={SubFeedChannelItemPage}/>
                             <CacheRoute exact path="/explore" component={SearchPage}/>
                             <Route exact path={"/setting"} component={SettingPage}/>

@@ -23,8 +23,8 @@ function App() {
         <div className={"App"}>
             <MuiThemeProvider theme={theme}>
                 <Router>
-                    <Route exact path={"/share/feed/item/:itemId"} component={ShareFeedItemPage}/>
-                    <Route exact path={"/"} component={Home}/>
+                    <Route path={"/share/feed/item/:itemId"} component={ShareFeedItemPage}/>
+                    <Route path={"/"} component={Home}/>
                 </Router>
                 <Toast ref={(ref) => {
                     Toast.setRef(ref)

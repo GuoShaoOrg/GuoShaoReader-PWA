@@ -18,7 +18,7 @@ const GSBottomNavigationWithoutToken = forwardRef((props, ref) => {
 
     useEffect(() => {
         switch (pathname) {
-            case "/":
+            case "/timeline":
                 setBottomValue(0)
                 break
             case "/explore":
