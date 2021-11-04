@@ -49,7 +49,7 @@ function CommonFeedItemView(props) {
     }
 
     const onFeedTitleClick = () => {
-        if (!isTitleClickable) {
+        if (isTitleClickable !== undefined && isTitleClickable !== null && !isTitleClickable) {
             return
         }
         history.push({
