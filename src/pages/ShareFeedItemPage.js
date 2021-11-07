@@ -266,7 +266,6 @@ const useStyles = makeStyles((theme) => ({
         marginTop: "10px"
     },
     channelDescription: {
-        maxHeight: "300px",
         overflow: "scroll"
     }
 
