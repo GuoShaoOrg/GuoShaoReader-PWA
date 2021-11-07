@@ -19,6 +19,7 @@ import {markFeedItemByUserId, subFeedChannelById} from "../../utils/http_util";
 import {getUserLoginInfo} from "../../service/UserService";
 import {useHistory} from "react-router-dom";
 import copy from 'copy-to-clipboard';
+import {diffTime} from "../../utils/time_utils";
 
 function CommonFeedItemView(props) {
     const classes = useStyles();
@@ -26,7 +27,8 @@ function CommonFeedItemView(props) {
     const history = useHistory()
     const data = props.data
     const isTitleClickable = props.isTitleClickable
-    const date = data.InputDate.slice(0, 10)
+    const date = diffTime(data.InputDate, new Date())
+    // const date = data.InputDate.slice(0, 10)
     const [author, setAuthor] = React.useState("")
     const [isSub, setIsSub] = React.useState(false)
     const [isMarked, setIsMarked] = React.useState(false)

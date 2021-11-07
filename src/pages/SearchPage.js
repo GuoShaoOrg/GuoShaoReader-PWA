@@ -8,7 +8,6 @@ import {alpha, AppBar, Button, Fab, InputBase, Toolbar} from "@material-ui/core"
 import SearchIcon from "@material-ui/icons/Search";
 import {getRandomFeedItem, searchFeedItemByKeyword} from "../utils/http_util";
 import {makeStyles} from "@material-ui/core/styles";
-import ListItemPlaceholder from "../component/feedCommomList/ListItemPlaceholder";
 import {getUserLoginInfo} from "../service/UserService";
 import ListLoadingPlaceholder from "../component/feedCommomList/ListLoadingPlaceholder";
 
