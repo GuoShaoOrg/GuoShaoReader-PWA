@@ -15,6 +15,7 @@ import MarkedFeedItemPage from "./MarkedFeedItemPage";
 import AccountPage from "./AccountPage";
 import RegisterPage from "./RegisterPage";
 import ShareFeedItemPage from "./ShareFeedItemPage";
+import FeedItemDetailPage from "./FeedItemDetailPage";
 
 export const AuthContext = React.createContext(null);
 
@@ -86,7 +87,8 @@ function Home() {
                             <Route exact path={"/feed/channel/:channelId"} component={FeedChannelPage}/>
                             <Route exact path={"/user/marked/item/"} component={MarkedFeedItemPage}/>
                             <Route exact path={"/account/info"} component={AccountPage}/>
-                            <Route path={"/share/feed/item/:itemId"} component={ShareFeedItemPage}/>
+                            <Route path={"/s/f/:itemId"} component={ShareFeedItemPage}/>
+                            <Route path={"/feed/item/:itemId"} component={FeedItemDetailPage}/>
                         </CacheSwitch>
                     </div>
                     {state.token === "" || state.token === undefined || state.token === null ?

@@ -5,17 +5,15 @@ import {
     CardActionArea,
     CardActions,
     CardContent,
-    CardHeader,
+    CardHeader, CardMedia,
     IconButton,
     Typography
 } from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
-import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
-import parse from "html-react-parser";
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import Toast from "../Toast";
-import {markFeedItemByUserId, subFeedChannelById} from "../../utils/http_util";
+import {markFeedItemByUserId} from "../../utils/http_util";
 import {getUserLoginInfo} from "../../service/UserService";
 import {useHistory} from "react-router-dom";
 import copy from 'copy-to-clipboard';
@@ -30,24 +28,22 @@ function CommonFeedItemView(props) {
     const date = diffTime(data.InputDate, new Date())
     // const date = data.InputDate.slice(0, 10)
     const [author, setAuthor] = React.useState("")
-    const [isSub, setIsSub] = React.useState(false)
     const [isMarked, setIsMarked] = React.useState(false)
     const userInfo = JSON.parse(getUserLoginInfo());
 
     useEffect(() => {
-        if (data.Sub === 1) {
-            setIsSub(true)
-        }
         if (data.Marked === 1) {
             setIsMarked(true)
         }
         if (data.Author !== "") {
-            setAuthor("作者:"+data.Author)
+            setAuthor("作者:" + data.Author)
         }
     }, [])
 
     const onFeedLinkClick = () => {
-        window.open(data.Link)
+        history.push({
+            pathname: '/feed/item/' + data.Id
+        })
     }
 
     const onFeedTitleClick = () => {
@@ -56,31 +52,6 @@ function CommonFeedItemView(props) {
         }
         history.push({
             pathname: '/feed/channel/' + data.ChannelId
-        })
-    }
-
-    const handlerFollowClick = () => {
-        let uid = "";
-        if (userInfo !== null) {
-            uid = userInfo["uid"]
-        }
-        let params = {
-            UserId: uid,
-            ChannelId: data.ChannelId,
-        };
-
-        subFeedChannelById(params).then(res => {
-            if (res.status === 200) {
-                if (isSub) {
-                    setIsSub(false)
-                    Toast.show("取消订阅", "info")
-                } else {
-                    setIsSub(true)
-                    Toast.show("订阅成功", "info")
-                }
-            }
-        }).catch(err => {
-            console.log(err)
         })
     }
 
@@ -106,7 +77,7 @@ function CommonFeedItemView(props) {
     }
 
     const handlerShareClick = () => {
-        let shareItemLink = process.env.REACT_APP_BASE_API + "share/feed/item/" + data.Id;
+        let shareItemLink = process.env.REACT_APP_BASE_API + "s/f/" + data.Id;
         let shareText = data.Title + "\n" + shareItemLink
         copy(shareText)
         Toast.show("链接已复制到剪贴板", "info")
@@ -125,22 +96,18 @@ function CommonFeedItemView(props) {
                     className={classes.title}
                 />
                 <CardContent onClick={onFeedLinkClick}>
-                    <div className={classes.channelDescription}>
-                        {parse(data.ChannelDesc)}
-                    </div>
+                    {data.Thumbnail === '' ? <div/> :
+                        <CardMedia
+                            className={classes.channelDescription}
+                            component="img"
+                            image={data.Thumbnail}
+                            alt="thumbnail"
+                        />}
                     <Typography className={classes.dateText} variant="subtitle2"
                                 color="textSecondary">{date}&nbsp;&nbsp;{author}</Typography>
                 </CardContent>
             </CardActionArea>
             <CardActions disableSpacing>
-                {isSub ? <IconButton aria-label="follow" onClick={handlerFollowClick}>
-                    <PlaylistAddIcon color={"primary"}/>
-                </IconButton> : (
-                    <IconButton aria-label="follow" onClick={handlerFollowClick}>
-                        <PlaylistAddIcon/>
-                    </IconButton>
-                )}
-
                 <IconButton aria-label="favorite" onClick={handlerFavoriteClick}>
                     {isMarked ? <FavoriteBorderOutlinedIcon color={"primary"}/> : (
                         <FavoriteBorderOutlinedIcon/>
