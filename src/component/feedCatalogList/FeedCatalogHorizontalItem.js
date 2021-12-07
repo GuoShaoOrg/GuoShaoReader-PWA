@@ -19,12 +19,13 @@ export default function FeedCatalogHorizontalItem(props) {
         <Card className={classes.root}>
             <CardContent className={classes.media} onClick={onFeedLinkClick}>
                 <Typography gutterBottom variant="subtitle2">{itemData.Title}</Typography>
-                <CardMedia
-                    className={classes.channelDescription}
-                    component="img"
-                    image={itemData.Thumbnail}
-                    alt="thumbnail"
-                />
+                {itemData.Thumbnail === '' ? <div/> :
+                    <CardMedia
+                        className={classes.channelDescription}
+                        component="img"
+                        image={itemData.Thumbnail}
+                        alt="thumbnail"
+                    />}
                 <Typography className={classes.dateText} variant="subtitle2"
                             color="textSecondary">{date}</Typography>
             </CardContent>
