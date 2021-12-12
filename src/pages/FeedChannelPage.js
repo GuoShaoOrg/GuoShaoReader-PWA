@@ -58,7 +58,7 @@ const FeedChannelPage = () => {
             .then((res) => {
                 if (res.status === 200) {
                     setChannelInfo(res.data.data)
-                    if (channelInfo.Sub === 1) {
+                    if (res.data.data.Sub === 1) {
                         setIsSub(true)
                     } else {
                         setIsSub(false)
