@@ -1,29 +1,29 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {useHistory, useParams} from "react-router-dom";
 import {getUserLoginInfo} from "../service/UserService";
 import {
-    getFeedItemInfoById,
+    getFeedItemInfoById, markFeedItemByUserId,
 } from "../utils/http_util";
 import {AuthContext} from "./Home";
 import parse from "html-react-parser";
 import {
-    Avatar, Button,
+    Button,
     Card,
     CardActionArea,
     CardActions,
     CardContent,
-    CardHeader,
-    IconButton,
+    CardHeader, IconButton,
     Typography
 } from "@material-ui/core";
-import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
 import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
+import ShareOutlinedIcon from "@material-ui/icons/ShareOutlined";
+import Toast from "../component/Toast";
+import copy from "copy-to-clipboard";
 
 const FeedItemDetailPage = () => {
 
     const classes = useStyles();
-    const history = useHistory()
 
     const {itemId} = useParams()
     const authContext = useContext(AuthContext);
@@ -72,6 +72,32 @@ const FeedItemDetailPage = () => {
         window.open(itemData.Link)
     }
 
+    const handlerFavoriteClick = () => {
+        let params = {
+            UserId: userInfo["uid"],
+            ItemId: itemData.Id,
+        };
+
+        markFeedItemByUserId(params).then(res => {
+            if (res.status === 200) {
+                if (isMarked) {
+                    setIsMarked(false)
+                    Toast.show("取消收藏", "info")
+                } else {
+                    setIsMarked(true)
+                    Toast.show("已收藏", "info")
+                }
+            }
+        }).catch(err => {
+            console.log(err)
+        })
+    }
+
+    const handlerShareClick = () => {
+        copy(itemData.Link)
+        Toast.show("链接已复制到剪贴板", "info")
+    }
+
     return (
         <div style={{overflow: 'scroll', height: authContext.GetCPageHeight()}}>
             <Card className={classes.root}>
@@ -91,6 +117,16 @@ const FeedItemDetailPage = () => {
                     <CardActions>
                         <Button color={"primary"} size="small" onClick={toOriginalPage}>查看原文</Button>
                     </CardActions>
+                    <IconButton aria-label="favorite" onClick={handlerFavoriteClick}>
+                        {isMarked ? <FavoriteBorderOutlinedIcon color={"primary"}/> : (
+                            <FavoriteBorderOutlinedIcon/>
+                        )}
+                    </IconButton>
+
+
+                    <IconButton aria-label="share" onClick={handlerShareClick}>
+                        <ShareOutlinedIcon/>
+                    </IconButton>
                 </CardActionArea>
             </Card>
         </div>
