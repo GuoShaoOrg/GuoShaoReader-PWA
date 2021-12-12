@@ -8,7 +8,6 @@ import {
 } from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import ShareOutlinedIcon from "@material-ui/icons/ShareOutlined";
-import {getUserLoginInfo} from "../../service/UserService";
 import Toast from "../Toast";
 import {useHistory} from "react-router-dom";
 import copy from 'copy-to-clipboard';
@@ -17,7 +16,6 @@ export default function FeedCatalogItemView(props) {
     const classes = useStyles();
     const itemData = props.data
     const [subTitle, setSubTitle] = useState(itemData.ChannelDesc);
-    const userInfo = JSON.parse(getUserLoginInfo());
     const history = useHistory()
 
     const onFeedTitleClick = () => {
