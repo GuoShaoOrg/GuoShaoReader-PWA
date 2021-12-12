@@ -1,15 +1,16 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {getFeedChannelInfoById, getFeedItemByChannelId} from "../utils/http_util";
+import {getFeedChannelInfoById, getFeedItemByChannelId, subFeedChannelById} from "../utils/http_util";
 import {getUserLoginInfo} from "../service/UserService";
 import {AuthContext} from "./Home";
 import {
-    Avatar, Box,
+    Avatar, Box, Button,
     Card, CardContent, Typography,
 } from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {orange} from "@material-ui/core/colors";
 import CommonFeedListView from "../component/feedCommomList/CommonFeedListView";
+import Toast from "../component/Toast";
 
 const FeedChannelPage = () => {
 
@@ -18,6 +19,7 @@ const FeedChannelPage = () => {
     const {channelId} = useParams()
     const [reqStart, setReqStart] = useState(0);
     const [channelInfo, setChannelInfo] = useState(0);
+    const [isSub, setIsSub] = useState(false);
     const userInfo = JSON.parse(getUserLoginInfo());
 
     const getFeedItemList = (refresh, callback) => {
@@ -56,11 +58,41 @@ const FeedChannelPage = () => {
             .then((res) => {
                 if (res.status === 200) {
                     setChannelInfo(res.data.data)
+                    if (channelInfo.Sub === 1) {
+                        setIsSub(true)
+                    } else {
+                        setIsSub(false)
+                    }
                 }
             })
             .catch((err) => {
                 console.log(err);
             });
+    }
+
+    const subFeedChannel = () => {
+        let uid = "";
+        if (userInfo !== null) {
+            uid = userInfo["uid"]
+        }
+        let params = {
+            UserId: uid,
+            ChannelId: channelInfo.Id,
+        };
+
+        subFeedChannelById(params).then(res => {
+            if (res.status === 200) {
+                if (isSub) {
+                    setIsSub(false)
+                    Toast.show("取消订阅", "info")
+                } else {
+                    setIsSub(true)
+                    Toast.show("订阅成功", "info")
+                }
+            }
+        }).catch(err => {
+            console.log(err)
+        })
     }
 
     useEffect(() => {
@@ -83,6 +115,18 @@ const FeedChannelPage = () => {
                     <Typography style={{textAlign: "center", color: "gray"}} variant="body2" color="textSecondary">
                         文章 {channelInfo.Count}
                     </Typography>
+                    <Box style={{width: '100%'}}>
+                        {isSub
+                            ?
+                            <Button onClick={subFeedChannel} className={classes.subBtn} variant="contained">
+                                取消订阅
+                            </Button>
+                            :
+                            <Button onClick={subFeedChannel} className={classes.subBtn} variant="contained" color="primary">
+                                订阅
+                            </Button>
+                        }
+                    </Box>
                 </CardContent>
             </Card>
         )
@@ -119,6 +163,11 @@ const useStyles = makeStyles((theme) => ({
     channelDescription: {
         maxHeight: "300px",
         overflow: "scroll"
+    },
+    subBtn: {
+        display: "table",
+        margin: '0 auto',
+        marginTop: '10px',
     }
 
 }));
