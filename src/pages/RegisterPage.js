@@ -1,5 +1,5 @@
 import React, {useContext, useState} from "react";
-import getHttpInstance, {register, subFeedChannelById} from "../utils/http_util";
+import {register} from "../utils/http_util";
 import {storeUserLoginInfo} from "../service/UserService";
 import {makeStyles} from "@material-ui/core/styles";
 import {Button, TextField} from "@material-ui/core";

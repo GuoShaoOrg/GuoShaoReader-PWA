@@ -4,10 +4,8 @@ import {
     Box, Button,
     Card,
     CardActionArea,
-    CardActions,
     CardContent,
     CardHeader,
-    IconButton,
     Typography
 } from "@material-ui/core";
 import parse from "html-react-parser";
@@ -17,12 +15,7 @@ import {getUserLoginInfo} from "../service/UserService";
 import {
     getFeedChannelInfoById, getFeedItemByChannelId,
     getFeedItemInfoById,
-    markFeedItemByUserId,
-    subFeedChannelById
 } from "../utils/http_util";
-import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
-import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
-import Toast from "../component/Toast";
 import {orange} from "@material-ui/core/colors";
 import CommonFeedItemView from "../component/feedCommomList/CommonFeedItemView";
 import {AuthContext} from "./Home";
@@ -37,8 +30,6 @@ const ShareFeedItemPage = () => {
     const [author, setAuthor] = React.useState("")
     const [date, setDate] = React.useState("")
     const [itemHtml, setItemHtml] = React.useState("")
-    const [isSub, setIsSub] = React.useState(false)
-    const [isMarked, setIsMarked] = React.useState(false)
     const [itemData, setItemData] = React.useState({})
     const [channelInfo, setChannelInfo] = useState({});
     const [itemList, setItemList] = useState([]);
@@ -62,12 +53,6 @@ const ShareFeedItemPage = () => {
             if (res.status === 200) {
                 let itemInfoData = res.data.data
                 setItemData(itemInfoData)
-                if (itemInfoData.Sub === 1) {
-                    setIsSub(true)
-                }
-                if (itemInfoData.Marked === 1) {
-                    setIsMarked(true)
-                }
                 if (itemInfoData.Author !== "") {
                     setAuthor("作者:" + itemInfoData.Author)
                 }
@@ -103,54 +88,8 @@ const ShareFeedItemPage = () => {
             });
     }
 
-    const handlerFollowClick = () => {
-        let uid = "";
-        if (userInfo !== null) {
-            uid = userInfo["uid"]
-        }
-        let params = {
-            UserId: uid,
-            ChannelId: itemData.ChannelId,
-        };
-
-        subFeedChannelById(params).then(res => {
-            if (res.status === 200) {
-                if (isSub) {
-                    setIsSub(false)
-                    Toast.show("取消订阅", "info")
-                } else {
-                    setIsSub(true)
-                    Toast.show("订阅成功", "info")
-                }
-            }
-        }).catch(err => {
-            console.log(err)
-        })
-    }
-
     const onFeedLinkClick = () => {
         window.open(itemData.Link)
-    }
-
-    const handlerFavoriteClick = () => {
-        let params = {
-            UserId: userInfo["uid"],
-            ItemId: itemData.Id,
-        };
-
-        markFeedItemByUserId(params).then(res => {
-            if (res.status === 200) {
-                if (isMarked) {
-                    setIsMarked(false)
-                    Toast.show("取消收藏", "info")
-                } else {
-                    setIsMarked(true)
-                    Toast.show("已收藏", "info")
-                }
-            }
-        }).catch(err => {
-            console.log(err)
-        })
     }
 
     const getFeedItemList = (channelId) => {
@@ -202,21 +141,6 @@ const ShareFeedItemPage = () => {
                                     color="textSecondary">{date}&nbsp;&nbsp;{author}</Typography>
                     </CardContent>
                 </CardActionArea>
-                <CardActions disableSpacing>
-                    {isSub ? <IconButton aria-label="follow" onClick={handlerFollowClick}>
-                        <PlaylistAddIcon color={"primary"}/>
-                    </IconButton> : (
-                        <IconButton aria-label="follow" onClick={handlerFollowClick}>
-                            <PlaylistAddIcon/>
-                        </IconButton>
-                    )}
-
-                    <IconButton aria-label="favorite" onClick={handlerFavoriteClick}>
-                        {isMarked ? <FavoriteBorderOutlinedIcon color={"primary"}/> : (
-                            <FavoriteBorderOutlinedIcon/>
-                        )}
-                    </IconButton>
-                </CardActions>
             </Card>
 
             <Box sx={{mx: 'auto', color: '#fff', width: 300, p: 1, m: 1, borderRadius: 1, textAlign: 'center',}}>
