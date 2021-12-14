@@ -94,7 +94,9 @@ const FeedItemDetailPage = () => {
     }
 
     const handlerShareClick = () => {
-        copy(itemData.Link)
+        let shareItemLink = process.env.REACT_APP_BASE_API + "s/f/" + itemData.Id;
+        let shareText = itemData.Title + "\n" + shareItemLink
+        copy(shareText)
         Toast.show("链接已复制到剪贴板", "info")
     }
 
