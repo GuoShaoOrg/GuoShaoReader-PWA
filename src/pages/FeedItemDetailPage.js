@@ -1,11 +1,11 @@
-import React, {useContext, useEffect} from "react";
-import {makeStyles} from "@material-ui/core/styles";
-import {useHistory, useParams} from "react-router-dom";
-import {getUserLoginInfo} from "../service/UserService";
+import React, { useContext, useEffect, useWindowDimensions } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { useHistory, useParams } from "react-router-dom";
+import { getUserLoginInfo } from "../service/UserService";
 import {
     getFeedItemInfoById, markFeedItemByUserId,
 } from "../utils/http_util";
-import {AuthContext} from "./Home";
+import { AuthContext } from "./Home";
 import parse from "html-react-parser";
 import {
     Button,
@@ -25,7 +25,7 @@ const FeedItemDetailPage = () => {
 
     const classes = useStyles();
 
-    const {itemId} = useParams()
+    const { itemId } = useParams()
     const authContext = useContext(AuthContext);
     const [author, setAuthor] = React.useState("")
     const [date, setDate] = React.useState("")
@@ -37,6 +37,17 @@ const FeedItemDetailPage = () => {
     useEffect(() => {
         getItemInfo()
     }, [])
+
+
+    const optimizeImg = () => {
+        const img = document.querySelectorAll("img")
+        img.forEach(item => {
+            console.log(item.width)
+            if (item.width > window.innerWidth) {
+                item.style.width = "100%"
+            }
+        })
+    }
 
     const getItemInfo = () => {
         let uid = "";
@@ -61,7 +72,9 @@ const FeedItemDetailPage = () => {
 
                 setDate(itemInfoData.InputDate.slice(0, 10))
                 setItemHtml(itemInfoData.ChannelDesc)
-                console.log(itemInfoData)
+                setTimeout(() => {
+                    optimizeImg()
+                }, 500);
             }
         }).catch(err => {
             console.log(err)
@@ -101,7 +114,7 @@ const FeedItemDetailPage = () => {
     }
 
     return (
-        <div style={{overflow: 'scroll', height: authContext.GetCPageHeight()}}>
+        <div style={{ overflow: 'scroll', height: authContext.GetCPageHeight() }}>
             <Card className={classes.root}>
                 <CardActionArea>
                     <CardHeader
@@ -111,7 +124,7 @@ const FeedItemDetailPage = () => {
                     />
                     <CardContent>
                         <Typography className={classes.dateText} variant="subtitle2"
-                                    color="textSecondary">{date}&nbsp;&nbsp;{author}</Typography>
+                            color="textSecondary">{date}&nbsp;&nbsp;{author}</Typography>
                         <div className={classes.channelDescription}>
                             {parse(itemHtml)}
                         </div>
@@ -120,14 +133,14 @@ const FeedItemDetailPage = () => {
                         <Button color={"primary"} size="small" onClick={toOriginalPage}>查看原文</Button>
                     </CardActions>
                     <IconButton aria-label="favorite" onClick={handlerFavoriteClick}>
-                        {isMarked ? <FavoriteBorderOutlinedIcon color={"primary"}/> : (
-                            <FavoriteBorderOutlinedIcon/>
+                        {isMarked ? <FavoriteBorderOutlinedIcon color={"primary"} /> : (
+                            <FavoriteBorderOutlinedIcon />
                         )}
                     </IconButton>
 
 
                     <IconButton aria-label="share" onClick={handlerShareClick}>
-                        <ShareOutlinedIcon/>
+                        <ShareOutlinedIcon />
                     </IconButton>
                 </CardActionArea>
             </Card>
