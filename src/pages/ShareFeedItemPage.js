@@ -39,6 +39,16 @@ const ShareFeedItemPage = () => {
         getItemInfo()
     }, [])
 
+    const optimizeImg = () => {
+        const img = document.querySelectorAll("*")
+        img.forEach(item => {
+            if (item.width > window.innerWidth) {
+                item.style.maxWidth = "100%"
+                item.style.height = "auto"
+            }
+        })
+    }
+
     const getItemInfo = () => {
         let uid = "";
         if (userInfo !== null) {
@@ -62,6 +72,9 @@ const ShareFeedItemPage = () => {
                 console.log(itemInfoData)
                 getFeedChannelInfo(itemInfoData.ChannelId)
                 getFeedItemList(itemInfoData.ChannelId)
+                setTimeout(() => {
+                    optimizeImg()
+                }, 500);
             }
         }).catch(err => {
             console.log(err)
