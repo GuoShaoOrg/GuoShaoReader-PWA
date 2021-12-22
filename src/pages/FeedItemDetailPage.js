@@ -40,9 +40,14 @@ const FeedItemDetailPage = () => {
 
 
     const optimizeImg = () => {
-        const img = document.querySelectorAll("*")
+        const img = document.querySelectorAll("img")
         img.forEach(item => {
-            if (item.width > window.innerWidth) {
+            item.style.maxWidth = "100%"
+            item.style.height = "auto"
+        })
+        const divs = document.querySelectorAll("div")
+        divs.forEach(item => {
+            if (item.style.width.replace("px", "") > window.innerWidth) {
                 item.style.maxWidth = "100%"
                 item.style.height = "auto"
             }

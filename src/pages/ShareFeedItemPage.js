@@ -40,12 +40,10 @@ const ShareFeedItemPage = () => {
     }, [])
 
     const optimizeImg = () => {
-        const img = document.querySelectorAll("*")
+        const img = document.querySelectorAll("img")
         img.forEach(item => {
-            if (item.width > window.innerWidth) {
-                item.style.maxWidth = "100%"
-                item.style.height = "auto"
-            }
+            item.style.maxWidth = "100%"
+            item.style.height = "auto"
         })
     }
 
