@@ -95,6 +95,7 @@ function CommonFeedItemView(props) {
                     className={classes.title}
                 />
                 <CardContent onClick={onFeedLinkClick}>
+                    <meta name="referrer" content="no-referrer" />
                     {data.Thumbnail === '' ? <div/> :
                         <CardMedia
                             className={classes.channelDescription}
