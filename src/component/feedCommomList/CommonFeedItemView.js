@@ -88,9 +88,8 @@ function CommonFeedItemView(props) {
             <CardActionArea>
                 <CardHeader
                     avatar={
-                        <Avatar aria-label="rss" className={classes.avatar} src={data.ChannelImageUrl}/>
+                        <Avatar onClick={onFeedTitleClick} aria-label="rss" className={classes.avatar} src={data.ChannelImageUrl}/>
                     }
-                    onClick={onFeedTitleClick}
                     title={data.Title}
                     subheader={data.ChannelTitle}
                     className={classes.title}
