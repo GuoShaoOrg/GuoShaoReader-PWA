@@ -101,7 +101,7 @@ function CommonFeedItemView(props) {
                             className={classes.channelDescription}
                             component="img"
                             image={data.Thumbnail}
-                            alt="thumbnail"
+                            alt=""
                         />}
                     <Typography className={classes.dateText} variant="subtitle2"
                                 color="textSecondary">{date}&nbsp;&nbsp;{author}</Typography>

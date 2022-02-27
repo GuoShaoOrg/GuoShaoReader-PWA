@@ -123,7 +123,7 @@ const FeedItemDetailPage = () => {
     return (
         <div style={{overflow: 'scroll', height: authContext.GetCPageHeight()}}>
             <Container>
-                <img src={thumbnail} alt={""}/>
+                <img src={thumbnail} alt={""} style={{width:"100%"}}/>
                 <Typography variant="h5" component="div" gutterBottom>
                     {itemData.Title}
                 </Typography>
@@ -158,18 +158,6 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: '2%',
         marginRight: '2%',
         marginBottom: '8px'
-    },
-    title: {},
-    media: {
-        height: 0,
-        paddingTop: '56.25%', // 16:9
-    },
-    avatar: {
-        backgroundColor: "transparent",
-    },
-    dateText: {
-        marginTop: "10px",
-        marginBottom: "20px"
     },
     channelDescription: {
         overflow: "scroll"
