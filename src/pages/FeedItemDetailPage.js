@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useWindowDimensions } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { useHistory, useParams } from "react-router-dom";
-import { getUserLoginInfo } from "../service/UserService";
+import React, {useContext, useEffect, useWindowDimensions} from "react";
+import {makeStyles} from "@material-ui/core/styles";
+import {useHistory, useParams} from "react-router-dom";
+import {getUserLoginInfo} from "../service/UserService";
 import {
     getFeedItemInfoById, markFeedItemByUserId,
 } from "../utils/http_util";
-import { AuthContext } from "./Home";
+import {AuthContext} from "./Home";
 import parse from "html-react-parser";
 import {
     Button,
@@ -13,7 +13,7 @@ import {
     CardActionArea,
     CardActions,
     CardContent,
-    CardHeader, IconButton,
+    CardHeader, Container, IconButton,
     Typography
 } from "@material-ui/core";
 import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
@@ -25,14 +25,15 @@ const FeedItemDetailPage = () => {
 
     const classes = useStyles();
 
-    const { itemId } = useParams()
+    const {itemId} = useParams()
     const authContext = useContext(AuthContext);
     const [author, setAuthor] = React.useState("")
     const [date, setDate] = React.useState("")
     const [itemHtml, setItemHtml] = React.useState("")
+    const [thumbnail, setThumbnail] = React.useState("")
     const [isMarked, setIsMarked] = React.useState(false)
-    const [itemData, setItemData] = React.useState({})
     const userInfo = JSON.parse(getUserLoginInfo());
+    const [itemData, setItemData] = React.useState({})
 
     useEffect(() => {
         getItemInfo()
@@ -77,6 +78,7 @@ const FeedItemDetailPage = () => {
 
                 setDate(itemInfoData.InputDate.slice(0, 10))
                 setItemHtml(itemInfoData.ChannelDesc)
+                setThumbnail(itemInfoData.Thumbnail)
                 setTimeout(() => {
                     optimizeImg()
                 }, 500);
@@ -119,36 +121,33 @@ const FeedItemDetailPage = () => {
     }
 
     return (
-        <div style={{ overflow: 'scroll', height: authContext.GetCPageHeight() }}>
-            <Card className={classes.root}>
-                <CardActionArea>
-                    <CardHeader
-                        title={itemData.Title}
-                        subheader={itemData.ChannelTitle}
-                        className={classes.title}
-                    />
-                    <CardContent>
-                        <Typography className={classes.dateText} variant="subtitle2"
-                            color="textSecondary">{date}&nbsp;&nbsp;{author}</Typography>
-                        <div className={classes.channelDescription}>
-                            {parse(itemHtml)}
-                        </div>
-                    </CardContent>
-                    <CardActions>
-                        <Button color={"primary"} size="small" onClick={toOriginalPage}>查看原文</Button>
-                    </CardActions>
-                    <IconButton aria-label="favorite" onClick={handlerFavoriteClick}>
-                        {isMarked ? <FavoriteBorderOutlinedIcon color={"primary"} /> : (
-                            <FavoriteBorderOutlinedIcon />
-                        )}
-                    </IconButton>
+        <div style={{overflow: 'scroll', height: authContext.GetCPageHeight()}}>
+            <Container>
+                <img src={thumbnail} alt={""}/>
+                <Typography variant="h5" component="div" gutterBottom>
+                    {itemData.Title}
+                </Typography>
+                <Typography variant="subtitle2" gutterBottom component="div" style={{"color": "#9e9e9e"}}>
+                    {itemData.ChannelTitle}
+                </Typography>
+                <Typography variant="caption" display="block" gutterBottom style={{"color": "#9e9e9e"}}>
+                    {date}&nbsp;&nbsp;{author}
+                </Typography>
+                <div className={classes.channelDescription}>
+                    {parse(itemHtml)}
+                </div>
 
+                <IconButton aria-label="favorite" onClick={handlerFavoriteClick}>
+                    {isMarked ? <FavoriteBorderOutlinedIcon color={"primary"}/> : (
+                        <FavoriteBorderOutlinedIcon/>
+                    )}
+                </IconButton>
+                <IconButton aria-label="share" onClick={handlerShareClick}>
+                    <ShareOutlinedIcon/>
+                </IconButton>
+                <Button color={"primary"} size="small" onClick={toOriginalPage}>查看原文</Button>
+            </Container>
 
-                    <IconButton aria-label="share" onClick={handlerShareClick}>
-                        <ShareOutlinedIcon />
-                    </IconButton>
-                </CardActionArea>
-            </Card>
         </div>
     )
 }
