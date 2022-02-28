@@ -1,6 +1,6 @@
-import React, {useContext, useEffect, useWindowDimensions} from "react";
+import React, {useContext, useEffect} from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import {useHistory, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {getUserLoginInfo} from "../service/UserService";
 import {
     getFeedItemInfoById, markFeedItemByUserId,
@@ -9,11 +9,7 @@ import {AuthContext} from "./Home";
 import parse from "html-react-parser";
 import {
     Button,
-    Card,
-    CardActionArea,
-    CardActions,
-    CardContent,
-    CardHeader, Container, IconButton,
+    Container, Divider, IconButton,
     Typography
 } from "@material-ui/core";
 import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
@@ -122,8 +118,8 @@ const FeedItemDetailPage = () => {
 
     return (
         <div style={{overflow: 'scroll', height: authContext.GetCPageHeight()}}>
+            <img src={thumbnail} alt={""} style={{width: "100%"}}/>
             <Container>
-                <img src={thumbnail} alt={""} style={{width:"100%"}}/>
                 <Typography variant="h5" component="div" gutterBottom>
                     {itemData.Title}
                 </Typography>
@@ -137,17 +133,18 @@ const FeedItemDetailPage = () => {
                     {parse(itemHtml)}
                 </div>
 
-                <IconButton aria-label="favorite" onClick={handlerFavoriteClick}>
-                    {isMarked ? <FavoriteBorderOutlinedIcon color={"primary"}/> : (
-                        <FavoriteBorderOutlinedIcon/>
-                    )}
-                </IconButton>
-                <IconButton aria-label="share" onClick={handlerShareClick}>
-                    <ShareOutlinedIcon/>
-                </IconButton>
-                <Button color={"primary"} size="small" onClick={toOriginalPage}>查看原文</Button>
             </Container>
 
+            <IconButton aria-label="favorite" onClick={handlerFavoriteClick}>
+                {isMarked ? <FavoriteBorderOutlinedIcon color={"primary"}/> : (
+                    <FavoriteBorderOutlinedIcon/>
+                )}
+            </IconButton>
+            <IconButton aria-label="share" onClick={handlerShareClick}>
+                <ShareOutlinedIcon/>
+            </IconButton>
+            <Button color={"primary"} size="small" onClick={toOriginalPage}>查看原文</Button>
+            <Divider variant="middle"/>
         </div>
     )
 }
