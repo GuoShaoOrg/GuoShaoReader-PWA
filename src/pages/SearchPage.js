@@ -17,7 +17,6 @@ function SearchPage() {
     const [hasMore, setHasMore] = useState(true);
     const [dataSource, setDataSource] = useState([]);
     const searchBarRef = useRef(null)
-    const [searchBarHeight, setSearchBarHeight] = useState(0)
     const [loading, setLoading] = useState(true);
     const [searchKeyword, setSearchKeyword] = useState("")
     const [preSearchKeyword, setPreSearchKeyword] = useState("")
@@ -26,7 +25,6 @@ function SearchPage() {
     const userInfo = JSON.parse(getUserLoginInfo());
 
     useEffect(() => {
-        setSearchBarHeight(searchBarRef.current.clientHeight)
     }, [])
 
     const onSearchClick = () => {
@@ -185,8 +183,7 @@ function SearchPage() {
             <div id="searchScrollableDiv"
                  onScroll={toggleVisible}
                  style={{
-                     height: (authContext.GetCPageHeight() - searchBarHeight),
-                     marginTop: searchBarHeight,
+                     height: (authContext.GetCPageHeight()),
                      overflowY: "scroll"
                  }}>
                 {loading?(<ListLoadingPlaceholder/>):
@@ -216,7 +213,7 @@ function SearchPage() {
                     </InfiniteScroll>
                 }
                 <Fab color="primary" size="small" onClick={scrollToTop}
-                     style={{position: "fixed", display: visible ? 'inline' : 'none',bottom: (authContext.GetBottomBarHeight() + 50), right: "60px", zIndex: 99}}>
+                    style={{ position: "fixed", display: visible ? 'inline' : 'none', bottom: (authContext.GetTopbarHeight() + 50), right: "60px", zIndex: 99}}>
                     <KeyboardArrowUpIcon />
                 </Fab>
             </div>

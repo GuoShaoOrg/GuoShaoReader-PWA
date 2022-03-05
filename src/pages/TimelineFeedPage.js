@@ -59,7 +59,7 @@ function TimelineFeedPage() {
         <div>
             <CommonFeedListView containerId={"TimelineFeedPageCommonFeedListView"}
                                 fetchData={fetchData}
-                                style={{height: authContext.GetCPageHeight(), overflowY: "scroll"}} />
+                                style={{height: authContext.GetCPageHeight(), overflowY: "scroll", marginTop:5}} />
         </div>
     );
 }

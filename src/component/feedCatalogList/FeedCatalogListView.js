@@ -69,7 +69,7 @@ export default function FeedCatalogListView(props) {
 
     return(
         <div>
-            <div id="feedCatalogScrollableDiv" onScroll={toggleVisible} style={{height: authContext.GetCPageHeight(), overflowY: "scroll"}}>
+            <div id="feedCatalogScrollableDiv" onScroll={toggleVisible} style={{ height: authContext.GetCPageHeight(), overflowY: "scroll", marginTop: 5}}>
                 {loading?(<ListLoadingPlaceholder/>):
                     <InfiniteScroll
                         scrollableTarget={"feedCatalogScrollableDiv"}
@@ -97,7 +97,7 @@ export default function FeedCatalogListView(props) {
                     </InfiniteScroll>
                 }
                 <Fab color="primary" size="small" onClick={scrollToTop}
-                     style={{position: "fixed", display: visible ? 'inline' : 'none',bottom: (authContext.GetBottomBarHeight() + 50), right: "60px", zIndex: 99}}>
+                    style={{ position: "fixed", display: visible ? 'inline' : 'none', bottom: (authContext.GetTopbarHeight() + 50), right: "60px", zIndex: 99}}>
                     <KeyboardArrowUpIcon />
                 </Fab>
             </div>

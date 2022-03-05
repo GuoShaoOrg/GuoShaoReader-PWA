@@ -102,7 +102,7 @@ function CommonFeedListView(props) {
                 </InfiniteScroll>
             }
             <Fab color="primary" size="small" onClick={scrollToTop}
-                 style={{position: "fixed", display: visible ? 'inline' : 'none',bottom: (authContext.GetBottomBarHeight() + 50), right: "60px", zIndex: 99}}>
+                style={{ position: "fixed", display: visible ? 'inline' : 'none', bottom: (authContext.GetTopbarHeight() + 50), right: "60px", zIndex: 99}}>
                 <KeyboardArrowUpIcon />
             </Fab>
         </div>
