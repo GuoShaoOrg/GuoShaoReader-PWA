@@ -6,7 +6,9 @@ import {
     CardActionArea,
     CardContent,
     CardHeader,
-    Typography
+    Typography,
+    Container,
+    Divider
 } from "@material-ui/core";
 import parse from "html-react-parser";
 import {makeStyles} from "@material-ui/core/styles";
@@ -34,6 +36,7 @@ const ShareFeedItemPage = () => {
     const [channelInfo, setChannelInfo] = useState({});
     const [itemList, setItemList] = useState([]);
     const userInfo = JSON.parse(getUserLoginInfo());
+    const [thumbnail, setThumbnail] = React.useState("")
 
     useEffect(() => {
         getItemInfo()
@@ -77,6 +80,7 @@ const ShareFeedItemPage = () => {
                 console.log(itemInfoData)
                 getFeedChannelInfo(itemInfoData.ChannelId)
                 getFeedItemList(itemInfoData.ChannelId)
+                setThumbnail(itemInfoData.Thumbnail)
                 setTimeout(() => {
                     optimizeImg()
                 }, 500);
@@ -140,26 +144,23 @@ const ShareFeedItemPage = () => {
 
     return (
         <div style={{overflow: 'scroll',height: authContext.GetCPageHeight()}}>
-            <Card className={classes.root}>
-                <CardActionArea>
-                    <CardHeader
-                        avatar={
-                            <Avatar aria-label="rss" className={classes.avatar} src={itemData.ChannelImageUrl}/>
-                        }
+            <img src={thumbnail} alt={""} style={{ width: "100%" }} />
+            <Container>
+                <Typography variant="h5" component="div" gutterBottom>
+                    {itemData.Title}
+                </Typography>
+                <Typography variant="subtitle2" gutterBottom component="div" style={{ "color": "#9e9e9e" }}>
+                    {itemData.ChannelTitle}
+                </Typography>
+                <Typography variant="caption" display="block" gutterBottom style={{ "color": "#9e9e9e" }}>
+                    {date}&nbsp;&nbsp;{author}
+                </Typography>
+                <div className={classes.channelDescription}>
+                    {parse(itemHtml)}
+                </div>
 
-                        title={itemData.Title}
-                        subheader={itemData.ChannelTitle}
-                        className={classes.title}
-                    />
-                    <CardContent onClick={onFeedLinkClick}>
-                        <div className={classes.channelDescription}>
-                            {parse(itemHtml)}
-                        </div>
-                        <Typography className={classes.dateText} variant="subtitle2"
-                                    color="textSecondary">{date}&nbsp;&nbsp;{author}</Typography>
-                    </CardContent>
-                </CardActionArea>
-            </Card>
+            </Container>
+            <Divider variant="middle" />
 
             <Box sx={{mx: 'auto', color: '#fff', width: 300, p: 1, m: 1, borderRadius: 1, textAlign: 'center',}}>
                 <Button variant="text" style={{width: 300, color: orange[500]}} onClick={toHomePage}>点击到主页查看更多</Button>
