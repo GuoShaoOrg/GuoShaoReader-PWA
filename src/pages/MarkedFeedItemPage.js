@@ -33,6 +33,7 @@ const MarkedFeedItemPage = () => {
             .then((res) => {
                 if (res.status === 200) {
                     callback(res.data.data)
+                    setReqStart((prevState) => prevState + 10);
                 }
             })
             .catch((err) => {
@@ -44,7 +45,7 @@ const MarkedFeedItemPage = () => {
         <div>
             <CommonFeedListView containerId={"TimelineFeedPageCommonFeedListView"}
                                 fetchData={getMarkedFeedItemList}
-                                style={{height: authContext.GetCPageHeight(), overflowY: "scroll"}} />
+                                style={{height: authContext.GetCPageHeight(), overflowY: "scroll", marginTop: 5}} />
         </div>
     )
 }

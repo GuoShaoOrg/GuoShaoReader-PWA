@@ -23,6 +23,14 @@ const GSTopDrawer = forwardRef((props, ref) => {
         setOpen(false);
     }
 
+    const getUserName = () => {
+        if (userInfo === null || userInfo === undefined || userInfo === "") {
+            return "";
+        } else {
+            return userInfo["username"]
+        }
+    }
+
     const itemClickHandler = (pageName) => {
         console.log("pageName:", pageName);
         switch (pageName) {
@@ -61,6 +69,12 @@ const GSTopDrawer = forwardRef((props, ref) => {
                     pathname: '/user/marked/item/'
                 })
                 break;
+
+            case "login":
+                history.push({
+                    pathname: '/login'
+                })
+                break;
             default:
                 break;
         }
@@ -79,16 +93,26 @@ const GSTopDrawer = forwardRef((props, ref) => {
                     <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={() => setOpen(true)}>
                         <Menu />
                     </IconButton>
+                    <Typography variant="subtitle2" className={classes.title}>{authContext.GetTopBarTitle()}</Typography>
                 </Toolbar>
             </AppBar>
             <Drawer anchor="left" open={open} onClose={handleDrawerClose}>
-                <Box sx={{ width: authContext.GetCPageWidth()*0.8 }} role="presentation" onClick={handleDrawerClose} onKeyDown={handleDrawerClose}>
-                    <Paper className={classes.account} onClick={() => itemClickHandler("account")}>
-                        <div className={classes.avatar}>
-                            <Avatar alt="Remy Sharp" src="">GS</Avatar>
-                        </div>
-                        <div className={classes.username}>{userInfo["username"]}</div>
-                    </Paper>
+                <Box sx={{ width: authContext.GetCPageWidth() * 0.8 }} role="presentation" onClick={handleDrawerClose} onKeyDown={handleDrawerClose}>
+                    {
+                        authContext.IsLogin() ?
+                            <Paper className={classes.account} onClick={() => itemClickHandler("account")}>
+                                <div className={classes.avatar}>
+                                    <Avatar alt="Remy Sharp" src="">GS</Avatar>
+                                </div>
+                                <div className={classes.username}>{getUserName()}</div>
+                            </Paper>
+                            :
+                            <Paper className={classes.account} onClick={() => itemClickHandler("login")}>
+                                <div className={classes.avatar}>
+                                    <Avatar alt="Remy Sharp" src="">GS</Avatar>
+                                </div>
+                                <div className={classes.username}>登录/注册</div>
+                            </Paper>                    }
                     <List>
                         <ListItem button onClick={() => itemClickHandler("timeline")}>
                             <ListItemIcon>
@@ -97,12 +121,14 @@ const GSTopDrawer = forwardRef((props, ref) => {
                             <ListItemText primary="全部文章" />
                         </ListItem>
 
-                        <ListItem button onClick={() => itemClickHandler("subList")}>
-                            <ListItemIcon>
-                                <ListIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="订阅列表" />
-                        </ListItem>
+                        {authContext.IsLogin() ?
+                            <ListItem button onClick={() => itemClickHandler("subList")}>
+                                <ListItemIcon>
+                                    <ListIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="订阅列表" />
+                            </ListItem> : null
+                        }
 
                         <ListItem button onClick={() => itemClickHandler("explore")}>
                             <ListItemIcon>
@@ -111,12 +137,14 @@ const GSTopDrawer = forwardRef((props, ref) => {
                             <ListItemText primary="发现更多" />
                         </ListItem>
 
-                        <ListItem button onClick={() => itemClickHandler("marked")}>
-                            <ListItemIcon>
-                                <GradeOutlined />
-                            </ListItemIcon>
-                            <ListItemText primary="收藏文章" />
-                        </ListItem>
+                        {authContext.IsLogin() ?
+                            <ListItem button onClick={() => itemClickHandler("marked")}>
+                                <ListItemIcon>
+                                    <GradeOutlined />
+                                </ListItemIcon>
+                                <ListItemText primary="收藏文章" />
+                            </ListItem> : null
+                        }
                     </List>
                     {/* <Container>
                         <Typography variant="subtitle2" gutterBottom component="div">
@@ -135,6 +163,9 @@ const useStyles = makeStyles((theme) => ({
     account: {
         marginTop: "5px",
         marginBottom: "25px"
+    },
+    title: {
+        flexGrow: 1,
     },
     avatar: {
         marginLeft: "10px",

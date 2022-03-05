@@ -26,6 +26,7 @@ function Home() {
     const [pageHeight, setPageHeight] = useState(0)
     const [pageWidth, setPageWidth] = useState(0)
     const [topbarHeight, setTopbarHeight] = useState(0)
+    const [topbarTitle, setTopBarTitle] = useState("锅烧阅读");
 
     const [state, dispatch] = React.useReducer(
         (prevState, action) => {
@@ -46,7 +47,11 @@ function Home() {
 
     const authContext = {
         IsLogin: () => {
-            return state.token !== null || state.token !== undefined || state.token !== '';
+            if (state.token === null || state.token === undefined || state.token === "") {
+                return false;
+            } else {
+                return true;
+            }
         },
         Login: (token) => {
             dispatch({ type: "RESTORE_TOKEN", token: token });
@@ -67,6 +72,12 @@ function Home() {
         GetTopbarHeight: () => {
             return topbarHeight
         },
+        SetTopBarTitle: (title) => {
+            setTopBarTitle(title)
+        },
+        GetTopBarTitle: () => {
+            return topbarTitle
+        }
     };
 
     useEffect(() => {
