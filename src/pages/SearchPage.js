@@ -1,14 +1,14 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CommonFeedItemView from "../component/feedCommomList/CommonFeedItemView";
-import {AuthContext} from "./Home";
+import { AuthContext } from "./Home";
 import ScrollToTop from "react-scroll-to-top";
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import {alpha, AppBar, Button, Fab, InputBase, Toolbar} from "@material-ui/core";
+import { alpha, AppBar, Button, Fab, InputBase, Toolbar } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-import {getRandomFeedItem, searchFeedItemByKeyword} from "../utils/http_util";
-import {makeStyles} from "@material-ui/core/styles";
-import {getUserLoginInfo} from "../service/UserService";
+import { getRandomFeedItem, searchFeedItemByKeyword } from "../utils/http_util";
+import { makeStyles } from "@material-ui/core/styles";
+import { getUserLoginInfo } from "../service/UserService";
 import ListLoadingPlaceholder from "../component/feedCommomList/ListLoadingPlaceholder";
 
 function SearchPage() {
@@ -164,7 +164,7 @@ function SearchPage() {
                 <Toolbar>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
-                            <SearchIcon/>
+                            <SearchIcon />
                         </div>
                         <InputBase
                             placeholder="输入关键字..."
@@ -172,28 +172,25 @@ function SearchPage() {
                                 root: classes.inputRoot,
                                 input: classes.inputInput,
                             }}
-                            inputProps={{'aria-label': 'search'}}
+                            inputProps={{ 'aria-label': 'search' }}
                             onChange={onInputTextChange}
                         />
                     </div>
                     <Button variant="contained" color="primary" onClick={onSearchClick}>搜索</Button>
                 </Toolbar>
             </AppBar>
-            <ScrollToTop smooth color={"orange"} component={<KeyboardArrowUpIcon/>}/>
+            <ScrollToTop smooth color={"orange"} component={<KeyboardArrowUpIcon />} />
             <div id="searchScrollableDiv"
-                 onScroll={toggleVisible}
-                 style={{
-                     height: (authContext.GetCPageHeight()),
-                     overflowY: "scroll"
-                 }}>
-                {loading?(<ListLoadingPlaceholder/>):
+                onScroll={toggleVisible}
+                style={{ height: (authContext.GetCPageHeight()), overflowY: "scroll" , marginTop: 5}}>
+                {loading ? (<ListLoadingPlaceholder />) :
                     <InfiniteScroll
                         scrollableTarget={"searchScrollableDiv"}
                         dataLength={dataSource.length}
                         next={handleInfiniteOnLoad}
                         hasMore={hasMore}
                         endMessage={
-                            <p style={{textAlign: 'center', color: 'grey'}}>
+                            <p style={{ textAlign: 'center', color: 'grey' }}>
                                 <b>Yay! You have seen it all</b>
                             </p>
                         }
@@ -201,19 +198,19 @@ function SearchPage() {
                         pullDownToRefresh={true}
                         pullDownToRefreshThreshold={50}
                         pullDownToRefreshContent={
-                            <h3 style={{textAlign: 'center', color: 'grey'}}>&#8595; Pull down to refresh</h3>
+                            <h3 style={{ textAlign: 'center', color: 'grey' }}>&#8595; Pull down to refresh</h3>
                         }
                         releaseToRefreshContent={
-                            <h3 style={{textAlign: 'center', color: 'grey'}}>&#8593; Release to refresh</h3>
+                            <h3 style={{ textAlign: 'center', color: 'grey' }}>&#8593; Release to refresh</h3>
                         }
                     >
                         {dataSource.map((_, index) => (
-                            <CommonFeedItemView key={index} data={dataSource[index]}/>
+                            <CommonFeedItemView key={index} data={dataSource[index]} />
                         ))}
                     </InfiniteScroll>
                 }
                 <Fab color="primary" size="small" onClick={scrollToTop}
-                    style={{ position: "fixed", display: visible ? 'inline' : 'none', bottom: (authContext.GetTopbarHeight() + 50), right: "60px", zIndex: 99}}>
+                    style={{ position: "fixed", display: visible ? 'inline' : 'none', bottom: (authContext.GetTopbarHeight() + 50), right: "60px", zIndex: 99 }}>
                     <KeyboardArrowUpIcon />
                 </Fab>
             </div>

@@ -81,9 +81,9 @@ function Home() {
     };
 
     useEffect(() => {
+        setTopbarHeight(topbarRef.current.clientHeight)
         setPageHeight(containerRef.current.clientHeight - topbarRef.current.clientHeight)
         setPageWidth(containerRef.current.clientWidth)
-        setTopbarHeight(topbarRef.current.clientHeight)
     }, [state.token])
 
 
