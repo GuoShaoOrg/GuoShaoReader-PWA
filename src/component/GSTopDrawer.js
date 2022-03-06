@@ -1,7 +1,8 @@
 import React, { useState, forwardRef, useContext, useEffect } from "react";
 import { AuthContext } from "../pages/Home";
 import { AppBar, Box, Drawer, IconButton, Toolbar, Avatar, Paper, List, ListItem, ListItemIcon, ListItemText, Container, Typography } from "@material-ui/core";
-import { GradeOutlined, ViewListOutlined, Menu } from "@material-ui/icons";
+import { GradeOutlined, Menu } from "@material-ui/icons";
+import RssFeedIcon from '@material-ui/icons/RssFeed';
 import ListIcon from '@material-ui/icons/List';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 
@@ -16,6 +17,7 @@ const GSTopDrawer = forwardRef((props, ref) => {
     const [open, setOpen] = useState(false);
     const userInfo = JSON.parse(getUserLoginInfo())
     const history = useHistory()
+    const [selectedIndex, setSelectedIndex] = React.useState("timeline");
 
     const authContext = useContext(AuthContext);
 
@@ -32,7 +34,7 @@ const GSTopDrawer = forwardRef((props, ref) => {
     }
 
     const itemClickHandler = (pageName) => {
-        console.log("pageName:", pageName);
+        setSelectedIndex(pageName);
         switch (pageName) {
             case "timeline":
                 history.push({
@@ -52,6 +54,12 @@ const GSTopDrawer = forwardRef((props, ref) => {
                 })
                 break;
 
+            case "marked":
+                history.push({
+                    pathname: '/user/marked/item/'
+                })
+                break;
+
             case "setting":
                 history.push({
                     pathname: '/setting'
@@ -64,12 +72,6 @@ const GSTopDrawer = forwardRef((props, ref) => {
                 })
                 break;
 
-            case "marked":
-                history.push({
-                    pathname: '/user/marked/item/'
-                })
-                break;
-
             case "login":
                 history.push({
                     pathname: '/login'
@@ -79,12 +81,6 @@ const GSTopDrawer = forwardRef((props, ref) => {
                 break;
         }
     }
-
-    useEffect(() => {
-        if (authContext.IsLogin()) {
-            console.log("authContext.IsLogin():", authContext.IsLogin());
-        }
-    }, [authContext.IsLogin()])
 
     return (
         <Box ref={ref} sx={{ flexGrow: 1 }}>
@@ -112,35 +108,35 @@ const GSTopDrawer = forwardRef((props, ref) => {
                                     <Avatar alt="Remy Sharp" src="">GS</Avatar>
                                 </div>
                                 <div className={classes.username}>登录/注册</div>
-                            </Paper>                    }
+                            </Paper>}
                     <List>
-                        <ListItem button onClick={() => itemClickHandler("timeline")}>
+                        <ListItem button onClick={() => itemClickHandler("timeline")} selected={selectedIndex === "timeline"}>
                             <ListItemIcon>
-                                <ViewListOutlined />
+                                <RssFeedIcon color={selectedIndex === "timeline" ? "primary" : ""} />
                             </ListItemIcon>
                             <ListItemText primary="全部文章" />
                         </ListItem>
 
                         {authContext.IsLogin() ?
-                            <ListItem button onClick={() => itemClickHandler("subList")}>
+                            <ListItem button onClick={() => itemClickHandler("subList")} selected={selectedIndex === "subList"} >
                                 <ListItemIcon>
-                                    <ListIcon />
+                                    <ListIcon color={selectedIndex === "subList" ? "primary" : ""} />
                                 </ListItemIcon>
                                 <ListItemText primary="订阅列表" />
                             </ListItem> : null
                         }
 
-                        <ListItem button onClick={() => itemClickHandler("explore")}>
+                        <ListItem button onClick={() => itemClickHandler("explore")} selected={selectedIndex === "explore"}>
                             <ListItemIcon>
-                                <SearchOutlinedIcon />
+                                <SearchOutlinedIcon color={selectedIndex === "explore" ? "primary" : ""}/>
                             </ListItemIcon>
                             <ListItemText primary="发现更多" />
                         </ListItem>
 
                         {authContext.IsLogin() ?
-                            <ListItem button onClick={() => itemClickHandler("marked")}>
+                            <ListItem button onClick={() => itemClickHandler("marked")} selected={selectedIndex === "marked"} >
                                 <ListItemIcon>
-                                    <GradeOutlined />
+                                    <GradeOutlined color={selectedIndex === "marked" ? "primary" : ""}/>
                                 </ListItemIcon>
                                 <ListItemText primary="收藏文章" />
                             </ListItem> : null
