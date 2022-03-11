@@ -15,6 +15,7 @@ import RegisterPage from "./RegisterPage";
 import ShareFeedItemPage from "./ShareFeedItemPage";
 import FeedItemDetailPage from "./FeedItemDetailPage";
 import GSTopDrawer from "../component/GSTopDrawer";
+import ExplorePage from "./ExplorePage";
 
 export const AuthContext = React.createContext(null);
 
@@ -99,7 +100,8 @@ function Home() {
                             </Route>
                             <CacheRoute exact path="/timeline" component={TimelineFeedPage} />
                             <CacheRoute exact path="/subList" component={SubFeedChannelItemPage} />
-                            <CacheRoute exact path="/explore" component={SearchPage} />
+                            <CacheRoute exact path="/search" component={SearchPage} />
+                            <CacheRoute exact path="/explore" component={ExplorePage} />
                             <Route exact path={"/setting"} component={SettingPage} />
                             <Route exact path={"/login"} component={LoginPage} />
                             <Route exact path={"/register"} component={RegisterPage} />

@@ -5,6 +5,7 @@ import { GradeOutlined, Menu } from "@material-ui/icons";
 import RssFeedIcon from '@material-ui/icons/RssFeed';
 import ListIcon from '@material-ui/icons/List';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
+import ExploreOutlinedIcon from '@material-ui/icons/ExploreOutlined';
 
 import { getUserLoginInfo } from "../service/UserService";
 import { makeStyles } from "@material-ui/core/styles";
@@ -51,6 +52,12 @@ const GSTopDrawer = forwardRef((props, ref) => {
             case "explore":
                 history.push({
                     pathname: '/explore'
+                })
+                break;
+
+            case "search":
+                history.push({
+                    pathname: '/search'
                 })
                 break;
 
@@ -128,9 +135,16 @@ const GSTopDrawer = forwardRef((props, ref) => {
 
                         <ListItem button onClick={() => itemClickHandler("explore")} selected={selectedIndex === "explore"}>
                             <ListItemIcon>
-                                <SearchOutlinedIcon color={selectedIndex === "explore" ? "primary" : ""}/>
+                                <ExploreOutlinedIcon color={selectedIndex === "explore" ? "primary" : ""}/>
                             </ListItemIcon>
                             <ListItemText primary="发现更多" />
+                        </ListItem>
+
+                        <ListItem button onClick={() => itemClickHandler("search")} selected={selectedIndex === "search"}>
+                            <ListItemIcon>
+                                <SearchOutlinedIcon color={selectedIndex === "search" ? "primary" : ""} />
+                            </ListItemIcon>
+                            <ListItemText primary="搜索文章" />
                         </ListItem>
 
                         {authContext.IsLogin() ?

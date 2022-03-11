@@ -1,12 +1,13 @@
 import React from "react";
-import {Card, CardContent, CardMedia, Typography} from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
-import {useHistory} from "react-router-dom";
+import { Card, CardContent, CardMedia, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
 
 export default function FeedCatalogHorizontalItem(props) {
     const classes = useStyles();
     const itemData = props.data
-    const date = itemData.InputDate.slice(0, 10)
+    const inputDate = itemData.InputDate.slice(0, 10)
+    const date = (itemData.date === null || itemData.date === undefined || itemData.date === "" ? inputDate : itemData.date)
     const history = useHistory()
 
     const onFeedLinkClick = () => {
@@ -19,7 +20,7 @@ export default function FeedCatalogHorizontalItem(props) {
         <Card className={classes.root}>
             <CardContent className={classes.media} onClick={onFeedLinkClick}>
                 <Typography gutterBottom variant="subtitle2">{itemData.Title}</Typography>
-                {itemData.Thumbnail === '' ? <div/> :
+                {itemData.Thumbnail === '' ? <div /> :
                     <CardMedia
                         className={classes.channelDescription}
                         component="img"
@@ -27,7 +28,7 @@ export default function FeedCatalogHorizontalItem(props) {
                         alt=""
                     />}
                 <Typography className={classes.dateText} variant="subtitle2"
-                            color="textSecondary">{date}</Typography>
+                    color="textSecondary">{date}</Typography>
             </CardContent>
         </Card>
     )

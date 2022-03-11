@@ -99,3 +99,15 @@ export const getFeedItemInfoById = (data) => {
         process.env.REACT_APP_BASE_API + "rss/api/v1/feed/item_by_item_id";
     return instance.get(api_url, { params: data });
 }
+
+export const getFeedTags= (data) => {
+    let api_url =
+        process.env.REACT_APP_BASE_API + "rss/api/v1/feed/tag";
+    return instance.get(api_url, { params: data });
+}
+
+export const getFeedChannelCatalogListByTag= (data) => {
+    let api_url =
+        process.env.REACT_APP_BASE_API + "rss/api/v1/feed/channel_catalog_list_by_tag";
+    return instance.get(api_url, { params: data });
+}
