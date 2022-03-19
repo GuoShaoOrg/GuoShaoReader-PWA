@@ -9,7 +9,7 @@ import {AuthContext} from "./Home";
 import parse from "html-react-parser";
 import {
     Button,
-    Container, Divider, IconButton,
+    Container, IconButton,
     Typography
 } from "@material-ui/core";
 import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
@@ -134,17 +134,17 @@ const FeedItemDetailPage = () => {
                 </div>
 
             </Container>
-
-            <IconButton aria-label="favorite" onClick={handlerFavoriteClick}>
-                {isMarked ? <FavoriteBorderOutlinedIcon color={"primary"}/> : (
-                    <FavoriteBorderOutlinedIcon/>
-                )}
-            </IconButton>
-            <IconButton aria-label="share" onClick={handlerShareClick}>
-                <ShareOutlinedIcon/>
-            </IconButton>
-            <Button color={"primary"} size="small" onClick={toOriginalPage}>查看原文</Button>
-            <Divider variant="middle"/>
+            <div className={classes.shareDiv}>
+                <IconButton aria-label="favorite" onClick={handlerFavoriteClick}>
+                    {isMarked ? <FavoriteBorderOutlinedIcon color={"primary"}/> : (
+                        <FavoriteBorderOutlinedIcon/>
+                    )}
+                </IconButton>
+                <IconButton aria-label="share" onClick={handlerShareClick}>
+                    <ShareOutlinedIcon/>
+                </IconButton>
+                <Button color={"primary"} size="small" onClick={toOriginalPage}>查看原文</Button>
+            </div>
         </div>
     )
 }
@@ -157,7 +157,14 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: '8px'
     },
     channelDescription: {
-        overflow: "scroll"
+        overflow: "scroll",
+        marginBottom: "50px"
+    },
+    shareDiv: {
+        position: "fixed",
+        bottom: "0px",
+        width: "100%",
+        backgroundColor: "#f5f5f5",
     }
 
 }));
