@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {getUserLoginInfo} from "../service/UserService";
 import {
     getFeedItemInfoById, markFeedItemByUserId,
@@ -22,6 +22,7 @@ const FeedItemDetailPage = () => {
     const classes = useStyles();
 
     const {itemId} = useParams()
+    const history = useHistory()
     const authContext = useContext(AuthContext);
     const [author, setAuthor] = React.useState("")
     const [date, setDate] = React.useState("")
@@ -84,6 +85,12 @@ const FeedItemDetailPage = () => {
         })
     }
 
+    const toChannelPage = () => {
+        history.push({
+            pathname: '/feed/channel/'+itemData.ChannelId
+        })
+    }
+
     const toOriginalPage = () => {
         window.open(itemData.Link)
     }
@@ -120,12 +127,16 @@ const FeedItemDetailPage = () => {
         <div style={{overflow: 'scroll', height: authContext.GetCPageHeight()}}>
             <img src={thumbnail} alt={""} style={{width: "100%"}}/>
             <Container>
-                <Typography variant="h5" component="div" gutterBottom>
-                    {itemData.Title}
-                </Typography>
-                <Typography variant="subtitle2" gutterBottom component="div" style={{"color": "#9e9e9e"}}>
-                    {itemData.ChannelTitle}
-                </Typography>
+                <div onClick={toOriginalPage}>
+                    <Typography variant="h5" component="div" gutterBottom>
+                        {itemData.Title}
+                    </Typography>
+                </div>
+                <div onClick={toChannelPage}>
+                    <Typography variant="subtitle2" gutterBottom component="div" style={{"color": "#9e9e9e"}}>
+                        {itemData.ChannelTitle}
+                    </Typography>
+                </div>
                 <Typography variant="caption" display="block" gutterBottom style={{"color": "#9e9e9e"}}>
                     {date}&nbsp;&nbsp;{author}
                 </Typography>
