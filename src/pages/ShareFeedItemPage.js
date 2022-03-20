@@ -76,7 +76,11 @@ const ShareFeedItemPage = () => {
                 }
 
                 setDate(itemInfoData.InputDate.slice(0, 10))
-                setItemHtml(itemInfoData.ChannelDesc)
+                if (itemInfoData.Content === null || itemInfoData.Content === undefined || itemInfoData.Content === "") {
+                    setItemHtml(itemInfoData.Description)
+                } else {
+                    setItemHtml(itemInfoData.Content)
+                }
                 console.log(itemInfoData)
                 getFeedChannelInfo(itemInfoData.ChannelId)
                 getFeedItemList(itemInfoData.ChannelId)

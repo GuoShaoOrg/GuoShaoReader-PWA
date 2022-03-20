@@ -2,6 +2,7 @@ import React from "react";
 import { Card, CardContent, CardMedia, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
+import {getTextFromDescription} from "../../utils/common";
 
 export default function FeedCatalogHorizontalItem(props) {
     const classes = useStyles();
@@ -20,7 +21,11 @@ export default function FeedCatalogHorizontalItem(props) {
         <Card className={classes.root}>
             <CardContent className={classes.media} onClick={onFeedLinkClick}>
                 <Typography gutterBottom variant="subtitle2">{itemData.Title}</Typography>
-                {itemData.Thumbnail === '' ? <div /> :
+                {itemData.Thumbnail === ''
+                    ?
+                    <Typography className={classes.dateText} variant="subtitle1"
+                                color="textSecondary">{getTextFromDescription(itemData.Description)}</Typography>
+                    :
                     <CardMedia
                         className={classes.channelDescription}
                         component="img"

@@ -18,6 +18,7 @@ import {getUserLoginInfo} from "../../service/UserService";
 import {useHistory} from "react-router-dom";
 import copy from 'copy-to-clipboard';
 import {diffTime} from "../../utils/time_utils";
+import {getTextFromDescription} from "../../utils/common";
 
 function CommonFeedItemView(props) {
     const classes = useStyles();
@@ -96,15 +97,17 @@ function CommonFeedItemView(props) {
                 />
                 <CardContent onClick={onFeedLinkClick}>
                     <meta name="referrer" content="no-referrer" />
-                    {data.Thumbnail === '' ? <div/> :
+                    {data.Thumbnail === ''
+                        ?
+                        <Typography className={classes.dateText} variant="subtitle1"
+                                    color="textSecondary">{getTextFromDescription(data.Description)}</Typography>
+                        :
                         <CardMedia
                             className={classes.channelDescription}
                             component="img"
                             image={data.Thumbnail}
                             alt=""
                         />}
-                    <Typography className={classes.dateText} variant="subtitle2"
-                                color="textSecondary">{date}&nbsp;&nbsp;{author}</Typography>
                 </CardContent>
             </CardActionArea>
             <CardActions disableSpacing>

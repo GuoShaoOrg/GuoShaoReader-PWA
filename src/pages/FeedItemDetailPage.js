@@ -74,7 +74,11 @@ const FeedItemDetailPage = () => {
                 }
 
                 setDate(itemInfoData.InputDate.slice(0, 10))
-                setItemHtml(itemInfoData.ChannelDesc)
+                if (itemInfoData.Description === null || itemInfoData.Description === undefined || itemInfoData.Description === "") {
+                    setItemHtml(itemInfoData.Content)
+                } else {
+                    setItemHtml(itemInfoData.Description)
+                }
                 setThumbnail(itemInfoData.Thumbnail)
                 setTimeout(() => {
                     optimizeImg()
