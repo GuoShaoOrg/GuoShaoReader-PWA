@@ -108,6 +108,8 @@ function CommonFeedItemView(props) {
                             image={data.Thumbnail}
                             alt=""
                         />}
+                    <Typography className={classes.dateText} variant="subtitle2"
+                                color="textSecondary">{date}&nbsp;&nbsp;{author}</Typography>
                 </CardContent>
             </CardActionArea>
             <CardActions disableSpacing>
