@@ -6,7 +6,7 @@ import ScrollToTop from "react-scroll-to-top";
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { alpha, AppBar, Button, Fab, InputBase, Toolbar } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-import { getRandomFeedItem, searchFeedItemByKeyword } from "../utils/http_util";
+import {getLatestFeedItem, getRandomFeedItem, searchFeedItemByKeyword} from "../utils/http_util";
 import { makeStyles } from "@material-ui/core/styles";
 import { getUserLoginInfo } from "../service/UserService";
 import ListLoadingPlaceholder from "../component/feedCommomList/ListLoadingPlaceholder";
@@ -83,7 +83,7 @@ function SearchPage() {
                     userId: userId
                 }
             }
-            getRandomFeedItem(randomParams).then((resp) => {
+            getLatestFeedItem(randomParams).then((resp) => {
                 if (resp.status === 200) {
                     callback(resp.data.data);
                     setReqStart((prevState) => prevState + 10);
