@@ -26,7 +26,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm run build --if-present
+    - uses: borales/actions-yarn@v2.3.0
+      with:
+        cmd: build
     - uses: montudor/action-zip@v1
       with:
         args: zip -qq -r build.zip build
