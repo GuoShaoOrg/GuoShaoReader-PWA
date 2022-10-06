@@ -16,9 +16,6 @@ function Home(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [selectedIndex, setSelectedIndex] = React.useState("timeline");
-  const appBarRef = React.useRef(null);
-  const appBarHeight = appBarRef.current?.clientHeight
-  console.log("appBarHeight : ", appBarHeight)
   const navigate = useNavigate()
 
 
