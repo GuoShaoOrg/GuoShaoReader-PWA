@@ -2,8 +2,9 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { AppBar, IconButton, Toolbar, Box, Divider, List, ListItemButton, ListItemIcon, ListItemText, Drawer, CssBaseline, Typography } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
+import RssFeedTwoToneIcon from '@mui/icons-material/RssFeedTwoTone';
 import { useNavigate } from "react-router-dom";
+import Timeline from "./Timeline";
 
 
 const drawerWidth = 240;
@@ -12,6 +13,7 @@ function Home(props) {
 
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [selectedIndex, setSelectedIndex] = React.useState("timeline");
   const navigate = useNavigate()
 
   const handleDrawerToggle = () => {
@@ -19,10 +21,11 @@ function Home(props) {
   };
 
 
-  const handlerListItemClick = (menuType) => {
+  const handlerListItemClick = (index, menuType) => {
     setMobileOpen(!mobileOpen)
+    setSelectedIndex(index)
     switch (menuType) {
-      case "tg-video":
+      case "timeline":
         navigate("/timeline")
         break
 
@@ -36,9 +39,9 @@ function Home(props) {
       <Toolbar />
       <Divider />
       <List>
-        <ListItemButton onClick={() => { handlerListItemClick("timeline") }}>
+        <ListItemButton selected={selectedIndex === "timeline"} onClick={() => { handlerListItemClick("timeline", "timeline") }}>
           <ListItemIcon>
-            <InboxIcon />
+            <RssFeedTwoToneIcon color="primary" fontSize="large" />
           </ListItemIcon>
           <ListItemText primary="Timeline" />
         </ListItemButton>
@@ -111,7 +114,7 @@ function Home(props) {
       >
         <Toolbar />
         <Routes>
-          <Route path="/timeline" element={<div />} />
+          <Route path="/timeline" element={<Timeline />} />
         </Routes>
 
       </Box>
