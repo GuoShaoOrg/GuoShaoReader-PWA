@@ -1,6 +1,6 @@
 {
-  "short_name": "锅烧阅读",
-  "name": "锅烧阅读",
+  "short_name": "React App",
+  "name": "Create React App Sample",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +20,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#ffffff",
+  "theme_color": "#000000",
   "background_color": "#ffffff"
 }
