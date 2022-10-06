@@ -41,10 +41,10 @@ const ListLoadingPlaceholder = () => {
   )
 
   return (
-    <div>
-      <ItemPlaceHolder />
-      <ItemPlaceHolder />
-      <ItemPlaceHolder />
+    <div className="w-full max-w-3xl">
+      {ItemPlaceHolder}
+      {ItemPlaceHolder}
+      {ItemPlaceHolder}
     </div>
   )
 }
