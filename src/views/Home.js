@@ -1,8 +1,9 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { AppBar, IconButton, Toolbar, Box, Divider, List, ListItemButton, ListItemIcon, ListItemText, Drawer, CssBaseline, Typography } from "@mui/material";
+import { AppBar, IconButton, Toolbar, Box, Divider, List, ListItemButton, ListItemIcon, ListItemText, Drawer, CssBaseline, Typography, ListItem } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import RssFeedTwoToneIcon from '@mui/icons-material/RssFeedTwoTone';
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { useNavigate } from "react-router-dom";
 import Timeline from "./Timeline";
 
@@ -12,9 +13,14 @@ const drawerWidth = 240;
 function Home(props) {
 
   const { window } = props;
+  const container = window !== undefined ? () => window().document.body : undefined;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [selectedIndex, setSelectedIndex] = React.useState("timeline");
+  const appBarRef = React.useRef(null);
+  const appBarHeight = appBarRef.current?.clientHeight
+  console.log("appBarHeight : ", appBarHeight)
   const navigate = useNavigate()
+
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -39,26 +45,38 @@ function Home(props) {
       <Toolbar />
       <Divider />
       <List>
-        <ListItemButton selected={selectedIndex === "timeline"} onClick={() => { handlerListItemClick("timeline", "timeline") }}>
-          <ListItemIcon>
-            <RssFeedTwoToneIcon color="primary" fontSize="large" />
-          </ListItemIcon>
-          <ListItemText primary="Timeline" />
-        </ListItemButton>
+        <ListItem disablePadding>
+          <ListItemButton selected={selectedIndex === "timeline"} onClick={() => { handlerListItemClick("timeline", "timeline") }}>
+            <ListItemIcon>
+              {selectedIndex === "timeline" ? (
+                <RssFeedTwoToneIcon color="primary" fontSize="large" />
+              ) : <RssFeedTwoToneIcon fontSize="large" />}
+            </ListItemIcon>
+            <ListItemText primary="Timeline" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton selected={selectedIndex === "userInfo"} onClick={() => { handlerListItemClick("userInfo", "userInfo") }}>
+            <ListItemIcon>
+              <ListItemIcon>
+                {selectedIndex === "userInfo" ? (
+                  <PersonOutlineOutlinedIcon color="primary" fontSize="large" />
+                ) : <PersonOutlineOutlinedIcon fontSize="large" />}
+              </ListItemIcon>
+            </ListItemIcon>
+            <ListItemText primary="Account" />
+          </ListItemButton>
+        </ListItem>
       </List>
     </div>
   );
 
-  const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed"
-        sx={{
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px` },
-        }}
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
       >
         <Toolbar>
           <IconButton
@@ -79,9 +97,7 @@ function Home(props) {
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="mailbox folders"
       >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
           container={container}
           variant="temporary"
