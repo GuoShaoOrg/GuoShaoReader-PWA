@@ -81,7 +81,7 @@ function Home(props) {
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
+            sx={{ mr: 2, display: { sm: 'none' } }}
             onClick={handleDrawerToggle}
           >
             <MenuIcon />
