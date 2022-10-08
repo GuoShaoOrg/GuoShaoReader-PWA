@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { List, ListItem } from "@mui/material"
 import CommonFeedListItem from "./CommonFeedListItem";
 import Pagination from "@mui/material/Pagination"
@@ -14,9 +14,31 @@ function CommonFeedList(props) {
   const [page, setPage] = React.useState(1)
 
   const handlePaginationChange = (_event, value) => {
-    console.log("page on changed : ", value)
     setPage(value)
+    setLoading(true)
+    fetchData(false, value, (resp) => {
+      if (resp === undefined || resp === null || resp === []) {
+        setLoading(false)
+        return
+      }
+      setLoading(false)
+      setFeedList(resp)
+    })
   }
+
+  useEffect(() => {
+    setLoading(true)
+    fetchData(true, (resp) => {
+      if (resp === undefined || resp === null || resp === []) {
+        setLoading(false)
+        return
+      }
+      setLoading(false)
+      setFeedList(resp)
+
+    })
+  }, [])
+
 
 
   return (

@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import HomePage from './views/Home';
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { orange, purple } from "@mui/material/colors";
+import Toast from './component/Toast';
 
 export const AppContext = React.createContext(null);
 
@@ -29,6 +30,9 @@ function App() {
             <Route path='/*' element={<HomePage />} />
           </Routes>
         </BrowserRouter>
+        <Toast ref={(ref) => {
+          Toast.setRef(ref)
+        }} />
       </ThemeProvider>
     </AppContext.Provider>
   );

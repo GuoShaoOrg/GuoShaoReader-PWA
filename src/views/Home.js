@@ -31,6 +31,9 @@ function Home(props) {
       case "timeline":
         navigate("/timeline")
         break
+      case "account":
+        navigator("/account")
+        break
 
       default:
         break
@@ -49,19 +52,19 @@ function Home(props) {
                 <RssFeedTwoToneIcon color="primary" fontSize="large" />
               ) : <RssFeedTwoToneIcon fontSize="large" />}
             </ListItemIcon>
-            <ListItemText primary="Timeline" />
+            <ListItemText primary="全部文章" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton selected={selectedIndex === "userInfo"} onClick={() => { handlerListItemClick("userInfo", "userInfo") }}>
+          <ListItemButton selected={selectedIndex === "account"} onClick={() => { handlerListItemClick("account", "account") }}>
             <ListItemIcon>
               <ListItemIcon>
-                {selectedIndex === "userInfo" ? (
+                {selectedIndex === "account" ? (
                   <PersonOutlineOutlinedIcon color="primary" fontSize="large" />
                 ) : <PersonOutlineOutlinedIcon fontSize="large" />}
               </ListItemIcon>
             </ListItemIcon>
-            <ListItemText primary="Account" />
+            <ListItemText primary="账户信息" />
           </ListItemButton>
         </ListItem>
       </List>
