@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { AppBar, IconButton, Toolbar, Box, Divider, List, ListItemButton, ListItemIcon, ListItemText, Drawer, CssBaseline, Typography, ListItem } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
@@ -16,6 +16,7 @@ function Home(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [selectedIndex, setSelectedIndex] = React.useState("timeline");
+  const [appBarTitle, setAppBarTitle] = React.useState("锅烧阅读")
   const navigate = useNavigate()
 
 
@@ -30,9 +31,11 @@ function Home(props) {
     switch (menuType) {
       case "timeline":
         navigate("/timeline")
+        setAppBarTitle("全部文章")
         break
       case "account":
-        navigator("/account")
+        navigate("/account")
+        setAppBarTitle("账户信息")
         break
 
       default:
@@ -71,6 +74,11 @@ function Home(props) {
     </div>
   );
 
+  useEffect(() => {
+    setSelectedIndex("timeline")
+    navigate("/timeline")
+    setAppBarTitle("全部文章")
+  }, [])
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -90,7 +98,7 @@ function Home(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            GuoShao
+            {appBarTitle}
           </Typography>
         </Toolbar>
       </AppBar>
