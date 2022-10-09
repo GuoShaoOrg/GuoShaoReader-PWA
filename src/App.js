@@ -4,6 +4,7 @@ import HomePage from './views/Home';
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { orange, purple } from "@mui/material/colors";
 import Toast from './component/Toast';
+import { getAuthToken, storeUserLoginInfo } from './service/UserService';
 
 export const AppContext = React.createContext(null);
 
@@ -20,7 +21,41 @@ const theme = createTheme({
 
 function App() {
 
-  const appContext = {}
+
+  const [state, dispatch] = React.useReducer(
+    (prevState, action) => {
+      switch (action.type) {
+        case "RESTORE_TOKEN":
+          return {
+            ...prevState,
+            token: action.token
+          };
+
+        default:
+          break;
+      }
+    },
+    {
+      token: getAuthToken()
+    }
+  )
+
+  const appContext = {
+    IsLogin: () => {
+      if (state.token === null || state.token === undefined || state.token === "") {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    Login: (token) => {
+      dispatch({ type: "RESTORE_TOKEN", token: token });
+    },
+    LogOut: () => {
+      dispatch({ type: "RESTORE_TOKEN", token: "" });
+      storeUserLoginInfo(null)
+    },
+  }
 
   return (
     <AppContext.Provider value={appContext}>
