@@ -32,7 +32,7 @@ function Timeline() {
 
     if (userInfo === null || userInfo === undefined) {
       getLatestFeedItem(params).then((resp) => {
-        if (resp.status === 200 && resp.data.data.length > 0) {
+        if (resp !== null && resp !== undefined && resp.status === 200 && resp.data.data.length > 0) {
           callback(resp.data.data)
         }
       }).catch((err) => {
