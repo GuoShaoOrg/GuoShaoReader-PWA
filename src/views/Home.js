@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useMatch } from "react-router-dom";
 import { AppBar, IconButton, Toolbar, Box, Divider, List, ListItemButton, ListItemIcon, ListItemText, Drawer, CssBaseline, Typography, ListItem } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import RssFeedTwoToneIcon from '@mui/icons-material/RssFeedTwoTone';
@@ -20,6 +20,7 @@ function Home(props) {
   const [selectedIndex, setSelectedIndex] = React.useState("timeline");
   const [appBarTitle, setAppBarTitle] = React.useState("锅烧阅读")
   const navigate = useNavigate()
+  const isRootPath = useMatch("/")
 
 
   const handleDrawerToggle = () => {
@@ -95,7 +96,9 @@ function Home(props) {
 
   useEffect(() => {
     setSelectedIndex("timeline")
-    navigate("/timeline")
+    if (isRootPath) {
+      navigate("/timeline")
+    }
     setAppBarTitle("全部文章")
   }, [])
 
