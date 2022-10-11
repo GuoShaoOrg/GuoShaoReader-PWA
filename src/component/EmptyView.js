@@ -1,6 +1,6 @@
 import React from "react";
 import Typography from '@mui/material/Typography';
-import EmptyAnimation from "../assets/empty.json"
+import EmptyAnimation from "../assets/lotties//empty.json"
 import Lottie from "lottie-react"
 
 
