@@ -4,8 +4,10 @@ import { AppBar, IconButton, Toolbar, Box, Divider, List, ListItemButton, ListIt
 import MenuIcon from '@mui/icons-material/Menu';
 import RssFeedTwoToneIcon from '@mui/icons-material/RssFeedTwoTone';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import PlaylistAddCheckOutlinedIcon from '@mui/icons-material/PlaylistAddCheckOutlined';
 import { useNavigate } from "react-router-dom";
 import Timeline from "./Timeline";
+import AddFeed from "./AddFeed";
 
 
 const drawerWidth = 240;
@@ -37,6 +39,11 @@ function Home(props) {
         navigate("/account")
         setAppBarTitle("账户信息")
         break
+      case "add":
+        navigate("/add")
+        setAppBarTitle("添加订阅")
+        break
+
 
       default:
         break
@@ -56,6 +63,18 @@ function Home(props) {
               ) : <RssFeedTwoToneIcon fontSize="large" />}
             </ListItemIcon>
             <ListItemText primary="全部文章" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton selected={selectedIndex === "add"} onClick={() => { handlerListItemClick("add", "add") }}>
+            <ListItemIcon>
+              <ListItemIcon>
+                {selectedIndex === "add" ? (
+                  <PlaylistAddCheckOutlinedIcon color="primary" fontSize="large" />
+                ) : <PlaylistAddCheckOutlinedIcon fontSize="large" />}
+              </ListItemIcon>
+            </ListItemIcon>
+            <ListItemText primary="添加订阅" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
@@ -139,6 +158,8 @@ function Home(props) {
         <Toolbar />
         <Routes>
           <Route path="/timeline" element={<Timeline />} />
+          <Route path="/account" element={<Timeline />} />
+          <Route path="/add" element={<AddFeed />} />
         </Routes>
 
       </Box>
