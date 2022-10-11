@@ -1,7 +1,6 @@
 import React from "react";
 import AddFeedAnimation from "../assets/lotties/add-feed.json"
 import { Button, TextField } from "@mui/material";
-import RssFeedTwoToneIcon from '@mui/icons-material/RssFeedTwoTone';
 import Lottie from "lottie-react"
 
 function AddFeed() {
@@ -20,7 +19,6 @@ function AddFeed() {
         <Lottie animationData={AddFeedAnimation} loop={true} className="md:w-1/2" />
       </div>
       <div className="flex justify-center h-12">
-        <RssFeedTwoToneIcon color="primary" sx={{ fontSize: 48 }} />
         <TextField className="w-1/2" onChange={handleFeedInputChange} id="input-with-sx" label="订阅源" variant="standard" />
       </div>
       <div className="flex justify-center h-12 mt-12">
