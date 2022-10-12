@@ -38,6 +38,11 @@ export const register = (data) => {
   return instance.post(api_url, data);
 }
 
+export const login = (data) => {
+  let api_url = process.env.REACT_APP_BASE_API + "v1/api/user/login";
+  return instance.post(api_url, data);
+}
+
 export const subFeedChannelById = (data) => {
   let api_url =
     process.env.REACT_APP_BASE_API + "v1/api/feed/channel/sub/uid";

@@ -5,9 +5,12 @@ import MenuIcon from '@mui/icons-material/Menu';
 import RssFeedTwoToneIcon from '@mui/icons-material/RssFeedTwoTone';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import PlaylistAddCheckOutlinedIcon from '@mui/icons-material/PlaylistAddCheckOutlined';
+import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 import { useNavigate } from "react-router-dom";
 import Timeline from "./Timeline";
 import AddFeed from "./AddFeed";
+import Login from "./Login";
+import { AppContext } from "../App";
 
 
 const drawerWidth = 240;
@@ -21,6 +24,7 @@ function Home(props) {
   const [appBarTitle, setAppBarTitle] = React.useState("锅烧阅读")
   const navigate = useNavigate()
   const isRootPath = useMatch("/")
+  const appContext = React.useContext(AppContext)
 
 
   const handleDrawerToggle = () => {
@@ -37,6 +41,11 @@ function Home(props) {
         setAppBarTitle("全部文章")
         break
       case "account":
+        if (!appContext.IsLogin()) {
+          navigate("/login")
+          setSelectedIndex("login")
+          return
+        }
         navigate("/account")
         setAppBarTitle("账户信息")
         break
@@ -44,7 +53,10 @@ function Home(props) {
         navigate("/add")
         setAppBarTitle("添加订阅")
         break
-
+      case "login":
+        navigate("/login")
+        setAppBarTitle("登录/注册")
+        break
 
       default:
         break
@@ -78,18 +90,35 @@ function Home(props) {
             <ListItemText primary="添加订阅" />
           </ListItemButton>
         </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton selected={selectedIndex === "account"} onClick={() => { handlerListItemClick("account", "account") }}>
-            <ListItemIcon>
+        {appContext.IsLogin() ?
+          <ListItem disablePadding>
+            <ListItemButton selected={selectedIndex === "account"} onClick={() => { handlerListItemClick("account", "account") }}>
               <ListItemIcon>
-                {selectedIndex === "account" ? (
-                  <PersonOutlineOutlinedIcon color="primary" fontSize="large" />
-                ) : <PersonOutlineOutlinedIcon fontSize="large" />}
+                <ListItemIcon>
+                  {selectedIndex === "account" ? (
+                    <PersonOutlineOutlinedIcon color="primary" fontSize="large" />
+                  ) : <PersonOutlineOutlinedIcon fontSize="large" />}
+                </ListItemIcon>
               </ListItemIcon>
-            </ListItemIcon>
-            <ListItemText primary="账户信息" />
-          </ListItemButton>
-        </ListItem>
+              <ListItemText primary="账户信息" />
+            </ListItemButton>
+          </ListItem> : null
+        }
+        {
+          !appContext.IsLogin() ?
+            <ListItem disablePadding>
+              <ListItemButton selected={selectedIndex === "login"} onClick={() => { handlerListItemClick("login", "login") }}>
+                <ListItemIcon>
+                  <ListItemIcon>
+                    {selectedIndex === "login" ? (
+                      <ExitToAppOutlinedIcon color="primary" fontSize="large" />
+                    ) : <ExitToAppOutlinedIcon fontSize="large" />}
+                  </ListItemIcon>
+                </ListItemIcon>
+                <ListItemText primary="登录/注册" />
+              </ListItemButton>
+            </ListItem> : null
+        }
       </List>
     </div>
   );
@@ -163,6 +192,7 @@ function Home(props) {
           <Route path="/timeline" element={<Timeline />} />
           <Route path="/account" element={<Timeline />} />
           <Route path="/add" element={<AddFeed />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
 
       </Box>

@@ -2,14 +2,21 @@ import React from "react";
 import AddFeedAnimation from "../assets/lotties/add-feed.json"
 import { Button, TextField } from "@mui/material";
 import Lottie from "lottie-react"
+import { AppContext } from "../App";
+import Toast from "../component/Toast";
 
 function AddFeed() {
 
+  const appContext = React.useContext(AppContext)
   const [feedInput, setFeedInput] = React.useState("")
   const handleFeedInputChange = (event) => {
     setFeedInput(event.target.value)
   }
   const submitBtnOnClick = () => {
+    if (!appContext.IsLogin()) {
+      Toast.show("请先登录", "error")
+      return
+    }
     console.log("the imput is : ", feedInput)
   }
 
