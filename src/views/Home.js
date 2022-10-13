@@ -9,7 +9,7 @@ import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 import { useNavigate } from "react-router-dom";
 import Timeline from "./Timeline";
 import AddFeed from "./AddFeed";
-import Login from "./Login";
+import LoginRegister from "./LoginRegister";
 import { AppContext } from "../App";
 
 
@@ -192,7 +192,7 @@ function Home(props) {
           <Route path="/timeline" element={<Timeline />} />
           <Route path="/account" element={<Timeline />} />
           <Route path="/add" element={<AddFeed />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<LoginRegister />} />
         </Routes>
 
       </Box>
