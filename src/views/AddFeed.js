@@ -23,13 +23,13 @@ function AddFeed() {
   return (
     <div className="w-full">
       <div className="flex justify-center">
-        <Lottie animationData={AddFeedAnimation} loop={true} className="md:w-1/2" />
+        <Lottie animationData={AddFeedAnimation} loop={true} className="md:w-1/2 w-4/5 max-w-md" />
       </div>
       <div className="flex justify-center h-12">
-        <TextField className="w-1/2" onChange={handleFeedInputChange} id="input-with-sx" label="订阅源" variant="standard" />
+        <TextField className="md:w-1/2 w-4/5 max-w-xs" onChange={handleFeedInputChange} id="input-with-sx" label="订阅源" variant="standard" />
       </div>
       <div className="flex justify-center h-12 mt-12">
-        <Button variant="contained" onClick={submitBtnOnClick} className="w-36">添加订阅</Button>
+        <Button variant="contained" onClick={submitBtnOnClick} className="md:w-1/2 w-4/5 max-w-xs">添加订阅</Button>
       </div>
     </div>
   )
