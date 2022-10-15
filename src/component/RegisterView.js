@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { isValidateEmail, isValidMobilePhone } from "../utils/common";
+import { isValidateEmail, isValidMobilePhone } from "../utils/Common";
 import Toast from "../component/Toast";
 import { storeUserLoginInfo } from "../service/UserService";
 import { register } from "../utils/HttpUtil";

@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, FormControl, Input, InputLabel, TextField } from "@mui/material";
 import { login } from "../utils/HttpUtil";
-import { isValidateEmail, isValidMobilePhone } from "../utils/common";
+import { isValidateEmail, isValidMobilePhone } from "../utils/Common";
 import Toast from "../component/Toast";
 import { storeUserLoginInfo } from "../service/UserService";
 import { AppContext } from "../App";
