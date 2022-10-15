@@ -9,7 +9,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { isValidateEmail, isValidMobilePhone } from "../utils/common";
 import Toast from "../component/Toast";
 import { storeUserLoginInfo } from "../service/UserService";
-import { register } from "../utils/http_util";
+import { register } from "../utils/HttpUtil";
 
 function RegisterView() {
 

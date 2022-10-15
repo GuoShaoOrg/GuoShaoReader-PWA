@@ -1,7 +1,7 @@
 import React from "react";
 import CommonFeedList from "../component/CommonFeedList";
 import { getUserLoginInfo } from "../service/UserService";
-import { getFeedItemByUserId, getLatestFeedItem } from "../utils/http_util";
+import { getFeedItemByUserId, getLatestFeedItem } from "../utils/HttpUtil";
 
 
 function Timeline() {
