@@ -1,7 +1,5 @@
 import React from "react";
-import AddFeedAnimation from "../assets/lotties/add-feed.json"
 import { Button, TextField } from "@mui/material";
-import Lottie from "lottie-react"
 import { AppContext } from "../App";
 import Toast from "../component/Toast";
 
@@ -23,7 +21,6 @@ function AddFeed() {
   return (
     <div className="w-full">
       <div className="flex justify-center">
-        <Lottie animationData={AddFeedAnimation} loop={true} className="md:w-1/2 w-4/5 max-w-md" />
       </div>
       <div className="flex justify-center h-12">
         <TextField className="md:w-1/2 w-4/5 max-w-xs" onChange={handleFeedInputChange} id="input-with-sx" label="订阅源" variant="standard" />
