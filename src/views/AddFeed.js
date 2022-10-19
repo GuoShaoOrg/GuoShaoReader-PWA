@@ -4,6 +4,8 @@ import { AppContext } from "../App";
 import Toast from "../component/Toast";
 import Lottie from "lottie-react"
 import UrlAnimation from "../assets/lotties/url.json"
+import { subFeedByLink } from "../utils/HttpUtil";
+import { getUserLoginInfo } from "../service/UserService";
 
 
 function AddFeed() {
@@ -18,7 +20,20 @@ function AddFeed() {
       Toast.show("请先登录", "error")
       return
     }
-    console.log("the imput is : ", feedInput)
+    let useInfo = getUserLoginInfo()
+    let rssLink = feedInput
+    let params = {
+      "userId": useInfo.uid,
+      "link": rssLink
+    }
+    subFeedByLink(params).then((resp) => {
+      if (resp === null || resp === undefined) {
+        return
+      }
+      Toast.show("添加订阅成功","info")
+    }).catch((err) => {
+
+    })
   }
 
   return (

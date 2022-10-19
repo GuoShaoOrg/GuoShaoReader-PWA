@@ -7,7 +7,7 @@ export const getUserLoginInfo = () => {
   if (userLoginInfo === null || userLoginInfo === undefined || userLoginInfo === "null") {
     return null
   }
-  return userLoginInfo
+  return JSON.parse(userLoginInfo)
 }
 
 export const getAuthToken = () => {
