@@ -32,7 +32,6 @@ function LoginRegister() {
 
   const [tabValue, setTabValue] = React.useState(0)
   const handlerTabChange = (_event, newValue) => {
-    console.log("newValue is :", newValue)
     setTabValue(newValue)
   }
 

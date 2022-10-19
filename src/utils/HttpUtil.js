@@ -16,11 +16,12 @@ instance.interceptors.request.use(function(config) {
 });
 
 instance.interceptors.response.use(function(response) {
-  if (response.data.code !== 0) {
-    Toast.show(response.data.message, "error")
+  if (response.data.error !== 0) {
+    Toast.show(response.data.msg, "error")
     return;
   }
-  return response;
+  let respJsonString = JSON.stringify(response.data.data[0])
+  return respJsonString;
 }, function(error) {
   if (error.response.status === 401) {
     Toast.show("请先登录", "error");

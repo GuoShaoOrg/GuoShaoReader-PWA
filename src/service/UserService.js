@@ -12,7 +12,7 @@ export const getUserLoginInfo = () => {
 
 export const getAuthToken = () => {
   let userLoginInfo = localStorage.getItem("userInfo")
-  if (userLoginInfo === null || userLoginInfo === undefined || userLoginInfo === "null") {
+  if (userLoginInfo === null || userLoginInfo === undefined || userLoginInfo === "null" || userLoginInfo === "undefined") {
     return null
   }
   userLoginInfo = JSON.parse(userLoginInfo)

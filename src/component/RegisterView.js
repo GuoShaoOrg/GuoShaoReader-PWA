@@ -36,8 +36,12 @@ function RegisterView() {
   const registerBtnOnClick = () => {
     let param = getInputParam()
     register(param).then((resp) => {
+      if (resp === null || resp === undefined) {
+        return
+      }
       storeUserLoginInfo(resp)
-      appContext.Login(resp.token)
+      let userInfo = JSON.parse(resp)
+      appContext.Login(userInfo.token)
       navigate("/")
     }).catch((err) => {
       console.log(err)
@@ -61,6 +65,7 @@ function RegisterView() {
       "email": username,
       "nickname": nickname,
       "password": password,
+      "passwordVerify": password,
     }
 
     if (isValidMobilePhone(username)) {
@@ -68,6 +73,7 @@ function RegisterView() {
         "mobile": username,
         "nickname": nickname,
         "password": password,
+        "passwordVerify": password,
       }
     }
 
