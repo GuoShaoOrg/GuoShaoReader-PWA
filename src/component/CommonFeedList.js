@@ -20,6 +20,9 @@ function CommonFeedList(props) {
     setLoading(true)
     fetchData(false, value, (resp) => {
       if (resp === undefined || resp === null || resp === []) {
+        if (feedList.length === 0) {
+          setSubFeedListEmpty(true)
+        }
         setLoading(false)
         return
       }
@@ -30,19 +33,17 @@ function CommonFeedList(props) {
 
   useEffect(() => {
     setLoading(true)
-    fetchData(true, (resp) => {
+    fetchData(true, page, (resp) => {
       if (resp === undefined || resp === null || resp === []) {
+        if (feedList.length === 0) {
+          setSubFeedListEmpty(true)
+        }
         setLoading(false)
         return
       }
       setFeedList(resp)
-
     })
     setLoading(false)
-    if (feedList.length === 0) {
-      console.log("feed list is empty")
-      setSubFeedListEmpty(true)
-    }
   }, [])
 
 

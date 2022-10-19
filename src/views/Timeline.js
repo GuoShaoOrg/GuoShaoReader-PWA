@@ -6,7 +6,7 @@ import { getFeedItemByUserId, getLatestFeedItem } from "../utils/HttpUtil";
 
 function Timeline() {
 
-  const userInfo = JSON.parse(getUserLoginInfo())
+  const userInfo = getUserLoginInfo()
 
   const fetchData = (refresh, page, callback) => {
     let params = {}
@@ -32,18 +32,22 @@ function Timeline() {
 
     if (userInfo === null || userInfo === undefined) {
       getLatestFeedItem(params).then((resp) => {
-        if (resp !== null && resp !== undefined && resp.status === 200 && resp.data.data.length > 0) {
-          callback(resp.data.data)
+        let respJson = JSON.parse(resp)
+        if (resp.length > 0) {
+          callback(respJson);
         }
       }).catch((err) => {
+        callback(null);
         console.log(err)
       })
     } else {
       getFeedItemByUserId(params).then((resp) => {
-        if (resp.status === 200 && resp.data.data.length > 0) {
-          callback(resp.data.data);
+        let respJson = JSON.parse(resp)
+        if (resp.length > 0) {
+          callback(respJson);
         }
       }).catch((err) => {
+        callback(null);
         console.log(err)
       })
     }
