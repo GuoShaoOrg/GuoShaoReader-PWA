@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -7,45 +7,77 @@ import CardActions from '@mui/material/CardActions';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
+import { orange } from '@mui/material/colors';
+import { diffTime } from '../utils/TimeUtils';
+import { getTextFromDescription } from "../utils/Common";
+import copy from 'copy-to-clipboard';
+import Toast from "../component/Toast";
 import { FavoriteBorderOutlined, ShareOutlined } from '@mui/icons-material';
+import { useNavigate } from "react-router-dom";
 
 
 
 function CommonFeedListItem(props) {
 
+  const navigate = useNavigate()
   const data = props.data
+  const date = diffTime(data.InputDate, new Date())
+  const [author, setAuthor] = React.useState("")
+  const [isMarked, setIsMarked] = React.useState(false)
+
+  useEffect(() => {
+    if (data.Marked === 1) {
+      setIsMarked(true)
+    }
+    if (data.Author !== "") {
+      setAuthor("作者:" + data.Author)
+    }
+  }, [])
+
+  const onFeedLinkClick = () => {
+    navigate('/feed/item/' + data.Id)
+  }
+
+  const handlerShareClick = () => {
+    let shareItemLink = process.env.REACT_APP_BASE_API + "s/f/" + data.Id;
+    let shareText = data.Title + "\n" + shareItemLink
+    copy(shareText)
+    Toast.show("链接已复制到剪贴板", "info")
+  }
 
   return (
-    <Card sx={{ maxWidth: 690 }}>
+    <Card sx={{ maxWidth: 690, width: '100%' }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            R
+          <Avatar sx={{ bgcolor: orange[800] }} src={data.ChannelImageUrl} aria-label="recipe">
+            G
           </Avatar>
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title={data.Title}
+        subheader={data.ChannelTitle}
       />
-      <CardMedia
-        component="img"
-        image=""
-        alt=""
-        className="max-h-80"
-      />
-      <CardContent>
+      <CardContent onClick={onFeedLinkClick}>
         <meta name="referrer" content="no-referrer" />
-        <Typography variant="body2" color="text.secondary">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the mussels,
-          if you like.
-        </Typography>
+        {data.Thumbnail === ''
+          ?
+          <Typography className="mt-3" variant="subtitle1"
+            color="textSecondary">{getTextFromDescription(data.Description)}</Typography>
+          :
+          <CardMedia
+            className="max-h-80 overflow-scroll"
+            component="img"
+            image={data.Thumbnail}
+            alt=""
+          />}
+        <Typography variant="subtitle2" color="textSecondary">{date}&nbsp;&nbsp;{author}</Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
-          <FavoriteBorderOutlined />
+          {isMarked ? <FavoriteBorderOutlined color={"primary"} /> : (
+            <FavoriteBorderOutlined />
+          )}
         </IconButton>
-        <IconButton aria-label="share">
+        <IconButton aria-label="share" onClick={handlerShareClick}>
           <ShareOutlined />
         </IconButton>
       </CardActions>

@@ -11,6 +11,7 @@ import Timeline from "./Timeline";
 import AddFeed from "./AddFeed";
 import LoginRegister from "./LoginRegister";
 import { AppContext } from "../App";
+import FeedItemDetail from "./FeedItemDetail";
 
 
 const drawerWidth = 240;
@@ -185,7 +186,7 @@ function Home(props) {
       </Box>
       <Box
         component="main"
-        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
+        sx={{ flexGrow: 1, width: { sm: `calc(100% - ${drawerWidth}px)` } }} q
       >
         <Toolbar />
         <Routes>
@@ -193,6 +194,7 @@ function Home(props) {
           <Route path="/account" element={<Timeline />} />
           <Route path="/add" element={<AddFeed />} />
           <Route path="/login" element={<LoginRegister />} />
+          <Route path="/feed/item/:itemId" element={<FeedItemDetail />} />
         </Routes>
 
       </Box>

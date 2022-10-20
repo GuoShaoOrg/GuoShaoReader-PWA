@@ -13,11 +13,16 @@ function CommonFeedList(props) {
   const [feedList, setFeedList] = React.useState([])
   const [loading, setLoading] = React.useState(true);
   const [page, setPage] = React.useState(1)
+  const [count, setCount] = React.useState(0)
   const [subFeedListEmpty, setSubFeedListEmpty] = React.useState(false)
 
   const handlePaginationChange = (_event, value) => {
     setPage(value)
     setLoading(true)
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
     fetchData(false, value, (resp) => {
       if (resp === undefined || resp === null || resp === []) {
         if (feedList.length === 0) {
@@ -42,6 +47,7 @@ function CommonFeedList(props) {
         return
       }
       setFeedList(resp)
+      setCount(resp[0].Count/resp.length)
     })
     setLoading(false)
   }, [])
@@ -63,7 +69,7 @@ function CommonFeedList(props) {
               </List>}
           </Box>
           <Box display="flex" justifyContent="center">
-            <Pagination className="place-self-center" count={10} page={page} color="primary" onChange={handlePaginationChange} />
+            <Pagination className="place-self-center mb-5" count={count} page={page} color="primary" onChange={handlePaginationChange} />
           </Box>
         </div>
       }
