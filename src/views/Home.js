@@ -6,12 +6,14 @@ import RssFeedTwoToneIcon from '@mui/icons-material/RssFeedTwoTone';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import PlaylistAddCheckOutlinedIcon from '@mui/icons-material/PlaylistAddCheckOutlined';
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
+import FavoriteBorderOutlined from '@mui/icons-material/FavoriteBorderOutlined';
 import { useNavigate } from "react-router-dom";
 import Timeline from "./Timeline";
 import AddFeed from "./AddFeed";
 import LoginRegister from "./LoginRegister";
 import { AppContext } from "../App";
 import FeedItemDetail from "./FeedItemDetail";
+import MarkedFeedItem from "./MarkedFeedItem";
 
 
 const drawerWidth = 240;
@@ -58,6 +60,10 @@ function Home(props) {
         navigate("/login")
         setAppBarTitle("登录/注册")
         break
+      case "marked":
+        navigate("/marked")
+        setAppBarTitle("添加订阅")
+        break
 
       default:
         break
@@ -92,18 +98,32 @@ function Home(props) {
           </ListItemButton>
         </ListItem>
         {appContext.IsLogin() ?
-          <ListItem disablePadding>
-            <ListItemButton selected={selectedIndex === "account"} onClick={() => { handlerListItemClick("account", "account") }}>
-              <ListItemIcon>
+          <div>
+            <ListItem disablePadding>
+              <ListItemButton selected={selectedIndex === "marked"} onClick={() => { handlerListItemClick("marked", "marked") }}>
                 <ListItemIcon>
-                  {selectedIndex === "account" ? (
-                    <PersonOutlineOutlinedIcon color="primary" fontSize="large" />
-                  ) : <PersonOutlineOutlinedIcon fontSize="large" />}
+                  <ListItemIcon>
+                    {selectedIndex === "marked" ? (
+                      <FavoriteBorderOutlined color="primary" fontSize="large" />
+                    ) : <FavoriteBorderOutlined fontSize="large" />}
+                  </ListItemIcon>
                 </ListItemIcon>
-              </ListItemIcon>
-              <ListItemText primary="账户信息" />
-            </ListItemButton>
-          </ListItem> : null
+                <ListItemText primary="收藏文章" />
+              </ListItemButton>
+            </ListItem>
+            < ListItem disablePadding>
+              <ListItemButton selected={selectedIndex === "account"} onClick={() => { handlerListItemClick("account", "account") }}>
+                <ListItemIcon>
+                  <ListItemIcon>
+                    {selectedIndex === "account" ? (
+                      <PersonOutlineOutlinedIcon color="primary" fontSize="large" />
+                    ) : <PersonOutlineOutlinedIcon fontSize="large" />}
+                  </ListItemIcon>
+                </ListItemIcon>
+                <ListItemText primary="账户信息" />
+              </ListItemButton>
+            </ListItem>
+          </div> : null
         }
         {
           !appContext.IsLogin() ?
@@ -121,7 +141,7 @@ function Home(props) {
             </ListItem> : null
         }
       </List>
-    </div>
+    </div >
   );
 
   useEffect(() => {
@@ -195,6 +215,7 @@ function Home(props) {
           <Route path="/add" element={<AddFeed />} />
           <Route path="/login" element={<LoginRegister />} />
           <Route path="/feed/item/:itemId" element={<FeedItemDetail />} />
+          <Route path="/marked" element={<MarkedFeedItem />} />
         </Routes>
 
       </Box>
