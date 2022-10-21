@@ -151,7 +151,7 @@ function Home(props) {
       navigate("/timeline")
     }
     setAppBarTitle("全部文章")
-  }, [])
+  }, [isRootPath])
 
   return (
     <Box sx={{ display: 'flex' }}>
