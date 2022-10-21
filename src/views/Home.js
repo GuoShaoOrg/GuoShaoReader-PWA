@@ -12,8 +12,9 @@ import Timeline from "./Timeline";
 import AddFeed from "./AddFeed";
 import LoginRegister from "./LoginRegister";
 import { AppContext } from "../App";
-import FeedItemDetail from "./FeedItemDetail";
+import FeedItemDetailPage from "./FeedItemDetailPage";
 import MarkedFeedItem from "./MarkedFeedItem";
+import SharedFeedItem from "./SharedFeedItem";
 
 
 const drawerWidth = 240;
@@ -214,8 +215,9 @@ function Home(props) {
           <Route path="/account" element={<Timeline />} />
           <Route path="/add" element={<AddFeed />} />
           <Route path="/login" element={<LoginRegister />} />
-          <Route path="/feed/item/:itemId" element={<FeedItemDetail />} />
+          <Route path="/feed/item/:itemId" element={<FeedItemDetailPage />} />
           <Route path="/marked" element={<MarkedFeedItem />} />
+          <Route path="/f/s/:itemId" element={<SharedFeedItem />} />
         </Routes>
 
       </Box>
