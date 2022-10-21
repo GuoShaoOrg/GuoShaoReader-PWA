@@ -30,17 +30,7 @@ function Timeline() {
     }
 
 
-    if (userInfo === null || userInfo === undefined) {
-      getLatestFeedItem(params).then((resp) => {
-        let respJson = JSON.parse(resp)
-        if (resp.length > 0) {
-          callback(respJson);
-        }
-      }).catch((err) => {
-        callback(null);
-        console.log(err)
-      })
-    } else {
+    if (userInfo !== null && userInfo !== undefined) {
       getFeedItemByUserId(params).then((resp) => {
         let respJson = JSON.parse(resp)
         if (resp.length > 0) {

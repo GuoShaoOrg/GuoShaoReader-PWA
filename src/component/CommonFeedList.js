@@ -14,7 +14,7 @@ function CommonFeedList(props) {
   const [loading, setLoading] = React.useState(true);
   const [page, setPage] = React.useState(1)
   const [count, setCount] = React.useState(0)
-  const [subFeedListEmpty, setSubFeedListEmpty] = React.useState(false)
+  const [subFeedListEmpty, setSubFeedListEmpty] = React.useState(true)
 
   const handlePaginationChange = (_event, value) => {
     setPage(value)
