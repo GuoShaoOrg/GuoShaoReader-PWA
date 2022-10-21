@@ -62,7 +62,7 @@ function Home(props) {
         break
       case "marked":
         navigate("/marked")
-        setAppBarTitle("添加订阅")
+        setAppBarTitle("收藏文章")
         break
 
       default:
