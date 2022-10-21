@@ -31,6 +31,8 @@ function FeedItemDetail() {
       item.style.height = "auto"
       item.style.marginLeft = "auto"
       item.style.marginRight = "auto"
+      item.style.marginTop = "10px"
+      item.style.marginBottom = "10px"
     })
     const divs = document.querySelectorAll("div")
     divs.forEach(item => {
@@ -91,7 +93,7 @@ function FeedItemDetail() {
     };
 
     markFeedItemByUserId(params).then(res => {
-      if (res.status === 1) {
+      if (res === 1) {
         if (isMarked) {
           setIsMarked(false)
           Toast.show("取消收藏", "info")
