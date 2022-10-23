@@ -49,9 +49,7 @@ function CommonFeedListItem(props) {
     <Card sx={{ maxWidth: 690, width: '100%' }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: orange[800] }} src={data.ChannelImageUrl} aria-label="recipe">
-            G
-          </Avatar>
+          <img className="object-contain rounded-full border w-12 h-12 max-w-min" alt="Remy Sharp" src={data.ChannelImageUrl} />
         }
         title={data.Title}
         subheader={data.ChannelTitle}
