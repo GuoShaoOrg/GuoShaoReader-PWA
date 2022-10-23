@@ -17,7 +17,10 @@ import FeedItemDetailPage from "./FeedItemDetailPage";
 import MarkedFeedItem from "./MarkedFeedItem";
 import SharedFeedItem from "./SharedFeedItem";
 import SubFeedChannelList from "./SubFeedChannelList";
+import FeedChannelItems from "./FeedChannelItems";
 
+
+export const HomeContext = React.createContext(null);
 
 const drawerWidth = 240;
 
@@ -74,6 +77,13 @@ function Home(props) {
 
       default:
         break
+    }
+  }
+
+
+  const homeContext = {
+    setBarTitle: (title) => {
+      setAppBarTitle(title)
     }
   }
 
@@ -172,75 +182,78 @@ function Home(props) {
   }, [isRootPath])
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar position="fixed"
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-      >
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2, display: { sm: 'none' } }}
-            onClick={handleDrawerToggle}
+    <HomeContext.Provider value={homeContext}>
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <AppBar position="fixed"
+          sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        >
+          <Toolbar>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2, display: { sm: 'none' } }}
+              onClick={handleDrawerToggle}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap component="div">
+              {appBarTitle}
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Box
+          component="nav"
+          sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        >
+          <Drawer
+            container={container}
+            variant="temporary"
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+            sx={{
+              display: { xs: 'block', sm: 'none' },
+              '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            }}
           >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            {appBarTitle}
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Box
-        component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-      >
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-          }}
+            {drawer}
+          </Drawer>
+          <Drawer
+            variant="permanent"
+            sx={{
+              display: { xs: 'none', sm: 'block' },
+              '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            }}
+            open
+          >
+            {drawer}
+          </Drawer>
+        </Box>
+        <Box
+          component="main"
+          sx={{ flexGrow: 1, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
         >
-          {drawer}
-        </Drawer>
-        <Drawer
-          variant="permanent"
-          sx={{
-            display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-          }}
-          open
-        >
-          {drawer}
-        </Drawer>
-      </Box>
-      <Box
-        component="main"
-        sx={{ flexGrow: 1, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
-      >
-        <Toolbar />
-        <Routes>
-          <Route path="/timeline" element={<Timeline />} />
-          <Route path="/account" element={<Timeline />} />
-          <Route path="/add" element={<AddFeed />} />
-          <Route path="/subList" element={<SubFeedChannelList />} />
-          <Route path="/login" element={<LoginRegister />} />
-          <Route path="/feed/item/:itemId" element={<FeedItemDetailPage />} />
-          <Route path="/marked" element={<MarkedFeedItem />} />
-          <Route path="/f/s/:itemId" element={<SharedFeedItem />} />
-        </Routes>
+          <Toolbar />
+          <Routes>
+            <Route path="/timeline" element={<Timeline />} />
+            <Route path="/account" element={<Timeline />} />
+            <Route path="/add" element={<AddFeed />} />
+            <Route path="/subList" element={<SubFeedChannelList />} />
+            <Route path="/login" element={<LoginRegister />} />
+            <Route path="/feed/item/:itemId" element={<FeedItemDetailPage />} />
+            <Route path="/feed/channel/:channelId" element={<FeedChannelItems />} />
+            <Route path="/marked" element={<MarkedFeedItem />} />
+            <Route path="/f/s/:itemId" element={<SharedFeedItem />} />
+          </Routes>
 
+        </Box>
       </Box>
-    </Box>
+    </HomeContext.Provider>
   )
 }
 export default Home;
