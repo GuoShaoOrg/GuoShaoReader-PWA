@@ -31,8 +31,12 @@ function LoginView() {
   const loginBtnOnClick = () => {
     let param = getInputParam()
     login(param).then((resp) => {
+      if (resp === null || resp === undefined) {
+        return
+      }
       storeUserLoginInfo(resp)
-      appContext.Login(resp.token)
+      let userInfo = JSON.parse(resp)
+      appContext.Login(userInfo.token)
       navigate("/")
     }).catch((err) => {
       console.log(err)

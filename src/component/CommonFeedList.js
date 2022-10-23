@@ -44,10 +44,12 @@ function CommonFeedList(props) {
           setSubFeedListEmpty(true)
         }
         setLoading(false)
+        setSubFeedListEmpty(true)
         return
       }
+      setSubFeedListEmpty(false)
       setFeedList(resp)
-      setCount(resp[0].Count/resp.length)
+      setCount(resp[0].Count / resp.length)
     })
     setLoading(false)
   }, [])
