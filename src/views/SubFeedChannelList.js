@@ -1,5 +1,6 @@
-import { Avatar, Box, Divider, List, ListItem, ListItemAvatar, ListItemText, Pagination, Typography } from "@mui/material";
+import { Box, Divider, List, ListItem, ListItemAvatar, Pagination } from "@mui/material";
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import EmptyView from "../component/EmptyView";
 import ListLoadingPlaceholder from "../component/ListPlacHolder";
 import { getUserLoginInfo } from "../service/UserService";
@@ -8,17 +9,20 @@ import { getSubFeedChannelListByUserId } from "../utils/HttpUtil";
 
 function FeedChannelItem(props) {
 
-
   const feedChannelData = props.data
+  const navigate = useNavigate()
+  const clickToChannelPage = () => {
+    navigate("/feed/channel/" + feedChannelData.Id)
+  }
 
   return (
     <div className="w-full flex justify-start border rounded-md mr-5 ml-5">
       <div className="w-full flex justify-start">
         <ListItemAvatar className="ml-5 mr-5 mt-5 flex justify-center">
-          <img className="object-contain rounded-full border w-16 h-16 max-w-min" alt="Remy Sharp" src={feedChannelData.ImageUrl} />
+          <img onClick={clickToChannelPage} className="object-contain rounded-full border w-16 h-16 max-w-min" alt="Remy Sharp" src={feedChannelData.ImageUrl} />
         </ListItemAvatar>
         <div className="w-full mt-5 mb-5 mr-5">
-          <div className="text-lg font-bold">{feedChannelData.Title}</div>
+          <div onClick={clickToChannelPage} className="text-lg font-bold">{feedChannelData.Title}</div>
           <div className="text-sm font-normal mt-2">{feedChannelData.ChannelDesc}</div>
           <div className="text-sm font-light">文章数: {feedChannelData.Count}</div>
           <a href={feedChannelData.Link} target="_blank" className="text-sm font-light">链接: {feedChannelData.Link}</a>
