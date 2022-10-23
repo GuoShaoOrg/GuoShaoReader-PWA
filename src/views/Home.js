@@ -7,6 +7,7 @@ import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined
 import PlaylistAddCheckOutlinedIcon from '@mui/icons-material/PlaylistAddCheckOutlined';
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 import FavoriteBorderOutlined from '@mui/icons-material/FavoriteBorderOutlined';
+import FormatListNumberedOutlinedIcon from '@mui/icons-material/FormatListNumberedOutlined';
 import { useNavigate } from "react-router-dom";
 import Timeline from "./Timeline";
 import AddFeed from "./AddFeed";
@@ -15,6 +16,7 @@ import { AppContext } from "../App";
 import FeedItemDetailPage from "./FeedItemDetailPage";
 import MarkedFeedItem from "./MarkedFeedItem";
 import SharedFeedItem from "./SharedFeedItem";
+import SubFeedChannelList from "./SubFeedChannelList";
 
 
 const drawerWidth = 240;
@@ -56,6 +58,10 @@ function Home(props) {
       case "add":
         navigate("/add")
         setAppBarTitle("添加订阅")
+        break
+      case "subList":
+        navigate("/subList")
+        setAppBarTitle("已订阅源")
         break
       case "login":
         navigate("/login")
@@ -100,6 +106,18 @@ function Home(props) {
         </ListItem>
         {appContext.IsLogin() ?
           <div>
+            < ListItem disablePadding>
+              <ListItemButton selected={selectedIndex === "subList"} onClick={() => { handlerListItemClick("subList", "subList") }}>
+                <ListItemIcon>
+                  <ListItemIcon>
+                    {selectedIndex === "subList" ? (
+                      <FormatListNumberedOutlinedIcon color="primary" fontSize="large" />
+                    ) : <FormatListNumberedOutlinedIcon fontSize="large" />}
+                  </ListItemIcon>
+                </ListItemIcon>
+                <ListItemText primary="已订阅源" />
+              </ListItemButton>
+            </ListItem>
             <ListItem disablePadding>
               <ListItemButton selected={selectedIndex === "marked"} onClick={() => { handlerListItemClick("marked", "marked") }}>
                 <ListItemIcon>
@@ -214,6 +232,7 @@ function Home(props) {
           <Route path="/timeline" element={<Timeline />} />
           <Route path="/account" element={<Timeline />} />
           <Route path="/add" element={<AddFeed />} />
+          <Route path="/subList" element={<SubFeedChannelList />} />
           <Route path="/login" element={<LoginRegister />} />
           <Route path="/feed/item/:itemId" element={<FeedItemDetailPage />} />
           <Route path="/marked" element={<MarkedFeedItem />} />

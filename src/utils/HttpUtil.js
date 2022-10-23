@@ -4,25 +4,25 @@ import { getAuthToken } from "../service/UserService";
 
 let instance = axios.create();
 
-instance.interceptors.request.use(function (config) {
+instance.interceptors.request.use(function(config) {
   if (config.headers.Authorization === undefined
     || config.headers.Authorization === null
     || config.headers.Authorization === "") {
     config.headers.Authorization = getAuthToken();
   }
   return config;
-}, function (error) {
+}, function(error) {
   return Promise.reject(error);
 });
 
-instance.interceptors.response.use(function (response) {
+instance.interceptors.response.use(function(response) {
   if (response.data.error !== 0) {
     Toast.show(response.data.msg, "error")
     return;
   }
   let respJsonString = JSON.stringify(response.data.data[0])
   return respJsonString;
-}, function (error) {
+}, function(error) {
   if (error.response.status === 401) {
     Toast.show("请先登录", "error");
     return;
@@ -122,4 +122,10 @@ export const subFeedByLink = (data) => {
   let api_url =
     process.env.REACT_APP_BASE_API + "v1/api/feed/link/uid";
   return instance.post(api_url, data);
+}
+
+export const getSubFeedChannelListByUserId = (data) => {
+  let api_url =
+    process.env.REACT_APP_BASE_API + "v1/api/feed/channel/sub";
+  return instance.get(api_url, { params: data });
 }
