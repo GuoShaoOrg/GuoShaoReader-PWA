@@ -31,7 +31,7 @@ function AddFeed() {
         return
       }
       Toast.show("添加订阅成功","info")
-    }).catch((err) => {
+    }).catch((_err) => {
 
     })
   }
