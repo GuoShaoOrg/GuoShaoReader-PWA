@@ -63,7 +63,7 @@ function RegisterView() {
     }
     let params = {
       "email": username,
-      "nickname": nickname,
+      "username": nickname,
       "password": password,
       "passwordVerify": password,
     }
@@ -71,7 +71,7 @@ function RegisterView() {
     if (isValidMobilePhone(username)) {
       params = {
         "mobile": username,
-        "nickname": nickname,
+        "username": nickname,
         "password": password,
         "passwordVerify": password,
       }

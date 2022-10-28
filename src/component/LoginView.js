@@ -15,13 +15,13 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 function LoginView() {
 
   const appContext = React.useContext(AppContext)
-  const [username, setUsername] = React.useState("")
+  const [account, setAccount] = React.useState("")
   const [password, setPassword] = React.useState("")
   const [showPassword, setShowPassword] = React.useState(false)
   const navigate = useNavigate()
 
   const handleUserNameInputChange = (event) => {
-    setUsername(event.target.value)
+    setAccount(event.target.value)
   }
 
   const handlePasswordInputChange = (event) => {
@@ -52,18 +52,18 @@ function LoginView() {
   };
 
   const getInputParam = () => {
-    if (!isValidateEmail(username) && !isValidMobilePhone(username)) {
+    if (!isValidateEmail(account) && !isValidMobilePhone(account)) {
       Toast.show("请输入正确格式的手机号或邮箱", "error")
       return
     }
     let params = {
-      "email": username,
+      "email": account,
       "password": password,
     }
 
-    if (isValidMobilePhone(username)) {
+    if (isValidMobilePhone(account)) {
       params = {
-        "mobile": username,
+        "mobile": account,
         "password": password,
       }
     }
