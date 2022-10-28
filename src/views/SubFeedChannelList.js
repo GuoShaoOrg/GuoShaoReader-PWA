@@ -93,7 +93,7 @@ function SubFeedChannelList() {
       }
       setSubFeedListEmpty(false)
       setFeedChannelList(resp)
-      setCount(resp[0].Count / resp.length)
+      setCount(resp[0].TotalFeedCount / resp.length)
     }, [])
     setLoading(false)
   }
