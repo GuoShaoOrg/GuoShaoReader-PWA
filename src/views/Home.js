@@ -18,6 +18,7 @@ import MarkedFeedItem from "./MarkedFeedItem";
 import SharedFeedItem from "./SharedFeedItem";
 import SubFeedChannelList from "./SubFeedChannelList";
 import FeedChannelItems from "./FeedChannelItems";
+import AccountPage from "./AccountPage";
 
 
 export const HomeContext = React.createContext(null);
@@ -267,7 +268,7 @@ function Home(props) {
           <Toolbar />
           <Routes>
             <Route path="/timeline" element={<Timeline />} />
-            <Route path="/account" element={<Timeline />} />
+            <Route path="/account" element={<AccountPage />} />
             <Route path="/add" element={<AddFeed />} />
             <Route path="/subList" element={<SubFeedChannelList />} />
             <Route path="/login" element={<LoginRegister />} />
