@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Route, Routes, useMatch } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { AppBar, IconButton, Toolbar, Box, Divider, List, ListItemButton, ListItemIcon, ListItemText, Drawer, CssBaseline, Typography, ListItem } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import RssFeedTwoToneIcon from '@mui/icons-material/RssFeedTwoTone';
@@ -32,8 +32,8 @@ function Home(props) {
   const [selectedIndex, setSelectedIndex] = React.useState("timeline");
   const [appBarTitle, setAppBarTitle] = React.useState("锅烧阅读")
   const navigate = useNavigate()
-  const isRootPath = useMatch("/")
   const appContext = React.useContext(AppContext)
+  const location = useLocation()
 
 
   const handleDrawerToggle = () => {
@@ -41,38 +41,59 @@ function Home(props) {
   };
 
 
+  const getTitleByIndexName = (indexName) => {
+    switch (indexName) {
+      case "timeline":
+        return "全部文章"
+
+      case "account":
+        return "账户信息"
+
+      case "add":
+        return "添加订阅"
+
+      case "subList":
+        return "已订阅源"
+
+      case "account":
+        return "账户信息"
+
+      case "marked":
+        return "收藏文章"
+
+      default:
+        break;
+    }
+  }
+
+
   const handlerListItemClick = (index, menuType) => {
     setMobileOpen(!mobileOpen)
     setSelectedIndex(index)
+    let title = getTitleByIndexName(index)
+    setAppBarTitle(title)
     switch (menuType) {
       case "timeline":
         navigate("/timeline")
-        setAppBarTitle("全部文章")
         break
       case "account":
         if (!appContext.IsLogin()) {
           navigate("/login")
-          setSelectedIndex("login")
           return
         }
         navigate("/account")
-        setAppBarTitle("账户信息")
         break
       case "add":
         navigate("/add")
-        setAppBarTitle("添加订阅")
         break
       case "subList":
         navigate("/subList")
-        setAppBarTitle("已订阅源")
         break
       case "login":
         navigate("/login")
-        setAppBarTitle("登录/注册")
         break
       case "marked":
         navigate("/marked")
-        setAppBarTitle("收藏文章")
         break
 
       default:
@@ -174,12 +195,17 @@ function Home(props) {
   );
 
   useEffect(() => {
-    setSelectedIndex("timeline")
-    if (isRootPath) {
+    let pathName = location.pathname
+    let indexName = pathName.replaceAll("/","")
+    if (location.pathname === "/") {
+      setSelectedIndex("timeline")
       navigate("/timeline")
+      setAppBarTitle("全部文章")
+    } else {
+      setSelectedIndex(indexName)
+      setAppBarTitle(getTitleByIndexName(indexName))
     }
-    setAppBarTitle("全部文章")
-  }, [isRootPath])
+  }, [location])
 
   return (
     <HomeContext.Provider value={homeContext}>
