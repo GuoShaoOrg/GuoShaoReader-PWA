@@ -18,11 +18,11 @@ function FeedChannelItem(props) {
   return (
     <div className="w-full flex justify-start border rounded-md mr-5 ml-5">
       <div className="w-full flex justify-start">
-        <ListItemAvatar className="ml-5 mr-5 mt-5 flex justify-center">
+        <ListItemAvatar className="ml-5 mr-5 mt-5 flex justify-center hover:cursor-pointer">
           <img onClick={clickToChannelPage} className="object-contain rounded-full border w-16 h-16 max-w-min" alt="Remy Sharp" src={feedChannelData.ImageUrl} />
         </ListItemAvatar>
         <div className="w-full mt-5 mb-5 mr-5">
-          <div onClick={clickToChannelPage} className="text-lg font-bold">{feedChannelData.Title}</div>
+          <div onClick={clickToChannelPage} className="text-lg font-bold hover:cursor-pointer">{feedChannelData.Title}</div>
           <div className="text-sm font-normal mt-2">{feedChannelData.ChannelDesc}</div>
           <div className="text-sm font-light">文章数: {feedChannelData.Count}</div>
           <a href={feedChannelData.Link} target="_blank" className="text-sm font-light">链接: {feedChannelData.Link}</a>
