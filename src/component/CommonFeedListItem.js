@@ -44,7 +44,7 @@ function CommonFeedListItem(props) {
   }
 
   return (
-    <Card sx={{ maxWidth: 690, width: '100%' }}>
+    <Card sx={{ maxWidth: 690, width: '100%', marginLeft: "20px", marginRight: "20px" }}>
       <CardHeader
         avatar={
           <img className="object-contain rounded-full border w-12 h-12 max-w-min" alt="Remy Sharp" src={data.ChannelImageUrl} />
