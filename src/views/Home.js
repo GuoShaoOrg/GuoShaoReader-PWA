@@ -47,9 +47,6 @@ function Home(props) {
       case "timeline":
         return "全部文章"
 
-      case "account":
-        return "账户信息"
-
       case "add":
         return "添加订阅"
 
@@ -57,7 +54,7 @@ function Home(props) {
         return "已订阅源"
 
       case "account":
-        return "账户信息"
+        return "用户设置"
 
       case "marked":
         return "收藏文章"
@@ -171,7 +168,7 @@ function Home(props) {
                     ) : <PersonOutlineOutlinedIcon fontSize="large" />}
                   </ListItemIcon>
                 </ListItemIcon>
-                <ListItemText primary="账户信息" />
+                <ListItemText primary="用户设置" />
               </ListItemButton>
             </ListItem>
           </div> : null
