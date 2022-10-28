@@ -10,10 +10,12 @@ import { AppContext } from "../App";
 import CommonFeedListItem from "./CommonFeedListItem";
 import { orange } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
+import { HomeContext } from "../views/Home";
 
 function FeedItemDetail(props) {
 
   const appContext = useContext(AppContext)
+  const homeContex = useContext(HomeContext)
   const showChannelInfo = props.showChannelInfo
   const [author, setAuthor] = React.useState("")
   const navigate = useNavigate()
@@ -82,6 +84,7 @@ function FeedItemDetail(props) {
           getFeedItemList(itemInfoData.ChannelId)
         }
         setThumbnail(itemInfoData.Thumbnail)
+        homeContex.setBarTitle(itemInfoData.Title)
         setTimeout(() => {
           optimizeImg()
         }, 500);
