@@ -30,7 +30,7 @@ function Home(props) {
   const { window } = props;
   const container = window !== undefined ? () => window().document.body : undefined;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [selectedIndex, setSelectedIndex] = React.useState("timeline");
+  const [selectedIndex, setSelectedIndex] = React.useState("all");
   const [appBarTitle, setAppBarTitle] = React.useState("锅烧阅读")
   const navigate = useNavigate()
   const appContext = React.useContext(AppContext)
@@ -44,7 +44,7 @@ function Home(props) {
 
   const getTitleByIndexName = (indexName) => {
     switch (indexName) {
-      case "timeline":
+      case "all":
         return "全部文章"
 
       case "add":
@@ -71,8 +71,8 @@ function Home(props) {
     let title = getTitleByIndexName(index)
     setAppBarTitle(title)
     switch (menuType) {
-      case "timeline":
-        navigate("/timeline")
+      case "all":
+        navigate("/all")
         break
       case "account":
         if (!appContext.IsLogin()) {
@@ -112,9 +112,9 @@ function Home(props) {
       <Divider />
       <List>
         <ListItem disablePadding>
-          <ListItemButton sx={{ borderRadius: "10px", marginRight: "10px", marginLeft: "10px" }} selected={selectedIndex === "timeline"} onClick={() => { handlerListItemClick("timeline", "timeline") }}>
+          <ListItemButton sx={{ borderRadius: "10px", marginRight: "10px", marginLeft: "10px" }} selected={selectedIndex === "all"} onClick={() => { handlerListItemClick("all", "all") }}>
             <ListItemIcon>
-              {selectedIndex === "timeline" ? (
+              {selectedIndex === "all" ? (
                 <RssFeedTwoToneIcon color="primary" fontSize="large" />
               ) : <RssFeedTwoToneIcon fontSize="large" />}
             </ListItemIcon>
@@ -196,8 +196,8 @@ function Home(props) {
     let pathName = location.pathname
     let indexName = pathName.replaceAll("/", "")
     if (location.pathname === "/") {
-      setSelectedIndex("timeline")
-      navigate("/timeline")
+      setSelectedIndex("all")
+      navigate("/all")
       setAppBarTitle("全部文章")
     } else {
       setSelectedIndex(indexName)
@@ -264,7 +264,7 @@ function Home(props) {
         >
           <Toolbar />
           <Routes>
-            <Route path="/timeline" element={<Timeline />} />
+            <Route path="/all" element={<Timeline />} />
             <Route path="/account" element={<AccountPage />} />
             <Route path="/add" element={<AddFeed />} />
             <Route path="/subList" element={<SubFeedChannelList />} />
