@@ -112,7 +112,7 @@ function Home(props) {
       <Divider />
       <List>
         <ListItem disablePadding>
-          <ListItemButton selected={selectedIndex === "timeline"} onClick={() => { handlerListItemClick("timeline", "timeline") }}>
+          <ListItemButton sx={{borderRadius: "10px", marginRight: "10px", marginLeft: "10px"}} selected={selectedIndex === "timeline"} onClick={() => { handlerListItemClick("timeline", "timeline") }}>
             <ListItemIcon>
               {selectedIndex === "timeline" ? (
                 <RssFeedTwoToneIcon color="primary" fontSize="large" />
@@ -122,7 +122,7 @@ function Home(props) {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton selected={selectedIndex === "add"} onClick={() => { handlerListItemClick("add", "add") }}>
+          <ListItemButton sx={{borderRadius: "10px", marginRight: "10px", marginLeft: "10px"}} selected={selectedIndex === "add"} onClick={() => { handlerListItemClick("add", "add") }}>
             <ListItemIcon>
               <ListItemIcon>
                 {selectedIndex === "add" ? (
@@ -136,7 +136,7 @@ function Home(props) {
         {appContext.IsLogin() ?
           <div>
             < ListItem disablePadding>
-              <ListItemButton selected={selectedIndex === "subList"} onClick={() => { handlerListItemClick("subList", "subList") }}>
+              <ListItemButton sx={{borderRadius: "10px", marginRight: "10px", marginLeft: "10px"}} selected={selectedIndex === "subList"} onClick={() => { handlerListItemClick("subList", "subList") }}>
                 <ListItemIcon>
                   <ListItemIcon>
                     {selectedIndex === "subList" ? (
@@ -148,7 +148,7 @@ function Home(props) {
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton selected={selectedIndex === "marked"} onClick={() => { handlerListItemClick("marked", "marked") }}>
+              <ListItemButton sx={{borderRadius: "10px", marginRight: "10px", marginLeft: "10px"}} selected={selectedIndex === "marked"} onClick={() => { handlerListItemClick("marked", "marked") }}>
                 <ListItemIcon>
                   <ListItemIcon>
                     {selectedIndex === "marked" ? (
@@ -160,7 +160,7 @@ function Home(props) {
               </ListItemButton>
             </ListItem>
             < ListItem disablePadding>
-              <ListItemButton selected={selectedIndex === "account"} onClick={() => { handlerListItemClick("account", "account") }}>
+              <ListItemButton sx={{borderRadius: "10px", marginRight: "10px", marginLeft: "10px"}} selected={selectedIndex === "account"} onClick={() => { handlerListItemClick("account", "account") }}>
                 <ListItemIcon>
                   <ListItemIcon>
                     {selectedIndex === "account" ? (
@@ -176,7 +176,7 @@ function Home(props) {
         {
           !appContext.IsLogin() ?
             <ListItem disablePadding>
-              <ListItemButton selected={selectedIndex === "login"} onClick={() => { handlerListItemClick("login", "login") }}>
+              <ListItemButton sx={{borderRadius: "10px"}} selected={selectedIndex === "login"} onClick={() => { handlerListItemClick("login", "login") }}>
                 <ListItemIcon>
                   <ListItemIcon>
                     {selectedIndex === "login" ? (
