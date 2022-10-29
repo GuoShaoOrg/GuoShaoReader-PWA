@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, useLocation, useHistory } from "react-router-dom";
 import { AppBar, IconButton, Toolbar, Box, Divider, List, ListItemButton, ListItemIcon, ListItemText, Drawer, CssBaseline, Typography, ListItem } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import RssFeedTwoToneIcon from '@mui/icons-material/RssFeedTwoTone';
@@ -8,7 +8,6 @@ import PlaylistAddCheckOutlinedIcon from '@mui/icons-material/PlaylistAddCheckOu
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 import FavoriteBorderOutlined from '@mui/icons-material/FavoriteBorderOutlined';
 import FormatListNumberedOutlinedIcon from '@mui/icons-material/FormatListNumberedOutlined';
-import { useNavigate } from "react-router-dom";
 import Timeline from "./Timeline";
 import AddFeed from "./AddFeed";
 import LoginRegister from "./LoginRegister";
@@ -19,6 +18,7 @@ import SharedFeedItem from "./SharedFeedItem";
 import SubFeedChannelList from "./SubFeedChannelList";
 import FeedChannelItems from "./FeedChannelItems";
 import AccountPage from "./AccountPage";
+import CacheRoute, { CacheSwitch } from "react-router-cache-route";
 
 
 export const HomeContext = React.createContext(null);
@@ -32,9 +32,9 @@ function Home(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [selectedIndex, setSelectedIndex] = React.useState("all");
   const [appBarTitle, setAppBarTitle] = React.useState("锅烧阅读")
-  const navigate = useNavigate()
+  const history = useHistory()
   const appContext = React.useContext(AppContext)
-  const location = useLocation()
+  const { pathname } = useLocation()
 
 
   const handleDrawerToggle = () => {
@@ -72,26 +72,40 @@ function Home(props) {
     setAppBarTitle(title)
     switch (menuType) {
       case "all":
-        navigate("/all")
+        history.push({
+          pathname: "/all"
+        })
         break
       case "account":
         if (!appContext.IsLogin()) {
-          navigate("/login")
+          history.push({
+            pathname: "/login"
+          })
           return
         }
-        navigate("/account")
+        history.push({
+          pathname: "/account"
+        })
         break
       case "add":
-        navigate("/add")
+        history.push({
+          pathname: "/add"
+        })
         break
       case "subList":
-        navigate("/subList")
+        history.push({
+          pathname: "/subList"
+        })
         break
       case "login":
-        navigate("/login")
+        history.push({
+          pathname: "/login"
+        })
         break
       case "marked":
-        navigate("/marked")
+        history.push({
+          pathname: "/marked"
+        })
         break
 
       default:
@@ -193,17 +207,18 @@ function Home(props) {
   );
 
   useEffect(() => {
-    let pathName = location.pathname
-    let indexName = pathName.replaceAll("/", "")
-    if (location.pathname === "/") {
+    let indexName = pathname.replaceAll("/", "")
+    if (pathname === "/") {
       setSelectedIndex("all")
-      navigate("/all")
+      history.push({
+        pathname: "/all"
+      })
       setAppBarTitle("全部文章")
     } else {
       setSelectedIndex(indexName)
       setAppBarTitle(getTitleByIndexName(indexName))
     }
-  }, [location])
+  }, [pathname])
 
   return (
     <HomeContext.Provider value={homeContext}>
@@ -263,18 +278,17 @@ function Home(props) {
           sx={{ flexGrow: 1, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
         >
           <Toolbar />
-          <Routes>
-            <Route path="/all" element={<Timeline />} />
-            <Route path="/account" element={<AccountPage />} />
-            <Route path="/add" element={<AddFeed />} />
-            <Route path="/subList" element={<SubFeedChannelList />} />
-            <Route path="/login" element={<LoginRegister />} />
-            <Route path="/feed/item/:itemId" element={<FeedItemDetailPage />} />
-            <Route path="/feed/channel/:channelId" element={<FeedChannelItems />} />
-            <Route path="/marked" element={<MarkedFeedItem />} />
-            <Route path="/f/s/:itemId" element={<SharedFeedItem />} />
-          </Routes>
-
+          <CacheSwitch>
+            <CacheRoute exact path="/all" component={Timeline} />
+            <CacheRoute exact path="/subList" component={SubFeedChannelList} />
+            <Route exact path="/account" component={AccountPage} />
+            <Route exact path="/add" component={AddFeed} />
+            <Route exact path="/login" component={LoginRegister} />
+            <Route exact path="/marked" component={MarkedFeedItem} />
+            <Route path="/feed/item/:itemId" component={FeedItemDetailPage} />
+            <Route path="/feed/channel/:channelId" component={FeedChannelItems} />
+            <Route path="/f/s/:itemId" component={SharedFeedItem} />
+          </CacheSwitch>
         </Box>
       </Box>
     </HomeContext.Provider>

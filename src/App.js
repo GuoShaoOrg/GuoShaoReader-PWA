@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import HomePage from './views/Home';
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { orange, purple } from "@mui/material/colors";
@@ -18,6 +18,7 @@ const theme = createTheme({
     },
   },
 });
+
 
 function App() {
 
@@ -60,11 +61,9 @@ function App() {
   return (
     <AppContext.Provider value={appContext}>
       <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <Routes>
-            <Route path='/*' element={<HomePage />} />
-          </Routes>
-        </BrowserRouter>
+        <Router>
+            <Route path='/' component={HomePage} />
+        </Router>
         <Toast ref={(ref) => {
           Toast.setRef(ref)
         }} />

@@ -5,7 +5,7 @@ import { isValidateEmail, isValidMobilePhone } from "../utils/Common";
 import Toast from "../component/Toast";
 import { storeUserLoginInfo } from "../service/UserService";
 import { AppContext } from "../App";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
@@ -18,7 +18,7 @@ function LoginView() {
   const [account, setAccount] = React.useState("")
   const [password, setPassword] = React.useState("")
   const [showPassword, setShowPassword] = React.useState(false)
-  const navigate = useNavigate()
+  const history = useHistory()
 
   const handleUserNameInputChange = (event) => {
     setAccount(event.target.value)
@@ -37,7 +37,9 @@ function LoginView() {
       storeUserLoginInfo(resp)
       let userInfo = JSON.parse(resp)
       appContext.Login(userInfo.token)
-      navigate("/")
+      history.push({
+        pathname: "/"
+      })
     }).catch((err) => {
       console.log(err)
     })

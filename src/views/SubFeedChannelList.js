@@ -1,6 +1,6 @@
 import { Box, Divider, List, ListItem, ListItemAvatar, Pagination } from "@mui/material";
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import EmptyView from "../component/EmptyView";
 import ListLoadingPlaceholder from "../component/ListPlacHolder";
 import { getUserLoginInfo } from "../service/UserService";
@@ -10,9 +10,11 @@ import { getSubFeedChannelListByUserId } from "../utils/HttpUtil";
 function FeedChannelItem(props) {
 
   const feedChannelData = props.data
-  const navigate = useNavigate()
+  const history = useHistory()
   const clickToChannelPage = () => {
-    navigate("/feed/channel/" + feedChannelData.Id)
+    history.push({
+      pathname: "/feed/channel/" + feedChannelData.Id
+    })
   }
 
   return (

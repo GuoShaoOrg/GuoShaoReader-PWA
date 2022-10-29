@@ -11,13 +11,13 @@ import { getTextFromDescription } from "../utils/Common";
 import copy from 'copy-to-clipboard';
 import Toast from "../component/Toast";
 import { FavoriteBorderOutlined, ShareOutlined } from '@mui/icons-material';
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 
 
 function CommonFeedListItem(props) {
 
-  const navigate = useNavigate()
+  const history = useHistory()
   const data = props.data
   const date = diffTime(data.InputDate, new Date())
   const [author, setAuthor] = React.useState("")
@@ -33,7 +33,9 @@ function CommonFeedListItem(props) {
   }, [])
 
   const onFeedLinkClick = () => {
-    navigate('/feed/item/' + data.Id)
+    history.push({
+      pathname: '/feed/item/' + data.Id
+    })
   }
 
   const handlerShareClick = () => {

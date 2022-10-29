@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { AppContext } from "../App";
 import { Button, FormControl, Input, InputLabel, TextField } from "@mui/material";
 import IconButton from '@mui/material/IconButton';
@@ -19,7 +19,7 @@ function RegisterView() {
   const [nickname, setNickname] = React.useState("")
   const [password, setPassword] = React.useState("")
   const [showPassword, setShowPassword] = React.useState(false)
-  const navigate = useNavigate()
+  const history = useHistory()
 
   const handleUserNameInputChange = (event) => {
     setUsername(event.target.value)
@@ -42,7 +42,9 @@ function RegisterView() {
       storeUserLoginInfo(resp)
       let userInfo = JSON.parse(resp)
       appContext.Login(userInfo.token)
-      navigate("/")
+      history.push({
+        pathname: "/"
+      })
     }).catch((err) => {
       console.log(err)
     })

@@ -9,7 +9,7 @@ import { FavoriteBorderOutlined, ShareOutlined } from "@mui/icons-material";
 import { AppContext } from "../App";
 import CommonFeedListItem from "./CommonFeedListItem";
 import { orange } from "@mui/material/colors";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { HomeContext } from "../views/Home";
 
 function FeedItemDetail(props) {
@@ -18,7 +18,7 @@ function FeedItemDetail(props) {
   const homeContex = useContext(HomeContext)
   const showChannelInfo = props.showChannelInfo
   const [author, setAuthor] = React.useState("")
-  const navigate = useNavigate()
+  const history = useHistory()
   const [date, setDate] = React.useState("")
   const [itemHtml, setItemHtml] = React.useState("")
   const [thumbnail, setThumbnail] = React.useState("")
@@ -175,7 +175,9 @@ function FeedItemDetail(props) {
 
 
   const toHomePage = () => {
-    navigate("/")
+    history.push({
+      pathname: "/"
+    })
   }
 
 

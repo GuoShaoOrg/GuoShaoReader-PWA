@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { AppContext } from "../App";
 import { getUserLoginInfo } from "../service/UserService";
 
@@ -8,11 +8,13 @@ function AccountPage() {
 
   const userInfo = getUserLoginInfo()
   const appContext = useContext(AppContext)
-  const navigate = useNavigate()
+  const history = useHistory()
 
   const logout = () => {
     appContext.LogOut()
-    navigate("/")
+    history.push({
+      pathname: "/"
+    })
   }
 
   return (
