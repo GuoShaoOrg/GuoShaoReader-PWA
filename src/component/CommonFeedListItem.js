@@ -12,6 +12,7 @@ import copy from 'copy-to-clipboard';
 import Toast from "../component/Toast";
 import { FavoriteBorderOutlined, ShareOutlined } from '@mui/icons-material';
 import { useHistory } from "react-router-dom";
+import logo from "../assets/logo.png"
 
 
 
@@ -49,13 +50,16 @@ function CommonFeedListItem(props) {
     <Card sx={{ maxWidth: 690, width: '100%', marginLeft: "20px", marginRight: "20px" }}>
       <CardHeader
         avatar={
-          <img className="object-contain rounded-full border w-12 h-12 max-w-min" alt="Remy Sharp" src={data.ChannelImageUrl} />
+          data.ChannelImageUrl === "" || data.ChannelImageUrl === null || data.ChannelImageUrl === undefined ?
+            <img className="object-contain rounded-full border w-16 h-16 max-w-min" alt="icon" src={logo} />
+            :
+            <img className="object-contain rounded-full border w-16 h-16 max-w-min" alt="icon" src={data.ChannelImageUrl} />
         }
         title={data.Title}
         subheader={data.ChannelTitle}
-        sx={{ ":hover": {cursor: "pointer"} }}
+        sx={{ ":hover": { cursor: "pointer" } }}
       />
-      <CardContent onClick={onFeedLinkClick} sx={{ ":hover": {cursor: "pointer"} }}>
+      <CardContent onClick={onFeedLinkClick} sx={{ ":hover": { cursor: "pointer" } }}>
         <meta name="referrer" content="no-referrer" />
         {data.Thumbnail === ''
           ?

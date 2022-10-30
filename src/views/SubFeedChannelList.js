@@ -5,6 +5,7 @@ import EmptyView from "../component/EmptyView";
 import ListLoadingPlaceholder from "../component/ListPlacHolder";
 import { getUserLoginInfo } from "../service/UserService";
 import { getSubFeedChannelListByUserId } from "../utils/HttpUtil";
+import logo from "../assets/logo.png"
 
 
 function FeedChannelItem(props) {
@@ -21,7 +22,12 @@ function FeedChannelItem(props) {
     <div className="w-full flex justify-start border rounded-md mr-5 ml-5">
       <div className="w-full flex justify-start">
         <ListItemAvatar className="ml-5 mr-5 mt-5 flex justify-center hover:cursor-pointer">
-          <img onClick={clickToChannelPage} className="object-contain rounded-full border w-16 h-16 max-w-min" alt="Remy Sharp" src={feedChannelData.ImageUrl} />
+          {
+            feedChannelData.ImageUrl === "" || feedChannelData.ImageUrl === null || feedChannelData.ImageUrl === undefined ?
+              <img onClick={clickToChannelPage} className="object-contain rounded-full border w-16 h-16 max-w-min" alt="icon" src={logo} />
+              :
+              <img onClick={clickToChannelPage} className="object-contain rounded-full border w-16 h-16 max-w-min" alt="icon" src={feedChannelData.ImageUrl} />
+          }
         </ListItemAvatar>
         <div className="w-full mt-5 mb-5 mr-5">
           <div onClick={clickToChannelPage} className="text-lg font-bold hover:cursor-pointer">{feedChannelData.Title}</div>
