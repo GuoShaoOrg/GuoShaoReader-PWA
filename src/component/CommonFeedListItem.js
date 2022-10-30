@@ -53,8 +53,9 @@ function CommonFeedListItem(props) {
         }
         title={data.Title}
         subheader={data.ChannelTitle}
+        sx={{ ":hover": {cursor: "pointer"} }}
       />
-      <CardContent onClick={onFeedLinkClick}>
+      <CardContent onClick={onFeedLinkClick} sx={{ ":hover": {cursor: "pointer"} }}>
         <meta name="referrer" content="no-referrer" />
         {data.Thumbnail === ''
           ?
