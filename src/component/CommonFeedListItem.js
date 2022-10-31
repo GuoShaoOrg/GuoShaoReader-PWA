@@ -49,6 +49,9 @@ function CommonFeedListItem(props) {
     };
 
     markFeedItemByUserId(params).then(res => {
+      if (res === null || res === undefined || res === "") {
+        return
+      }
       if (isMarked) {
         setIsMarked(false)
         Toast.show("取消收藏", "info")
