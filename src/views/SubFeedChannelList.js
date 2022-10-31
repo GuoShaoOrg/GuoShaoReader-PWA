@@ -21,7 +21,7 @@ function FeedChannelItem(props) {
   return (
     <div className="w-full flex justify-start border rounded-md mr-5 ml-5">
       <div className="w-full flex justify-start">
-        <ListItemAvatar className="ml-5 mr-5 mt-5 flex justify-center hover:cursor-pointer">
+        <ListItemAvatar className="ml-5 mr-5 mt-5 w-20 h-20 max-w-min flex justify-center hover:cursor-pointer">
           {
             feedChannelData.ImageUrl === "" || feedChannelData.ImageUrl === null || feedChannelData.ImageUrl === undefined ?
               <img onClick={clickToChannelPage} className="object-contain rounded-full border w-16 h-16 max-w-min" alt="icon" src={logo} />
