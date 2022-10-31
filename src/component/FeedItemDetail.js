@@ -192,13 +192,10 @@ function FeedItemDetail(props) {
         </div>
         <div onClick={toChannelPage}>
           <Typography variant="subtitle2" gutterBottom component="div" style={{ "color": "#9e9e9e", textAlign: "center" }}>
-            {itemData.ChannelTitle}
+            {itemData.ChannelTitle} |  &nbsp;{author} | {date} 
           </Typography>
         </div>
-        <Typography variant="caption" display="block" gutterBottom style={{ "color": "#9e9e9e", textAlign: "center" }}>
-          {date}&nbsp;&nbsp;{author}
-        </Typography>
-        <div className="">
+        <div className="mt-10 mb-10">
           {parse(itemHtml)}
         </div>
         {
