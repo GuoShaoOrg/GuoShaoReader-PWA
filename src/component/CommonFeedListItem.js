@@ -13,6 +13,8 @@ import Toast from "../component/Toast";
 import { FavoriteBorderOutlined, ShareOutlined } from '@mui/icons-material';
 import { useHistory } from "react-router-dom";
 import logo from "../assets/logo.png"
+import { markFeedItemByUserId } from "../utils/HttpUtil";
+import { getUserLoginInfo } from "../service/UserService";
 
 
 
@@ -23,6 +25,7 @@ function CommonFeedListItem(props) {
   const date = diffTime(data.InputDate, new Date())
   const [author, setAuthor] = React.useState("")
   const [isMarked, setIsMarked] = React.useState(false)
+  const userInfo = getUserLoginInfo();
 
   useEffect(() => {
     if (data.Marked === 1) {
@@ -36,6 +39,25 @@ function CommonFeedListItem(props) {
   const onFeedLinkClick = () => {
     history.push({
       pathname: '/feed/item/' + data.Id
+    })
+  }
+
+  const markFeed = () => {
+    let params = {
+      UserId: userInfo["uid"],
+      ItemId: data.Id,
+    };
+
+    markFeedItemByUserId(params).then(res => {
+      if (isMarked) {
+        setIsMarked(false)
+        Toast.show("取消收藏", "info")
+      } else {
+        setIsMarked(true)
+        Toast.show("已收藏", "info")
+      }
+    }).catch(err => {
+      console.log(err)
     })
   }
 
@@ -75,7 +97,7 @@ function CommonFeedListItem(props) {
         <Typography variant="subtitle2" color="textSecondary">{date}&nbsp;&nbsp;{author}</Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
+        <IconButton aria-label="add to favorites" onClick={markFeed}>
           {isMarked ? <FavoriteBorderOutlined color={"primary"} /> : (
             <FavoriteBorderOutlined />
           )}
