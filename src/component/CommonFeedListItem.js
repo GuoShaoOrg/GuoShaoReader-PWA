@@ -42,6 +42,12 @@ function CommonFeedListItem(props) {
     })
   }
 
+  const toFeedChannelPage = () => {
+    history.push({
+      pathname: '/feed/channel/' + data.ChannelId
+    })
+  }
+  
   const markFeed = () => {
     let params = {
       UserId: userInfo["uid"],
@@ -80,6 +86,7 @@ function CommonFeedListItem(props) {
             :
             <img className="object-contain rounded-full border w-16 h-16 max-w-min" alt="icon" src={data.ChannelImageUrl} />
         }
+        onClick={toFeedChannelPage}
         title={data.Title}
         subheader={data.ChannelTitle}
         sx={{ ":hover": { cursor: "pointer" } }}
