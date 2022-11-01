@@ -11,6 +11,6 @@ git init
 git add -A
 git commit -m 'deploy'
 
-git push -f git@github.com:chenjunqian/zimoarts.git main:gh-pages
+git push -f git@github.com:GuoShaoOrg/GuoShaoReader-PWA.git main:gh-pages
 
 cd -
