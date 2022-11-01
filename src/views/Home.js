@@ -19,6 +19,7 @@ import SubFeedChannelList from "./SubFeedChannelList";
 import FeedChannelItems from "./FeedChannelItems";
 import AccountPage from "./AccountPage";
 import CacheRoute, { CacheSwitch } from "react-router-cache-route";
+import FeedChannelDetailPage from "./FeedChannelDetailPage";
 
 
 export const HomeContext = React.createContext(null);
@@ -287,6 +288,7 @@ function Home(props) {
             <Route exact path="/marked" component={MarkedFeedItem} />
             <Route path="/feed/item/:itemId" component={FeedItemDetailPage} />
             <Route path="/feed/channel/:channelId" component={FeedChannelItems} />
+            <Route path="/feed/detail/:channelId" component={FeedChannelDetailPage} />
             <Route path="/f/s/:itemId" component={SharedFeedItem} />
           </CacheSwitch>
         </Box>
