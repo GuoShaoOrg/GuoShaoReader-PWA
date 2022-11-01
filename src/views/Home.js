@@ -191,7 +191,7 @@ function Home(props) {
         {
           !appContext.IsLogin() ?
             <ListItem disablePadding>
-              <ListItemButton sx={{ borderRadius: "10px" }} selected={selectedIndex === "login"} onClick={() => { handlerListItemClick("login", "login") }}>
+              <ListItemButton sx={{ borderRadius: "10px", marginRight: "10px", marginLeft: "10px" }} selected={selectedIndex === "login"} onClick={() => { handlerListItemClick("login", "login") }}>
                 <ListItemIcon>
                   <ListItemIcon>
                     {selectedIndex === "login" ? (
