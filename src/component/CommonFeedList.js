@@ -10,6 +10,7 @@ import EmptyView from "./EmptyView";
 function CommonFeedList(props) {
 
   const fetchData = props.fetchData
+  const emptyText = props.emptyText
   const [feedList, setFeedList] = React.useState([])
   const [loading, setLoading] = React.useState(true);
   const [page, setPage] = React.useState(1)
@@ -39,7 +40,7 @@ function CommonFeedList(props) {
   useEffect(() => {
     setLoading(true)
     fetchData(true, page, (resp) => {
-      if (resp === undefined || resp === null || resp === []) {
+      if (resp === undefined || resp === null || resp.length === 0) {
         if (feedList.length === 0) {
           setSubFeedListEmpty(true)
         }
@@ -58,7 +59,7 @@ function CommonFeedList(props) {
 
   return (
     <div className="w-full">
-      {subFeedListEmpty ? (<EmptyView />) :
+      {subFeedListEmpty ? (<EmptyView emptyText={emptyText} />) :
         <div>
           <Box className="flex justify-center">
             {loading ? (<ListLoadingPlaceholder />) :

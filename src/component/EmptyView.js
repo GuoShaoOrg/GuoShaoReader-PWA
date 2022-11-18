@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Typography from '@mui/material/Typography';
 import EmptyAnimation from "../assets/lotties/empty.json"
 import Lottie from "lottie-react"
 
 
-function EmptyView() {
+function EmptyView(props) {
+
+  const emptyText = props.emptyText
+  const [hintText, setHintText] = useState("")
+
+  useEffect(() => {
+    if (emptyText === undefined || emptyText === null || emptyText === "") {
+      setHintText("还没有订阅源，赶快去添加吧")
+    } else {
+      setHintText(emptyText)
+    }
+  }, [])
 
   return (
     <div className="w-full max-h-96">
@@ -13,7 +24,7 @@ function EmptyView() {
       </div>
       <div className="flex justify-center">
         <Typography variant="body1" gutterBottom>
-          还没有订阅源，赶快去添加吧
+          {hintText}
         </Typography>
       </div>
     </div>

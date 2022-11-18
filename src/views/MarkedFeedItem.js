@@ -41,7 +41,7 @@ function MarkedFeedItem() {
   }
 
   return (
-    <CommonFeedList fetchData={fetchData} />
+    <CommonFeedList emptyText="还没有收藏的文章" fetchData={fetchData} />
   )
 }
 
