@@ -104,7 +104,7 @@ function CommonFeedListItem(props) {
             image={data.Thumbnail}
             alt=""
           />}
-        <Typography variant="subtitle2" color="textSecondary">{date}&nbsp;&nbsp;{author}</Typography>
+        <Typography sx={{"marginTop": "10px"}} variant="subtitle2" color="textSecondary">{date}&nbsp;&nbsp;{author}</Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites" onClick={markFeed}>

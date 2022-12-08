@@ -183,7 +183,7 @@ function FeedItemDetail(props) {
 
   return (
     <div className="w-full pl-4 pr-4 mt-5 max-w-3xl m-auto">
-      <img src={thumbnail} alt={""} style={{ width: "100%" }} />
+      {/* <img src={thumbnail} alt={""} style={{ width: "100%" }} /> */}
       <div>
         <div className="hover:cursor-pointer" onClick={toOriginalPage}>
           <Typography className="text-center" variant="h5" component="div" gutterBottom>
