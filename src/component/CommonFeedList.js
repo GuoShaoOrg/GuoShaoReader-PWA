@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useImperativeHandle } from "react";
 import { List, ListItem } from "@mui/material"
 import CommonFeedListItem from "./CommonFeedListItem";
 import Pagination from "@mui/material/Pagination"
@@ -7,7 +7,7 @@ import ListLoadingPlaceholder from "./ListPlacHolder";
 import EmptyView from "./EmptyView";
 
 
-function CommonFeedList(props) {
+const CommonFeedList = React.forwardRef((props, ref) => {
 
   const fetchData = props.fetchData
   const emptyText = props.emptyText
@@ -37,6 +37,28 @@ function CommonFeedList(props) {
     })
   }
 
+  useImperativeHandle(ref, () => ({
+    refreshListData() {
+      setLoading(true)
+      setPage(1)
+      fetchData(true, 1, (resp) => {
+        if (resp === undefined || resp === null || resp.length === 0) {
+          if (feedList.length === 0) {
+            setSubFeedListEmpty(true)
+          }
+          setLoading(false)
+          setSubFeedListEmpty(true)
+          return
+        }
+        setSubFeedListEmpty(false)
+        setFeedList(resp)
+        let roundCount = Math.floor(resp[0].Count / resp.length)
+        setCount(roundCount)
+      })
+      setLoading(false)
+    },
+  }))
+
   useEffect(() => {
     setLoading(true)
     fetchData(true, page, (resp) => {
@@ -50,7 +72,8 @@ function CommonFeedList(props) {
       }
       setSubFeedListEmpty(false)
       setFeedList(resp)
-      setCount(resp[0].Count / resp.length)
+      let roundCount = Math.floor(resp[0].Count / resp.length)
+      setCount(roundCount)
     })
     setLoading(false)
   }, [])
@@ -78,7 +101,7 @@ function CommonFeedList(props) {
       }
     </div>
   )
-}
+})
 
 
 export default CommonFeedList;

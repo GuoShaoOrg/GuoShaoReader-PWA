@@ -129,3 +129,9 @@ export const getSubFeedChannelListByUserId = (data) => {
     process.env.REACT_APP_BASE_API + "v1/api/feed/channel/sub";
   return instance.get(api_url, { params: data });
 }
+
+export const searchFeedItem= (data) => {
+  let api_url =
+    process.env.REACT_APP_BASE_API + "v1/api/feed/search";
+  return instance.get(api_url, { params: data });
+}

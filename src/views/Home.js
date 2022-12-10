@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Route, useLocation, useHistory } from "react-router-dom";
-import { AppBar, IconButton, Toolbar, Box, Divider, List, ListItemButton, ListItemIcon, ListItemText, Drawer, CssBaseline, Typography, ListItem } from "@mui/material";
+import { AppBar, IconButton, Toolbar, Box, Divider, List, ListItemButton, ListItemIcon, ListItemText, Drawer, CssBaseline, Typography, ListItem} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import RssFeedTwoToneIcon from '@mui/icons-material/RssFeedTwoTone';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
@@ -8,6 +8,7 @@ import PlaylistAddCheckOutlinedIcon from '@mui/icons-material/PlaylistAddCheckOu
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 import FavoriteBorderOutlined from '@mui/icons-material/FavoriteBorderOutlined';
 import FormatListNumberedOutlinedIcon from '@mui/icons-material/FormatListNumberedOutlined';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import Timeline from "./Timeline";
 import AddFeed from "./AddFeed";
 import LoginRegister from "./LoginRegister";
@@ -20,6 +21,7 @@ import FeedChannelItems from "./FeedChannelItems";
 import AccountPage from "./AccountPage";
 import CacheRoute, { CacheSwitch } from "react-router-cache-route";
 import FeedChannelDetailPage from "./FeedChannelDetailPage";
+import SearchPage from "./SearchPage";
 
 
 export const HomeContext = React.createContext(null);
@@ -47,6 +49,9 @@ function Home(props) {
     switch (indexName) {
       case "all":
         return "全部文章"
+
+      case "search":
+        return "搜索文章"
 
       case "add":
         return "添加订阅"
@@ -86,6 +91,11 @@ function Home(props) {
         }
         history.push({
           pathname: "/account"
+        })
+        break
+      case "search":
+        history.push({
+          pathname: "/search"
         })
         break
       case "add":
@@ -136,7 +146,19 @@ function Home(props) {
             <ListItemText primary="全部文章" />
           </ListItemButton>
         </ListItem>
-        < ListItem disablePadding>
+        <ListItem disablePadding>
+          <ListItemButton sx={{ borderRadius: "10px", marginRight: "10px", marginLeft: "10px" }} selected={selectedIndex === "saerch"} onClick={() => { handlerListItemClick("search", "search") }}>
+            <ListItemIcon>
+              <ListItemIcon>
+                {selectedIndex === "search" ? (
+                  <SearchOutlinedIcon color="primary" fontSize="large" />
+                ) : <SearchOutlinedIcon fontSize="large" />}
+              </ListItemIcon>
+            </ListItemIcon>
+            <ListItemText primary="搜索文章" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
           <ListItemButton sx={{ borderRadius: "10px", marginRight: "10px", marginLeft: "10px" }} selected={selectedIndex === "subList"} onClick={() => { handlerListItemClick("subList", "subList") }}>
             <ListItemIcon>
               <ListItemIcon>
@@ -281,6 +303,7 @@ function Home(props) {
           <Toolbar />
           <CacheSwitch>
             <CacheRoute exact path="/all" component={Timeline} />
+            <CacheRoute exact path="/search" component={SearchPage} />
             <CacheRoute exact path="/subList" component={SubFeedChannelList} />
             <Route exact path="/account" component={AccountPage} />
             <Route exact path="/add" component={AddFeed} />
