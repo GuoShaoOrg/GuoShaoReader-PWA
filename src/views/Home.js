@@ -147,7 +147,7 @@ function Home(props) {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton sx={{ borderRadius: "10px", marginRight: "10px", marginLeft: "10px" }} selected={selectedIndex === "saerch"} onClick={() => { handlerListItemClick("search", "search") }}>
+          <ListItemButton sx={{ borderRadius: "10px", marginRight: "10px", marginLeft: "10px" }} selected={selectedIndex === "search"} onClick={() => { handlerListItemClick("search", "search") }}>
             <ListItemIcon>
               <ListItemIcon>
                 {selectedIndex === "search" ? (
