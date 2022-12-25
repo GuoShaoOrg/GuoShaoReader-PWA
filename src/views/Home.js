@@ -72,7 +72,7 @@ function Home(props) {
 
 
   const handlerListItemClick = (index, menuType) => {
-    setMobileOpen(!mobileOpen)
+    // setMobileOpen(!mobileOpen)
     setSelectedIndex(index)
     let title = getTitleByIndexName(index)
     setAppBarTitle(title)
