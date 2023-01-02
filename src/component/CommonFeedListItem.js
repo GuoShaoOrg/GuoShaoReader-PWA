@@ -44,7 +44,7 @@ function CommonFeedListItem(props) {
 
   const toFeedChannelPage = () => {
     history.push({
-      pathname: '/feed/channel/' + data.ChannelId
+      pathname: '/feed/detail/' + data.ChannelId
     })
   }
   

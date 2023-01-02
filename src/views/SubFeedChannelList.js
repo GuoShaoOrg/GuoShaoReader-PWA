@@ -14,7 +14,7 @@ function FeedChannelItem(props) {
   const history = useHistory()
   const clickToChannelPage = () => {
     history.push({
-      pathname: "/feed/channel/" + feedChannelData.Id
+      pathname: "/feed/detail/" + feedChannelData.Id
     })
   }
 
