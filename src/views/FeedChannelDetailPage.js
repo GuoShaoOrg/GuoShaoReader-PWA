@@ -1,4 +1,4 @@
-import { Button, List, ListItem, Typography } from "@mui/material";
+import { Button, Link, List, ListItem, Typography } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import CommonFeedListItem from "../component/CommonFeedListItem";
@@ -89,9 +89,11 @@ function FeedChannelDetailPage() {
               }
             </div>
             <div className="mb-5">
-              <Typography style={{ textAlign: "center" }} gutterBottom variant="h5" component="div">
-                {channelInfo.Title}
-              </Typography>
+              <div className=" w-full flex justify-center">
+                <Link style={{ textAlign: "center" }} gutterBottom variant="h5" href={channelInfo.Link} target="_blank" underline="hover" color="black" rel="noreferrer">
+                  {channelInfo.Title}
+                </Link>
+              </div>
               <Typography style={{ textAlign: "center" }} variant="body2" color="textSecondary">
                 {channelInfo.ChannelDesc}
               </Typography>
