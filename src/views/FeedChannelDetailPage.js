@@ -90,7 +90,8 @@ function FeedChannelDetailPage() {
             </div>
             <div className="mb-5">
               <div className=" w-full flex justify-center">
-                <Link style={{ textAlign: "center" }} gutterBottom variant="h5" href={channelInfo.Link} target="_blank" underline="hover" color="black" rel="noreferrer">
+                <Link style={{ textAlign: "center" }} gutterBottom variant="h5" href={channelInfo.Link}
+                  target="_blank" underline="hover" color="black" rel="noreferrer">
                   {channelInfo.Title}
                 </Link>
               </div>
